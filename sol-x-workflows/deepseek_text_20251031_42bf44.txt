@@ -1,0 +1,9 @@
+    try:
+        self._one_improvement_cycle()
+    except Exception as e:
+        # Log the error
+        self.record_decision("continuous_improvement_error", {"error": str(e)})
+
+    # Schedule the next run
+    self._loop_timer = threading.Timer(self._loop_interval, self._run_loop)
+    self._loop_timer.start()

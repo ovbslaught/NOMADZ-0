@@ -1,0 +1,11 @@
+    def record_decision(self, decision_type, data):
+        decision = {
+            'type': decision_type,
+            'data': data,
+            'timestamp': self._get_timestamp()
+        }
+        self.decision_history.append(decision)
+
+    def _get_timestamp(self):
+        from datetime import datetime
+        return datetime.now().isoformat()

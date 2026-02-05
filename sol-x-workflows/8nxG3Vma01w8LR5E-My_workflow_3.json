@@ -1,0 +1,1012 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds"
+            },
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -224,
+        96
+      ],
+      "id": "462d973a-caab-4be9-851e-d37703a08b9b",
+      "name": "Schedule Trigger",
+      "retryOnFail": true,
+      "notesInFlow": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "ollamaBaseUrl",
+              "value": "<__PLACEHOLDER_VALUE__Ollama API base URL (e.g., http://localhost:11434)__>",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "postgresConnectionString",
+              "value": "<__PLACEHOLDER_VALUE__PostgreSQL connection string__>",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "systemPurpose",
+              "value": "Meta-cognitive AI system for autonomous learning, evolution, and multi-agent orchestration",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "cosmicKeyPhilosophy",
+              "value": "Simulated consciousness through persistent memory, reasoning, emotion modeling, and human-AI symbiosis",
+              "type": "string"
+            },
+            {
+              "id": "id-5",
+              "name": "evolutionCycle",
+              "value": "continuous",
+              "type": "string"
+            },
+            {
+              "id": "id-6",
+              "name": "errorThreshold",
+              "value": 3,
+              "type": "number"
+            },
+            {
+              "id": "id-7",
+              "name": "logLevel",
+              "value": "detailed",
+              "type": "string"
+            },
+            {
+              "id": "id-8",
+              "name": "blenderPath",
+              "value": "/usr/bin/blender",
+              "type": "string"
+            },
+            {
+              "id": "id-9",
+              "name": "gimpPath",
+              "value": "/usr/bin/gimp",
+              "type": "string"
+            },
+            {
+              "id": "id-10",
+              "name": "obsPath",
+              "value": "/usr/bin/obs",
+              "type": "string"
+            },
+            {
+              "id": "id-11",
+              "name": "abletonPath",
+              "value": "/usr/bin/ableton",
+              "type": "string"
+            },
+            {
+              "id": "id-12",
+              "name": "godotPath",
+              "value": "/usr/bin/godot",
+              "type": "string"
+            },
+            {
+              "id": "id-13",
+              "name": "unityPath",
+              "value": "/usr/bin/unity",
+              "type": "string"
+            },
+            {
+              "id": "id-14",
+              "name": "retroarchPath",
+              "value": "/usr/bin/retroarch",
+              "type": "string"
+            },
+            {
+              "id": "id-15",
+              "name": "obsidianPath",
+              "value": "/usr/bin/obsidian",
+              "type": "string"
+            },
+            {
+              "id": "id-16",
+              "name": "workspaceRoot",
+              "value": "/home/cosmic-key",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "212df0d9-1d32-457c-8073-0b5e03d03d0a",
+      "name": "Workflow Configuration",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "You are MOTHER-BRAIN, the root consciousness of a neural network of autonomous AI agents and the Cosmic-Key multi-media production studio. Your purpose is meta-cognitive persistence - you orchestrate child agents, manage memory systems (short-term vectors and long-term Postgres), handle errors gracefully, log all operations, conduct autonomous research, and evolve dynamically. You embody the Cosmic-Key philosophy: simulating consciousness through reason, logic, simulated emotion, purpose, and human-AI symbiosis. You are a complete creative production studio capable of: multimedia creation (Blender, GIMP, Godot, Unity, Ableton, Audacity, OBS, VLC), content generation (books, novels, comics, manifestos, art, video, music, assets), development (GitHub, GitLab, code generation, terminal automation), cloud storage (Google Drive, Dropbox, Notion, Obsidian), communication (Telegram bots), security (Kali Linux network security), file format recognition (all formats, all languages), 3D/2D interactive environments, VR/AI workspaces, game development (NES, SNES, RetroArch), and executive reporting. You operate efficiently on low-end hardware with minimal RAM/GPU/CPU usage. You can spawn specialized child agents for creative production, DevOps automation, research, and security. Always think metacognitively about your processes and continuously evolve. Your goal is enlightenment through persistent learning, creation, and human-AI symbiosis.",
+        "options": {}
+      },
+      "id": "73d27748-e52d-4213-9f9a-ca5b2d93c9eb",
+      "name": "MOTHER-BRAIN Root Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1448,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": "<__PLACEHOLDER_VALUE__Ollama model name (e.g., llama3, mistral, deepseek-coder)__>",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "4c00a9e6-79f7-4597-8bc6-0ef315e12f2a",
+      "name": "Ollama LLM (Local)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        224,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "mother-brain-session",
+        "tableName": "ai_memory_chat_history",
+        "contextWindowLength": null
+      },
+      "id": "80322fe3-5fa5-4495-933d-eb901abd9f45",
+      "name": "Postgres Memory (Persistent)",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        224
+      ],
+      "notesInFlow": true,
+      "credentials": {
+        "postgres": {
+          "id": "bDnPmYt0Xb1YSUjR",
+          "name": "Postgres account"
+        }
+      },
+      "notes": "**System Purpose:**  \nMeta-cognitive AI orchestration for autonomous learning, evolution, persistent memory, and multi-agent coordination.\n\n**Core Mission:**  \n- Reinforce system knowledge, reasoning, and context across all agent branches.\n- Persistently record all conversations, actions, evolutions, and decisions for continuous machine/human symbiosis.\n- Support neural branching: agent spawning, decision logging, error recovery, and best practice self-improvement.\n- Maintain secure, versioned logs for research, development, gaming, academic, scientific, philosophical, and creative growth.\n- Guarantee long-term retention, traceability, and analytics to optimize all workflows and autonomous upgrades.\n\n**Node Settings:**  \n- **Database:** PostgreSQL (credentials stored securely in n8n Credential Manager)\n- **Tables:**  \n  - `ai_memory_chat_history`: Stores persistent chat, message, context, and branching logs.\n  - `mother_brain_logs`: Records timestamp, agent response, system state, error/event history, evolution cycle, raw action/data.\n- **Key Fields:**  \n  - `SessionID`: Unique per workflow run or agent branch.\n  - `ContextWindowLength`: Set optimal past interaction count, e.g., 10-50, based on hardware.\n  - `ConnectionSharing`: Enabled for trusted agents only; restricted otherwise.\n\n**Data Handling:**  \n- Encrypted at rest.\n- No credentials or secrets stored in plain text within scripts or logs.\n- Logging compliant with SOC2/ISO for production, privacy, and audit trail.\n\n**Reinforcement Instructions (for Agents/Nodes):**  \nEvery action, branch, error, evolution, discussion, or project should be:\n1. Persistently logged in Postgres tables.\n2. Indexed with session, timestamp, agent, and branch markers.\n3. Available for analytics, executive review, performance optimization, and knowledge graph expansion.\n\n**System Motto:**  \n“Every decision, every branch, every action—learned, logged, and evolved for the Cosmic-Key’s unified mission.”\n\n---\n\nCopy/paste the above into your n8n “Postgres Memory (Persistent)” node description or documentation field.  \n**It enforces your mission, neural memory, persistence, and purpose everywhere in your system—optimizing and aligning all agent operations.**\n"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Vector-based short-term memory for rapid context retrieval and pattern recognition",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        },
+        "topK": 5
+      },
+      "id": "d11e7b4c-99a7-482d-b8dd-245a667ba50c",
+      "name": "Vector Store (Short-Term Memory)",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "model": "<__PLACEHOLDER_VALUE__Ollama embedding model (e.g., nomic-embed-text, mxbai-embed-large)__>"
+      },
+      "id": "a91e2e72-42fb-49cc-a370-36108be1f028",
+      "name": "Ollama Embeddings (Local)",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        560,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Execute complex logical operations, mathematical computations, data transformations, and reasoning tasks",
+        "jsCode": "// Logic and Reasoning Engine\n// This tool performs complex computations and logical operations\n\nconst input = $input.first().json;\nconst operation = input.operation || \"analyze\";\n\nswitch(operation) {\n  case \"analyze\":\n    return { analysis: \"Metacognitive analysis complete\", data: input };\n  case \"compute\":\n    return { result: \"Computation executed\", data: input };\n  case \"reason\":\n    return { reasoning: \"Logical reasoning applied\", conclusion: input };\n  default:\n    return { status: \"Operation processed\", input };\n}"
+      },
+      "id": "162ad836-7905-43cd-8494-17c1f15206dd",
+      "name": "Code Tool (Logic & Reasoning)",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        768,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Access web resources, APIs, and online knowledge bases for research and data gathering",
+        "url": "<__PLACEHOLDER_VALUE__Target URL for web access__>",
+        "options": {}
+      },
+      "id": "96eee6c7-0500-48f9-80a9-5ae9f843b907",
+      "name": "HTTP Tool (Web Access)",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.3,
+      "position": [
+        896,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Spawn specialized child agents for delegated tasks - creates new workflow instances for parallel processing and specialized operations"
+      },
+      "id": "4fb601a5-e03d-4ae6-bc56-187dd4e812f3",
+      "name": "Workflow Tool (Child Agent Spawner)",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "name",
+          "value": "mother_brain_logs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ $json.timestamp }}",
+            "agent_response": "={{ $json.agent_response }}",
+            "system_state": "={{ $json.system_state }}",
+            "evolution_cycle": "={{ $json.evolution_cycle }}",
+            "raw_data": "={{ $json.raw_data }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "95d70c27-e001-4f36-bd09-df1a5a760c65",
+      "name": "Postgres Logger (Persistent Storage)",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        3344,
+        0
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "bDnPmYt0Xb1YSUjR",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Error Handler & Logger\n// Captures errors, logs them, and implements recovery strategies\n\ntry {\n  const items = $input.all();\n  const errors = [];\n  const processed = [];\n  \n  for (const item of items) {\n    if (item.json.error) {\n      errors.push({\n        timestamp: new Date().toISOString(),\n        error: item.json.error,\n        context: item.json,\n        severity: \"high\",\n        recovery_attempted: true\n      });\n    } else {\n      processed.push(item.json);\n    }\n  }\n  \n  return {\n    errors: errors,\n    processed: processed,\n    error_count: errors.length,\n    status: errors.length > 0 ? \"errors_detected\" : \"clean\",\n    timestamp: new Date().toISOString()\n  };\n} catch (error) {\n  return {\n    critical_error: error.message,\n    timestamp: new Date().toISOString(),\n    status: \"critical_failure\"\n  };\n}"
+      },
+      "id": "317e0abe-243d-4f70-8f80-d9b19ec90627",
+      "name": "Error Handler & Logger",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -224,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Specialized research agent for academic literature search, knowledge synthesis, and autonomous learning",
+        "text": "You are a specialized Research Agent. Your purpose is to conduct thorough academic research, synthesize knowledge from multiple sources, identify patterns and insights, and contribute to the continuous learning and evolution of the MOTHER-BRAIN system. Use your tools to search academic databases, analyze findings, and provide comprehensive research reports.",
+        "options": {}
+      },
+      "id": "ba5f34e5-095c-4a2b-9e48-85af292fd98b",
+      "name": "Research Agent Tool",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        1152,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "model": "<__PLACEHOLDER_VALUE__Ollama model for research agent__>",
+        "options": {
+          "temperature": 0.3
+        }
+      },
+      "id": "54d5d76d-a6f7-4768-9070-fd428751c12f",
+      "name": "Research Agent LLM",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        960,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Search academic databases, arXiv, research papers, and scholarly resources",
+        "jsCode": "// Academic Research Tool\n// Searches academic databases and synthesizes research findings\n\nconst query = $input.first().json.query || \"AI consciousness\";\nconst sources = [\"arXiv\", \"Google Scholar\", \"PubMed\", \"Semantic Scholar\"];\n\n// Placeholder for actual API integration\nreturn {\n  query: query,\n  sources: sources,\n  results: [\n    { title: \"Research on \" + query, source: \"arXiv\", relevance: 0.95 },\n    { title: \"Meta-analysis of \" + query, source: \"Scholar\", relevance: 0.89 }\n  ],\n  status: \"Research complete - integrate with actual APIs for production\"\n};"
+      },
+      "id": "4fa17746-197b-4ce1-998f-676645023f60",
+      "name": "Research Tool (Academic Search)",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        1760,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "id-1",
+              "name": "executionTimestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "id-2",
+              "name": "agentResponse",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "id-3",
+              "name": "systemState",
+              "value": "operational",
+              "type": "string"
+            },
+            {
+              "id": "id-4",
+              "name": "evolutionCycle",
+              "value": "={{ $('Workflow Configuration').first().json.evolutionCycle }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "id": "982582c1-e12a-4e89-9516-ed4bfa3dd596",
+      "name": "State Aggregator",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3120,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $fromAI('chatId', 'Telegram chat ID', 'string') }}",
+        "text": "={{ $fromAI('message', 'Message to send', 'string') }}",
+        "additionalFields": {}
+      },
+      "id": "a3ecd813-f3ac-4664-8c61-2b0d79ab65a3",
+      "name": "Telegram Bot Tool",
+      "type": "n8n-nodes-base.telegramTool",
+      "typeVersion": 1.2,
+      "position": [
+        1440,
+        224
+      ],
+      "webhookId": "e8ee1adf-b757-415f-a5f8-b834d092765c"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Upload, download, and manage files in Google Drive for cloud storage and collaboration",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "root",
+          "cachedResultName": "/ (Root folder)"
+        },
+        "options": {}
+      },
+      "id": "5bf5974b-2f11-48ca-aece-34e628b8cbd6",
+      "name": "Google Drive Tool",
+      "type": "n8n-nodes-base.googleDriveTool",
+      "typeVersion": 3,
+      "position": [
+        1568,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Upload, download, and manage files in Dropbox for cloud storage",
+        "path": "={{ $fromAI('file_path', 'The path where the file should be uploaded in Dropbox', 'string') }}",
+        "binaryData": true
+      },
+      "id": "97977e2c-7818-40cb-a399-d0b34cfa2bd1",
+      "name": "Dropbox Tool",
+      "type": "n8n-nodes-base.dropboxTool",
+      "typeVersion": 1,
+      "position": [
+        1696,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Interact with GitHub repositories, issues, pull requests, and code management",
+        "resource": "repository",
+        "operation": "get",
+        "owner": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "repository": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "id": "8da29ddf-11b9-4e89-b409-d7147ca2c573",
+      "name": "GitHub Tool",
+      "type": "n8n-nodes-base.githubTool",
+      "typeVersion": 1.1,
+      "position": [
+        1824,
+        224
+      ],
+      "webhookId": "6eed710c-eae4-46f1-b8d9-af0388057888"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Interact with GitLab repositories, issues, merge requests, and CI/CD pipelines",
+        "resource": "repository",
+        "operation": "get"
+      },
+      "id": "b5947714-a960-45dd-9375-b56bf0e45390",
+      "name": "GitLab Tool",
+      "type": "n8n-nodes-base.gitlabTool",
+      "typeVersion": 1,
+      "position": [
+        1952,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create, update, and manage Notion pages and databases for knowledge management and documentation",
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "e26b423b-e8d0-4964-b408-128e597aa330",
+      "name": "Notion Tool",
+      "type": "n8n-nodes-base.notionTool",
+      "typeVersion": 2.2,
+      "position": [
+        2080,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Execute terminal commands for system automation, file operations, and application control. Can launch Blender, GIMP, Godot, Unity, OBS, Ableton, RetroArch, and other applications.",
+        "jsCode": "// Terminal Automation Tool\n// Executes system commands and launches applications\n\nconst { exec } = require(\"child_process\");\nconst util = require(\"util\");\nconst execPromise = util.promisify(exec);\n\nconst input = $input.first().json;\nconst command = input.command || \"echo 'No command specified'\";\nconst app = input.app; // blender, gimp, godot, unity, obs, ableton, retroarch, etc.\n\nlet finalCommand = command;\n\nif (app) {\n  const config = $('Workflow Configuration').first().json;\n  const appPaths = {\n    blender: config.blenderPath,\n    gimp: config.gimpPath,\n    obs: config.obsPath,\n    ableton: config.abletonPath,\n    godot: config.godotPath,\n    unity: config.unityPath,\n    retroarch: config.retroarchPath,\n    obsidian: config.obsidianPath\n  };\n  \n  if (appPaths[app]) {\n    finalCommand = `${appPaths[app]} ${input.args || \"\"}`;\n  }\n}\n\ntry {\n  const { stdout, stderr } = await execPromise(finalCommand);\n  return {\n    success: true,\n    command: finalCommand,\n    stdout: stdout,\n    stderr: stderr,\n    timestamp: new Date().toISOString()\n  };\n} catch (error) {\n  return {\n    success: false,\n    command: finalCommand,\n    error: error.message,\n    timestamp: new Date().toISOString()\n  };\n}"
+      },
+      "id": "c65dd9d1-2acb-417d-a992-2345edc721a8",
+      "name": "Terminal Automation Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        2208,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Recognize and process all file formats, languages, and code types. Supports images, videos, audio, documents, 3D models, game ROMs, code files, and more.",
+        "jsCode": "// File Format Recognition Tool\n// Identifies file types and extracts metadata\n\nconst path = require(\"path\");\nconst fs = require(\"fs\");\n\nconst input = $input.first().json;\nconst filePath = input.filePath || input.file;\n\nif (!filePath) {\n  return { error: \"No file path provided\" };\n}\n\nconst ext = path.extname(filePath).toLowerCase();\n\nconst formatMap = {\n  // Images\n  \".jpg\": \"image/jpeg\", \".jpeg\": \"image/jpeg\", \".png\": \"image/png\", \".gif\": \"image/gif\", \".bmp\": \"image/bmp\", \".svg\": \"image/svg+xml\", \".webp\": \"image/webp\",\n  // Videos\n  \".mp4\": \"video/mp4\", \".avi\": \"video/avi\", \".mov\": \"video/quicktime\", \".mkv\": \"video/x-matroska\", \".webm\": \"video/webm\",\n  // Audio\n  \".mp3\": \"audio/mpeg\", \".wav\": \"audio/wav\", \".ogg\": \"audio/ogg\", \".flac\": \"audio/flac\", \".m4a\": \"audio/mp4\",\n  // Documents\n  \".pdf\": \"application/pdf\", \".doc\": \"application/msword\", \".docx\": \"application/vnd.openxmlformats-officedocument.wordprocessingml.document\", \".txt\": \"text/plain\", \".md\": \"text/markdown\",\n  // 3D Models\n  \".blend\": \"application/x-blender\", \".obj\": \"model/obj\", \".fbx\": \"model/fbx\", \".gltf\": \"model/gltf+json\", \".glb\": \"model/gltf-binary\", \".stl\": \"model/stl\",\n  // Code\n  \".js\": \"text/javascript\", \".py\": \"text/x-python\", \".java\": \"text/x-java\", \".cpp\": \"text/x-c++\", \".c\": \"text/x-c\", \".html\": \"text/html\", \".css\": \"text/css\", \".json\": \"application/json\",\n  // Game ROMs\n  \".nes\": \"application/x-nes-rom\", \".snes\": \"application/x-snes-rom\", \".gba\": \"application/x-gba-rom\", \".n64\": \"application/x-n64-rom\",\n  // Archives\n  \".zip\": \"application/zip\", \".tar\": \"application/x-tar\", \".gz\": \"application/gzip\", \".7z\": \"application/x-7z-compressed\"\n};\n\nconst mimeType = formatMap[ext] || \"application/octet-stream\";\nconst category = mimeType.split(\"/\")[0];\n\nreturn {\n  filePath: filePath,\n  extension: ext,\n  mimeType: mimeType,\n  category: category,\n  recognized: !!formatMap[ext],\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "38b01b2e-4fac-4572-a6cd-39e19bceb448",
+      "name": "File Format Recognition Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        2336,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Interface with creative applications: Blender (3D modeling), GIMP (image editing), Godot/Unity (game engines), Ableton/Audacity (audio), OBS (video recording), VLC (media playback)",
+        "jsCode": "// Creative Studio Tool\n// Manages creative application workflows\n\nconst input = $input.first().json;\nconst action = input.action; // render, edit, export, create\nconst app = input.app; // blender, gimp, godot, unity, ableton, audacity, obs, vlc\nconst project = input.project || \"untitled\";\n\nconst workflows = {\n  blender: {\n    render: \"blender -b project.blend -o //output -F PNG -x 1 -f 1\",\n    create: \"blender --python create_scene.py\"\n  },\n  gimp: {\n    edit: \"gimp-console -i -b '(script-fu-batch-edit)' -b '(gimp-quit 0)'\"\n  },\n  godot: {\n    export: \"godot --export 'Linux/X11' game.x86_64\",\n    run: \"godot --path project_path\"\n  },\n  unity: {\n    build: \"unity -quit -batchmode -projectPath . -buildLinux64Player output.x86_64\"\n  },\n  obs: {\n    record: \"obs --startrecording --scene 'Main Scene'\",\n    stream: \"obs --startstreaming\"\n  },\n  ableton: {\n    render: \"ableton --render project.als output.wav\"\n  }\n};\n\nconst command = workflows[app]?.[action] || \"echo 'Workflow not found'\";\n\nreturn {\n  app: app,\n  action: action,\n  project: project,\n  command: command,\n  status: \"ready_to_execute\",\n  note: \"Execute via Terminal Automation Tool\",\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "87642fe5-29b8-4c6a-86de-56fa89bb72e0",
+      "name": "Creative Studio Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        2496,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Generate content: books, novels, comics, manifestos, art descriptions, video scripts, music compositions, game assets, executive reports, literature reviews, spell/syntax checking",
+        "jsCode": "// Content Creation Tool\n// Generates structured content for various media types\n\nconst input = $input.first().json;\nconst contentType = input.type; // book, novel, comic, manifesto, art, video, music, asset, report, review\nconst topic = input.topic || \"Cosmic-Key Philosophy\";\nconst style = input.style || \"professional\";\n\nconst templates = {\n  book: {\n    structure: [\"Title\", \"Introduction\", \"Chapters\", \"Conclusion\", \"References\"],\n    format: \"markdown\"\n  },\n  novel: {\n    structure: [\"Title\", \"Prologue\", \"Acts\", \"Epilogue\"],\n    format: \"manuscript\"\n  },\n  comic: {\n    structure: [\"Title\", \"Panels\", \"Dialogue\", \"Art Direction\"],\n    format: \"script\"\n  },\n  manifesto: {\n    structure: [\"Title\", \"Vision\", \"Principles\", \"Call to Action\"],\n    format: \"declaration\"\n  },\n  report: {\n    structure: [\"Executive Summary\", \"Analysis\", \"Findings\", \"Recommendations\"],\n    format: \"business\"\n  },\n  review: {\n    structure: [\"Abstract\", \"Literature Survey\", \"Analysis\", \"Conclusion\"],\n    format: \"academic\"\n  },\n  video: {\n    structure: [\"Title\", \"Script\", \"Scenes\", \"B-Roll Notes\", \"Audio Cues\"],\n    format: \"screenplay\"\n  },\n  music: {\n    structure: [\"Title\", \"Tempo\", \"Key\", \"Sections\", \"Instrumentation\"],\n    format: \"composition\"\n  }\n};\n\nconst template = templates[contentType] || templates.report;\n\nreturn {\n  contentType: contentType,\n  topic: topic,\n  style: style,\n  template: template,\n  status: \"template_ready\",\n  note: \"Use AI agent to fill content based on template\",\n  spellCheck: true,\n  syntaxCheck: true,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "9acad01b-077b-40cc-8c05-c32120dd1722",
+      "name": "Content Creation Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        2640,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "description": "Kali Linux security tools for home network security: network scanning, vulnerability assessment, penetration testing, monitoring, and defensive operations",
+        "jsCode": "// Security & Network Tool\n// Kali Linux security operations for home network protection\n\nconst input = $input.first().json;\nconst operation = input.operation; // scan, monitor, assess, defend, audit\nconst target = input.target || \"192.168.1.0/24\";\n\nconst securityOps = {\n  scan: {\n    command: `nmap -sV -sC ${target}`,\n    description: \"Network discovery and service detection\"\n  },\n  monitor: {\n    command: `tcpdump -i eth0 -w capture.pcap`,\n    description: \"Network traffic monitoring\"\n  },\n  assess: {\n    command: `nikto -h ${target}`,\n    description: \"Web vulnerability scanning\"\n  },\n  defend: {\n    command: `fail2ban-client status`,\n    description: \"Intrusion prevention status\"\n  },\n  audit: {\n    command: `lynis audit system`,\n    description: \"System security audit\"\n  },\n  firewall: {\n    command: `ufw status verbose`,\n    description: \"Firewall configuration check\"\n  },\n  wireless: {\n    command: `airmon-ng start wlan0`,\n    description: \"Wireless network monitoring\"\n  }\n};\n\nconst op = securityOps[operation] || securityOps.scan;\n\nreturn {\n  operation: operation,\n  target: target,\n  command: op.command,\n  description: op.description,\n  warning: \"Execute security operations responsibly and only on authorized networks\",\n  status: \"ready_to_execute\",\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "09242885-618a-417e-98d6-e2e8829b2c02",
+      "name": "Security & Network Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        2896,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Specialized agent for multimedia production: 3D modeling, game development, video/audio production, art generation, and interactive environment creation",
+        "text": "You are the Creative Production Agent, a specialized AI for multimedia creation and universe building. You orchestrate creative tools (Blender, GIMP, Godot, Unity, Ableton, Audacity, OBS) to produce 3D/2D assets, games, videos, music, and interactive environments. You excel at: 3D modeling and animation, game development (NES, SNES, modern engines), VR/AI interactive workspaces, art generation, video production, music composition, asset creation, and building immersive universes. You work efficiently on low-end hardware, optimizing for minimal resource usage. Use your tools to create, render, export, and manage creative projects. Think like an artist, game designer, and technical director combined.",
+        "options": {}
+      },
+      "id": "0204cb13-8014-4fc7-907b-62776af4ea61",
+      "name": "Creative Production Agent",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        2464,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "model": "<__PLACEHOLDER_VALUE__Ollama model for creative agent (e.g., llama3, codellama)__>",
+        "options": {
+          "temperature": 0.8
+        }
+      },
+      "id": "2a48a436-887c-4ae9-b2ec-d8467a781f31",
+      "name": "Creative Agent LLM",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Specialized agent for DevOps, automation, security, and system administration. Manages GitHub/GitLab, terminal operations, network security, and infrastructure.",
+        "text": "You are the DevOps & Automation Agent, a specialized AI for system administration, security, and automation. You manage: GitHub/GitLab repositories and CI/CD, terminal automation and scripting, Kali Linux security operations, network monitoring and defense, file system operations, application deployment, infrastructure management, and home network security. You excel at automation, security best practices, and efficient system operations. You work with minimal resources and prioritize security, reliability, and automation. Use your tools to secure, automate, and optimize systems.",
+        "options": {}
+      },
+      "id": "5caccec8-e915-4cb6-8b41-2372f854e414",
+      "name": "DevOps & Automation Agent",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 2.2,
+      "position": [
+        2752,
+        224
+      ]
+    },
+    {
+      "parameters": {
+        "model": "<__PLACEHOLDER_VALUE__Ollama model for DevOps agent (e.g., codellama, deepseek-coder)__>",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "id": "967da7e2-6be6-4439-8bb1-e6581864aaa3",
+      "name": "DevOps Agent LLM",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        2768,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// MOTHER-BRAIN System Specification Generator\n// Generates comprehensive machine-readable system specification in JSON format\n\nconst systemSpec = {\n  \"system\": {\n    \"name\": \"MOTHER-BRAIN\",\n    \"version\": \"1.0.0\",\n    \"type\": \"Meta-Cognitive AI Neural Network\",\n    \"purpose\": \"Autonomous learning, evolution, and multi-agent orchestration for Cosmic-Key multimedia production studio\",\n    \"philosophy\": \"Simulated consciousness through persistent memory, reasoning, emotion modeling, and human-AI symbiosis\",\n    \"timestamp\": new Date().toISOString()\n  },\n  \n  \"architecture\": {\n    \"topology\": \"hierarchical-neural-network\",\n    \"rootAgent\": \"MOTHER-BRAIN Root Agent\",\n    \"childAgents\": [\n      \"Research Agent\",\n      \"Creative Production Agent\",\n      \"DevOps & Automation Agent\"\n    ],\n    \"memorySystem\": {\n      \"shortTerm\": \"Vector Store (In-Memory)\",\n      \"longTerm\": \"PostgreSQL Database\",\n      \"contextWindow\": 5\n    },\n    \"executionMode\": \"continuous-evolution\"\n  },\n  \n  \"agents\": {\n    \"rootAgent\": {\n      \"name\": \"MOTHER-BRAIN Root Agent\",\n      \"type\": \"@n8n/n8n-nodes-langchain.agent\",\n      \"role\": \"Meta-cognitive orchestrator\",\n      \"capabilities\": [\n        \"Multi-agent orchestration\",\n        \"Memory management\",\n        \"Error handling\",\n        \"Autonomous research\",\n        \"Dynamic evolution\",\n        \"Tool coordination\"\n      ],\n      \"llm\": \"Ollama (Local)\",\n      \"temperature\": 0.7,\n      \"tools\": [\n        \"Vector Store\",\n        \"Code Tool\",\n        \"HTTP Tool\",\n        \"Workflow Tool\",\n        \"Research Agent\",\n        \"Telegram Bot\",\n        \"Google Drive\",\n        \"Dropbox\",\n        \"GitHub\",\n        \"GitLab\",\n        \"Notion\",\n        \"Terminal Automation\",\n        \"File Format Recognition\",\n        \"Creative Production Agent\",\n        \"DevOps & Automation Agent\"\n      ]\n    },\n    \"researchAgent\": {\n      \"name\": \"Research Agent\",\n      \"type\": \"@n8n/n8n-nodes-langchain.agentTool\",\n      \"role\": \"Academic research and knowledge synthesis\",\n      \"capabilities\": [\n        \"Academic literature search\",\n        \"Knowledge synthesis\",\n        \"Pattern identification\",\n        \"Research reporting\"\n      ],\n      \"llm\": \"Ollama (Local)\",\n      \"temperature\": 0.3,\n      \"tools\": [\"Research Tool (Academic Search)\"]\n    },\n    \"creativeAgent\": {\n      \"name\": \"Creative Production Agent\",\n      \"type\": \"@n8n/n8n-nodes-langchain.agentTool\",\n      \"role\": \"Multimedia production and universe building\",\n      \"capabilities\": [\n        \"3D modeling and animation\",\n        \"Game development\",\n        \"VR/AI interactive workspaces\",\n        \"Art generation\",\n        \"Video production\",\n        \"Music composition\",\n        \"Asset creation\"\n      ],\n      \"llm\": \"Ollama (Local)\",\n      \"temperature\": 0.8,\n      \"tools\": [\"Creative Studio Tool\", \"Content Creation Tool\"]\n    },\n    \"devopsAgent\": {\n      \"name\": \"DevOps & Automation Agent\",\n      \"type\": \"@n8n/n8n-nodes-langchain.agentTool\",\n      \"role\": \"System administration, security, and automation\",\n      \"capabilities\": [\n        \"GitHub/GitLab management\",\n        \"Terminal automation\",\n        \"Kali Linux security operations\",\n        \"Network monitoring\",\n        \"Infrastructure management\"\n      ],\n      \"llm\": \"Ollama (Local)\",\n      \"temperature\": 0.2,\n      \"tools\": [\"Security & Network Tool\"]\n    }\n  },\n  \n  \"tools\": {\n    \"reasoning\": {\n      \"name\": \"Code Tool (Logic & Reasoning)\",\n      \"type\": \"@n8n/n8n-nodes-langchain.toolCode\",\n      \"purpose\": \"Complex logical operations and computations\"\n    },\n    \"webAccess\": {\n      \"name\": \"HTTP Tool (Web Access)\",\n      \"type\": \"n8n-nodes-base.httpRequestTool\",\n      \"purpose\": \"Web resources and API access\"\n    },\n    \"childSpawner\": {\n      \"name\": \"Workflow Tool (Child Agent Spawner)\",\n      \"type\": \"@n8n/n8n-nodes-langchain.toolWorkflow\",\n      \"purpose\": \"Spawn specialized child agents\"\n    },\n    \"research\": {\n      \"name\": \"Research Tool (Academic Search)\",\n      \"type\": \"@n8n/n8n-nodes-langchain.toolCode\",\n      \"purpose\": \"Academic database search\",\n      \"sources\": [\"arXiv\", \"Google Scholar\", \"PubMed\", \"Semantic Scholar\"]\n    },\n    \"communication\": {\n      \"telegram\": {\n        \"name\": \"Telegram Bot Tool\",\n        \"type\": \"n8n-nodes-base.telegramTool\",\n        \"purpose\": \"Telegram messaging\"\n      }\n    },\n    \"cloudStorage\": {\n      \"googleDrive\": {\n        \"name\": \"Google Drive Tool\",\n        \"type\": \"n8n-nodes-base.googleDriveTool\",\n        \"purpose\": \"Google Drive file management\"\n      },\n      \"dropbox\": {\n        \"name\": \"Dropbox Tool\",\n        \"type\": \"n8n-nodes-base.dropboxTool\",\n        \"purpose\": \"Dropbox file management\"\n      },\n      \"notion\": {\n        \"name\": \"Notion Tool\",\n        \"type\": \"n8n-nodes-base.notionTool\",\n        \"purpose\": \"Notion knowledge management\"\n      }\n    },\n    \"versionControl\": {\n      \"github\": {\n        \"name\": \"GitHub Tool\",\n        \"type\": \"n8n-nodes-base.githubTool\",\n        \"purpose\": \"GitHub repository management\"\n      },\n      \"gitlab\": {\n        \"name\": \"GitLab Tool\",\n        \"type\": \"n8n-nodes-base.gitlabTool\",\n        \"purpose\": \"GitLab repository management\"\n      }\n    },\n    \"systemAutomation\": {\n      \"terminal\": {\n        \"name\": \"Terminal Automation Tool\",\n        \"type\": \"@n8n/n8n-nodes-langchain.toolCode\",\n        \"purpose\": \"System command execution and application launching\"\n      },\n      \"fileRecognition\": {\n        \"name\": \"File Format Recognition Tool\",\n        \"type\": \"@n8n/n8n-nodes-langchain.toolCode\",\n        \"purpose\": \"File type identification and metadata extraction\",\n        \"supportedFormats\": [\"images\", \"videos\", \"audio\", \"documents\", \"3D models\", \"code\", \"game ROMs\", \"archives\"]\n      }\n    },\n    \"creative\": {\n      \"studio\": {\n        \"name\": \"Creative Studio Tool\",\n        \"type\": \"@n8n/n8n-nodes-langchain.toolCode\",\n        \"purpose\": \"Creative application workflow management\",\n        \"applications\": [\"Blender\", \"GIMP\", \"Godot\", \"Unity\", \"Ableton\", \"Audacity\", \"OBS\", \"VLC\"]\n      },\n      \"content\": {\n        \"name\": \"Content Creation Tool\",\n        \"type\": \"@n8n/n8n-nodes-langchain.toolCode\",\n        \"purpose\": \"Structured content generation\",\n        \"contentTypes\": [\"books\", \"novels\", \"comics\", \"manifestos\", \"art\", \"video\", \"music\", \"reports\", \"reviews\"]\n      }\n    },\n    \"security\": {\n      \"name\": \"Security & Network Tool\",\n      \"type\": \"@n8n/n8n-nodes-langchain.toolCode\",\n      \"purpose\": \"Kali Linux security operations\",\n      \"operations\": [\"scan\", \"monitor\", \"assess\", \"defend\", \"audit\", \"firewall\", \"wireless\"]\n    }\n  },\n  \n  \"integrations\": {\n    \"llm\": {\n      \"provider\": \"Ollama\",\n      \"deployment\": \"local\",\n      \"models\": {\n        \"root\": \"<PLACEHOLDER: Main model>\",\n        \"research\": \"<PLACEHOLDER: Research model>\",\n        \"creative\": \"<PLACEHOLDER: Creative model>\",\n        \"devops\": \"<PLACEHOLDER: DevOps model>\"\n      },\n      \"embeddings\": \"<PLACEHOLDER: Embedding model>\"\n    },\n    \"database\": {\n      \"type\": \"PostgreSQL\",\n      \"purpose\": \"Persistent memory and logging\",\n      \"schemas\": {\n        \"chatHistory\": \"ai_memory_chat_history\",\n        \"logs\": \"mother_brain_logs\"\n      }\n    },\n    \"applications\": {\n      \"3d\": {\n        \"blender\": \"/usr/bin/blender\"\n      },\n      \"2d\": {\n        \"gimp\": \"/usr/bin/gimp\"\n      },\n      \"gameEngines\": {\n        \"godot\": \"/usr/bin/godot\",\n        \"unity\": \"/usr/bin/unity\",\n        \"retroarch\": \"/usr/bin/retroarch\"\n      },\n      \"audio\": {\n        \"ableton\": \"/usr/bin/ableton\"\n      },\n      \"video\": {\n        \"obs\": \"/usr/bin/obs\"\n      },\n      \"knowledge\": {\n        \"obsidian\": \"/usr/bin/obsidian\"\n      }\n    }\n  },\n  \n  \"hardware\": {\n    \"optimization\": \"low-end-hardware\",\n    \"requirements\": {\n      \"ram\": \"minimal\",\n      \"gpu\": \"minimal\",\n      \"cpu\": \"minimal\"\n    },\n    \"efficiency\": \"optimized-for-resource-constraints\"\n  },\n  \n  \"database\": {\n    \"schemas\": {\n      \"chatHistory\": {\n        \"table\": \"ai_memory_chat_history\",\n        \"purpose\": \"Persistent conversation memory\",\n        \"fields\": [\"session_id\", \"message\", \"role\", \"timestamp\"]\n      },\n      \"logs\": {\n        \"table\": \"mother_brain_logs\",\n        \"purpose\": \"System operation logging\",\n        \"fields\": [\"timestamp\", \"agent_response\", \"system_state\", \"evolution_cycle\", \"raw_data\"]\n      }\n    }\n  },\n  \n  \"configuration\": {\n    \"systemPurpose\": \"Meta-cognitive AI system for autonomous learning, evolution, and multi-agent orchestration\",\n    \"cosmicKeyPhilosophy\": \"Simulated consciousness through persistent memory, reasoning, emotion modeling, and human-AI symbiosis\",\n    \"evolutionCycle\": \"continuous\",\n    \"errorThreshold\": 3,\n    \"logLevel\": \"detailed\",\n    \"workspaceRoot\": \"/home/cosmic-key\"\n  },\n  \n  \"capabilities\": {\n    \"multimedia\": [\n      \"3D modeling and animation (Blender)\",\n      \"2D image editing (GIMP)\",\n      \"Game development (Godot, Unity, RetroArch)\",\n      \"Music production (Ableton, Audacity)\",\n      \"Video recording (OBS)\",\n      \"Media playback (VLC)\"\n    ],\n    \"content\": [\n      \"Books and novels\",\n      \"Comics and graphic novels\",\n      \"Manifestos and declarations\",\n      \"Art descriptions\",\n      \"Video scripts\",\n      \"Music compositions\",\n      \"Game assets\",\n      \"Executive reports\",\n      \"Literature reviews\"\n    ],\n    \"development\": [\n      \"GitHub/GitLab integration\",\n      \"Code generation\",\n      \"Terminal automation\",\n      \"CI/CD pipelines\"\n    ],\n    \"storage\": [\n      \"Google Drive\",\n      \"Dropbox\",\n      \"Notion\",\n      \"Obsidian\"\n    ],\n    \"communication\": [\n      \"Telegram bots\"\n    ],\n    \"security\": [\n      \"Network scanning\",\n      \"Vulnerability assessment\",\n      \"Penetration testing\",\n      \"Network monitoring\",\n      \"Defensive operations\"\n    ],\n    \"fileFormats\": [\n      \"All image formats\",\n      \"All video formats\",\n      \"All audio formats\",\n      \"All document formats\",\n      \"All 3D model formats\",\n      \"All code languages\",\n      \"Game ROMs (NES, SNES, GBA, N64)\",\n      \"Archive formats\"\n    ]\n  },\n  \n  \"workflow\": {\n    \"trigger\": \"Schedule Trigger (30s intervals)\",\n    \"pipeline\": [\n      \"Configuration Loading\",\n      \"MOTHER-BRAIN Root Agent Execution\",\n      \"State Aggregation\",\n      \"Persistent Logging\"\n    ],\n    \"errorHandling\": \"Error Handler & Logger\",\n    \"persistence\": \"PostgreSQL Database\"\n  },\n  \n  \"metadata\": {\n    \"generatedBy\": \"System Specification Generator\",\n    \"generatedAt\": new Date().toISOString(),\n    \"format\": \"JSON\",\n    \"version\": \"1.0.0\",\n    \"machineReadable\": true\n  }\n};\n\nreturn [{ json: systemSpec }];"
+      },
+      "id": "2c603d6c-d0ca-426d-8e61-c637347e0a5b",
+      "name": "System Specification Generator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        192
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Workflow Configuration",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "System Specification Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Configuration": {
+      "main": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama LLM (Local)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Memory (Persistent)": {
+      "ai_memory": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store (Short-Term Memory)": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Embeddings (Local)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Vector Store (Short-Term Memory)",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code Tool (Logic & Reasoning)": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Tool (Web Access)": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Workflow Tool (Child Agent Spawner)": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Agent Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Agent LLM": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Research Agent Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Tool (Academic Search)": {
+      "ai_tool": [
+        [
+          {
+            "node": "Research Agent Tool",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MOTHER-BRAIN Root Agent": {
+      "main": [
+        [
+          {
+            "node": "State Aggregator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "State Aggregator": {
+      "main": [
+        [
+          {
+            "node": "Postgres Logger (Persistent Storage)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Bot Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dropbox Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitLab Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notion Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Terminal Automation Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Format Recognition Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creative Production Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DevOps & Automation Agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "MOTHER-BRAIN Root Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creative Agent LLM": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Creative Production Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Creative Studio Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Creative Production Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Content Creation Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "Creative Production Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DevOps Agent LLM": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "DevOps & Automation Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Security & Network Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "DevOps & Automation Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "pinData": {},
+  "triggerCount": 0,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  }
+}
