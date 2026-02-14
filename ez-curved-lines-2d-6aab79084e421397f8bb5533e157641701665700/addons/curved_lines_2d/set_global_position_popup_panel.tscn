@@ -1,0 +1,106 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4d61or7beyf5"]
+
+[ext_resource type="Script" uid="uid://bq4xfmsr6k2te" path="res://addons/curved_lines_2d/set_global_position_popup_panel.gd" id="1_tnog5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3qpoy"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.133333, 0.12549, 0.14902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tnog5"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_u6amf"]
+line_spacing = 0.0
+font_color = Color(0.54, 0.33696, 0.2808, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vlbak"]
+bg_color = Color(0.133333, 0.12549, 0.14902, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0n4is"]
+font_color = Color(0.345098, 0.47451, 0.396078, 1)
+
+[node name="SetGlobalPositionPopupPanel" type="PopupPanel"]
+initial_position = 4
+size = Vector2i(160, 140)
+theme_override_styles/panel = SubResource("StyleBoxFlat_3qpoy")
+script = ExtResource("1_tnog5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "Set global position"
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tnog5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "x"
+label_settings = SubResource("LabelSettings_u6amf")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="XPosInputContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_vlbak")
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tnog5")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/PanelContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "y"
+label_settings = SubResource("LabelSettings_0n4is")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YPosInputContainer" type="PanelContainer" parent="VBoxContainer/PanelContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_vlbak")
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Ok"
+
+[connection signal="gui_input" from="VBoxContainer/Label" to="." method="_on_label_gui_input"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

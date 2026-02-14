@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb72od43gg2ew"]
+
+[ext_resource type="Script" uid="uid://cm4sio0ryplts" path="res://addons/curved_lines_2d/batch_insert_curve_point_key_frames_inspector_form.gd" id="1_65iy1"]
+[ext_resource type="Texture2D" uid="uid://31qakec1dm6y" path="res://addons/curved_lines_2d/Key.svg" id="2_2yrvp"]
+
+[node name="BatchInsertCurvePointKeyFramesInspectorForm" type="VBoxContainer"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_65iy1")
+
+[node name="HSeparator2" type="HSeparator" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "- Clicking this button will insert key frames for all the curve points and control points at the current animation postion for all their property tracks
+- When a track for a certain point, or control point is not found based on its relative it will newly be created
+- Be aware that removing points or control points that are referenced in an animation track will cause warnings"
+mouse_filter = 0
+text = "Insert key frames*"
+
+[node name="BatchInsertButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "- Clicking this button will insert key frames for all the curve points and control points at the current animation postion for all their property tracks
+- When a track for a certain point, or control point is not found based on its relative it will newly be created
+- Be aware that removing points or control points that are referenced in an animation track will cause warnings"
+disabled = true
+text = "Batch insert"
+icon = ExtResource("2_2yrvp")
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/BatchInsertButton" to="." method="_on_batch_insert_button_pressed"]

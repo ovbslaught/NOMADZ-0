@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjbkvx1pj7gq2"]
+
+[ext_resource type="Script" uid="uid://ppu1camg8q83" path="res://addons/curved_lines_2d/collision_object_type_option_button.gd" id="1_cky2p"]
+
+[node name="CollisionObjectTypeOptionButton" type="OptionButton"]
+selected = 0
+item_count = 7
+popup/item_0/text = "- No Collision -"
+popup/item_0/id = 0
+popup/item_1/text = "StaticBody2D"
+popup/item_1/id = 1
+popup/item_2/text = "Area2D"
+popup/item_2/id = 2
+popup/item_3/text = "AnimatableBody2D"
+popup/item_3/id = 3
+popup/item_4/text = "RigidBody2D"
+popup/item_4/id = 4
+popup/item_5/text = "CharacterBody2D"
+popup/item_5/id = 5
+popup/item_6/text = "PhysicalBone2D"
+popup/item_6/id = 6
+script = ExtResource("1_cky2p")
+
+[connection signal="item_selected" from="." to="." method="_on_item_selected"]

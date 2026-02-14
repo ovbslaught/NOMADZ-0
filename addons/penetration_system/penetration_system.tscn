@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhhpxecx7pif4"]
+
+[ext_resource type="Script" uid="uid://bpen23ht2gfwt" path="res://addons/penetration_system/penetration_system.gd" id="1_1lsst"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6f0js"]
+size = Vector3(0, 0, 0)
+
+[node name="PenetrationSystem" type="StaticBody3D"]
+script = ExtResource("1_1lsst")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6f0js")
+disabled = true

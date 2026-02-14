@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://xhla57ruhkbn"]
+
+[ext_resource type="Script" uid="uid://cgx6kbhr66usw" path="res://city.gd" id="1_87pio"]
+[ext_resource type="PackedScene" uid="uid://di1ngld8fyyx" path="res://SCENES/example_scene.tscn" id="2_d45j6"]
+[ext_resource type="PackedScene" uid="uid://cw7f373qn6m11" path="res://NOMADZ-O/PLAYER-1/meka.glb" id="3_d45j6"]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.58374405, 0)
+script = ExtResource("1_87pio")
+
+[node name="ExampleScene" parent="." instance=ExtResource("2_d45j6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -128.18527, 0.36871338, -0.3781433)
+
+[node name="meka" parent="." instance=ExtResource("3_d45j6")]
+transform = Transform3D(115.570786, 0, 0, 0, 110.16195, 0, 0, 0, 1.1186303, 0, 0, 80.77541)

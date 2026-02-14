@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1mpesm8gt63t"]
+
+[ext_resource type="Script" path="res://addons/ai_autonomous_agent/chat_history_entry.gd" id="1_rl68l"]
+
+[node name="ChatHistoryEntry" type="HBoxContainer"]
+auto_translate_mode = 1
+offset_right = 162.0
+offset_bottom = 24.0
+size_flags_horizontal = 3
+script = ExtResource("1_rl68l")
+
+[node name="RoleOptionList" type="OptionButton" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "user"
+popup/item_1/text = "assistant"
+popup/item_1/id = 1
+
+[node name="ContentTxt" type="TextEdit" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+layout_mode = 2
+size_flags_horizontal = 3
+wrap_mode = 1
+autowrap_mode = 2
+scroll_fit_content_height = true
+
+[node name="ForgetCheckBox" type="CheckBox" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "This entry will be deleted on save."
+text = "Forget"
+
+[connection signal="item_selected" from="RoleOptionList" to="." method="_on_role_option_list_item_selected"]
+[connection signal="text_changed" from="ContentTxt" to="." method="_on_content_txt_text_changed"]
+

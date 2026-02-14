@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2k8nyelxdgi3"]
+
+[ext_resource type="Script" uid="uid://c8rves0r1i4up" path="res://addons/curved_lines_2d/examples/add_shapes_programmatically/click_ellipse.gd" id="1_1ehuy"]
+[ext_resource type="Script" uid="uid://dr5dl1my0r0rl" path="res://addons/curved_lines_2d/examples/add_shapes_programmatically/label.gd" id="2_a3wah"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1ehuy"]
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ClickEllipse" type="Node2D" parent="."]
+script = ExtResource("1_1ehuy")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -217.0
+offset_top = -22.5
+offset_right = 217.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "- Left click to add an ellipse -
+
+- Right click to cut a hole in the ellipse -"
+label_settings = SubResource("LabelSettings_1ehuy")
+horizontal_alignment = 1
+script = ExtResource("2_a3wah")

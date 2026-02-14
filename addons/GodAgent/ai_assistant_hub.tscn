@@ -1,0 +1,240 @@
+[gd_scene load_steps=8 format=3 uid="uid://w1f4dho36qy2"]
+
+[ext_resource type="Script" uid="uid://ckr8xl3sdmbwx" path="res://addons/GodAgent/ai_assistant_hub.gd" id="1_x668t"]
+[ext_resource type="PackedScene" uid="uid://c5d12f133cpv7" path="res://addons/GodAgent/ai_chat.tscn" id="2_chat"]
+[ext_resource type="Texture2D" uid="uid://cod0jg1a4g6ke" path="res://addons/GodAgent/graphics/icons/Reload.svg" id="3_reload"]
+[ext_resource type="Texture2D" uid="uid://xg4f0eorun5r" path="res://addons/GodAgent/graphics/icons/github-logo.png" id="4_6la8y"]
+[ext_resource type="Texture2D" uid="uid://buqe0bp0mxvdx" path="res://addons/GodAgent/graphics/icons/key-icon.png" id="4_qglr0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.121569, 0.121569, 0.121569, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_Card"]
+content_margin_left = 15.0
+content_margin_top = 15.0
+content_margin_right = 15.0
+content_margin_bottom = 15.0
+bg_color = Color(0.16, 0.16, 0.16, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.25, 0.25, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Agent" type="PanelContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+script = ExtResource("1_x668t")
+
+[node name="ModelsHTTPRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[node name="ViewManager" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AIChat" parent="ViewManager" instance=ExtResource("2_chat")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="SettingsView" type="ScrollContainer" parent="ViewManager"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Margin" type="MarginContainer" parent="ViewManager/SettingsView"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBox" type="VBoxContainer" parent="ViewManager/SettingsView/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="HBoxContainer" parent="ViewManager/SettingsView/Margin/VBox"]
+layout_mode = 2
+
+[node name="BackToChatBtn" type="Button" parent="ViewManager/SettingsView/Margin/VBox/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "← Back"
+flat = true
+
+[node name="Title" type="Label" parent="ViewManager/SettingsView/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.3, 0.6, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Configuration"
+horizontal_alignment = 1
+
+[node name="CardModels" type="PanelContainer" parent="ViewManager/SettingsView/Margin/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="VBox" type="VBoxContainer" parent="ViewManager/SettingsView/Margin/VBox/CardModels"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBox" type="HBoxContainer" parent="ViewManager/SettingsView/Margin/VBox/CardModels/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ViewManager/SettingsView/Margin/VBox/CardModels/VBox/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
+text = "Global Model"
+
+[node name="RefreshModelsBtn" type="Button" parent="ViewManager/SettingsView/Margin/VBox/CardModels/VBox/HBox"]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("3_reload")
+flat = true
+
+[node name="ModelsListError" type="Label" parent="ViewManager/SettingsView/Margin/VBox/CardModels/VBox"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 0.4, 0.4, 1)
+layout_mode = 2
+text = "Error loading models."
+autowrap_mode = 3
+
+[node name="ModelsList" type="ItemList" parent="ViewManager/SettingsView/Margin/VBox/CardModels/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="CardProvider" type="PanelContainer" parent="ViewManager/SettingsView/Margin/VBox"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="Grid" type="GridContainer" parent="ViewManager/SettingsView/Margin/VBox/CardProvider"]
+layout_mode = 2
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 2
+
+[node name="L1" type="Label" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid"]
+layout_mode = 2
+text = "Provider"
+
+[node name="LLMProviderOption" type="OptionButton" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UrlLabel" type="Label" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Server URL"
+
+[node name="UrlTxt" type="LineEdit" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "http://localhost:11434"
+
+[node name="L2" type="Label" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid"]
+layout_mode = 2
+text = "API Key"
+
+[node name="APIKeyHBox" type="HBoxContainer" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid"]
+layout_mode = 2
+
+[node name="APIKeyTxt" type="LineEdit" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid/APIKeyHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+secret = true
+
+[node name="KeyWarning" type="Label" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid/APIKeyHBox"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "API Key is missing!"
+text = "⚠️"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid"]
+layout_mode = 2
+alignment = 1
+
+[node name="GetKeyLink" type="LinkButton" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Get Key"
+
+[node name="TextureRect" type="TextureRect" parent="ViewManager/SettingsView/Margin/VBox/CardProvider/Grid/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_qglr0")
+
+[node name="Footer" type="HBoxContainer" parent="ViewManager/SettingsView/Margin/VBox"]
+layout_mode = 2
+
+[node name="VersionLabel" type="Label" parent="ViewManager/SettingsView/Margin/VBox/Footer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.3)
+layout_mode = 2
+text = "v0.1.0"
+
+[node name="Spacer" type="Control" parent="ViewManager/SettingsView/Margin/VBox/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SupportBtn" type="Button" parent="ViewManager/SettingsView/Margin/VBox/Footer"]
+unique_name_in_owner = true
+layout_mode = 2
+icon = ExtResource("4_6la8y")
+flat = true
+
+[node name="HistoryView" type="ScrollContainer" parent="ViewManager"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CardHistory" type="PanelContainer" parent="ViewManager/HistoryView"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_Card")
+
+[node name="VBox" type="VBoxContainer" parent="ViewManager/HistoryView/CardHistory"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBox" type="HBoxContainer" parent="ViewManager/HistoryView/CardHistory/VBox"]
+layout_mode = 2
+
+[node name="BackToChatBtn" type="Button" parent="ViewManager/HistoryView/CardHistory/VBox/HBox"]
+layout_mode = 2
+text = "← Back"
+flat = true
+
+[node name="Title" type="Label" parent="ViewManager/HistoryView/CardHistory/VBox/HBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.6, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Chat History"
+horizontal_alignment = 1
+
+[node name="HistoryList" type="VBoxContainer" parent="ViewManager/HistoryView/CardHistory/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3

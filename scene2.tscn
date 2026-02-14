@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://ew48f0tqob7u"]
+
+[ext_resource type="Script" uid="uid://cvasoq8f5ka8r" path="res://SCENES/assets/example_assets/kenney_city-kit-commercial_20/Models/GLB format/Textures/# Master Environment Setup Script.gd" id="1_8dm54"]
+[ext_resource type="PackedScene" uid="uid://xhla57ruhkbn" path="res://maincity.tscn" id="2_jcpy2"]
+[ext_resource type="PackedScene" uid="uid://cw7f373qn6m11" path="res://NOMADZ-O/PLAYER-1/meka.glb" id="3_nfnsu"]
+[ext_resource type="Script" uid="uid://81h15jxve6ah" path="res://NOMADZ-O/CAMERA/CameraTemplate.gd" id="4_nfnsu"]
+[ext_resource type="Script" uid="uid://dweiw2kgmem33" path="res://control.gd" id="5_64ein"]
+[ext_resource type="PackedScene" uid="uid://by38v5txdvh1a" path="res://SCENES/gitdo.tscn" id="6_64ein"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_8dm54")
+
+[node name="Node3D" parent="." instance=ExtResource("2_jcpy2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.180363, -54.43921, -149.92737)
+
+[node name="meka" parent="." instance=ExtResource("3_nfnsu")]
+transform = Transform3D(-11.700181, 0, 90.54522, 0, 79.34359, 0, -127.11296, 0, -8.334284, 1732.4806, 554.5435, 368.63275)
+
+[node name="Camera3D" type="Camera3D" parent="meka"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.4258013, 20.270666)
+script = ExtResource("4_nfnsu")
+
+[node name="control" type="Node3D" parent="meka"]
+script = ExtResource("5_64ein")
+
+[node name="bones" type="Node" parent="meka"]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Node3D" parent="Node" instance=ExtResource("6_64ein")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3736.4512, 0, 0)

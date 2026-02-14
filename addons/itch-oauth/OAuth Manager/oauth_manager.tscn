@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch5iyiu30ua6i"]
+
+[ext_resource type="Script" uid="uid://cl03adr4vrxj5" path="res://addons/itch-oauth/OAuth Manager/oauth_manager.gd" id="1_vh2sb"]
+[ext_resource type="PackedScene" uid="uid://dj6rc6vvt3sxg" path="res://addons/itch-oauth/OAuth Manager/oauth_popup.tscn" id="2_qv7jf"]
+
+[node name="OauthManager" type="CanvasLayer"]
+script = ExtResource("1_vh2sb")
+
+[node name="Popup" parent="." instance=ExtResource("2_qv7jf")]

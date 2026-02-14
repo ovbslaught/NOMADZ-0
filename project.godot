@@ -1,0 +1,51 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="NOMADZ-0"
+run/main_scene="uid://bmhqnfqnfjgy5"
+config/features=PackedStringArray("4.5", "Mobile")
+config/icon="res://icon.svg"
+
+[autoload]
+
+ScreenView="*res://addons/Control3D/root.gd"
+GMap="*res://addons/gmaps/map.gd"
+ItchAuth="*res://addons/itch-oauth/OAuth Manager/oauth_manager.tscn"
+GUIDE="*res://addons/guide/guide.gd"
+
+[debug_draw_3d]
+
+settings/addon_root_folder="res://addons/debug_draw_3d"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/Control3D/plugin.cfg", "res://addons/DragNDropNodes/plugin.cfg", "res://addons/FreeControl/plugin.cfg", "res://addons/Gizmo3DScript/plugin.cfg", "res://addons/GodotGoogleSignIn/plugin.cfg", "res://addons/MagicaVoxel_Importer_with_Extensions/plugin.cfg", "res://addons/OpenStylized3D/plugin.cfg", "res://addons/asset_placer/plugin.cfg", "res://addons/extremely_fast_atmosphere/plugin.cfg", "res://addons/fetchmyscript/plugin.cfg", "res://addons/github_to_itch/plugin.cfg", "res://addons/gmaps/plugin.cfg", "res://addons/godot_3d_cursor/plugin.cfg", "res://addons/guide/plugin.cfg", "res://addons/itch-oauth/plugin.cfg", "res://addons/localization_sync/plugin.cfg", "res://addons/py4godot/plugin.cfg", "res://addons/real_equation_solver/plugin.cfg", "res://addons/rust_tools/plugin.cfg")
+
+[filesystem]
+
+import/blender/enabled=false
+
+[github_to_itch]
+
+config/itch_username=""
+config/itch_project_name=""
+
+[plugins]
+
+ai_assistant_hub/llm_api="ollama_api"
+ai_assistant_hub/preferences/thinking_target=0
+ai_assistant_hub/preferences/skip_greeting=false
+ai_assistant_hub/preferences/always_scroll_to_bottom=false
+
+[rendering]
+
+renderer/rendering_method="mobile"

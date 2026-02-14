@@ -1,0 +1,71 @@
+[gd_scene load_steps=14 format=3 uid="uid://dmsa3rdgybqdd"]
+
+[ext_resource type="Script" path="res://guide_examples/virtual_cursor/virtual_cursor.gd" id="1_2rp0j"]
+[ext_resource type="Script" path="res://guide_examples/virtual_cursor/pointer.gd" id="2_h1nim"]
+[ext_resource type="Resource" uid="uid://dbo7gukmqll0o" path="res://guide_examples/virtual_cursor/mapping_contexts/keyboard_mappings.tres" id="2_tqdti"]
+[ext_resource type="Resource" uid="uid://c30c7ouhojk8x" path="res://guide_examples/virtual_cursor/mapping_contexts/controller_mappings.tres" id="3_xcoq2"]
+[ext_resource type="Resource" uid="uid://cy3gl7awoigq4" path="res://guide_examples/virtual_cursor/mapping_contexts/actions/switch_to_controller.tres" id="4_ofxlp"]
+[ext_resource type="Resource" uid="uid://bctchx4pq708u" path="res://guide_examples/virtual_cursor/mapping_contexts/actions/switch_to_keyboard.tres" id="5_pahhr"]
+[ext_resource type="Resource" uid="uid://bjmdf7hpcpg6r" path="res://guide_examples/virtual_cursor/mapping_contexts/actions/cursor_2d.tres" id="7_18ein"]
+[ext_resource type="PackedScene" uid="uid://c2rl058s7wq5r" path="res://guide_examples/virtual_cursor/pointable/pointable.tscn" id="7_rhw28"]
+[ext_resource type="PackedScene" uid="uid://dkr80d2pi0d41" path="res://addons/guide/debugger/guide_debugger.tscn" id="8_f1dtb"]
+[ext_resource type="Resource" uid="uid://by0je753kdc4" path="res://guide_examples/virtual_cursor/mapping_contexts/actions/click.tres" id="8_sx06i"]
+[ext_resource type="Theme" uid="uid://dot0gi1yoqmrl" path="res://guide_examples/shared/ui_theme.tres" id="9_ra860"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7n6hb"]
+load_path = "res://.godot/imported/pointer.svg-2068835178847b731dd1d6754048fd27.ctex"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ltt1b"]
+radius = 32.95
+
+[node name="VirtualCursor" type="Node2D"]
+script = ExtResource("1_2rp0j")
+keyboard_and_mouse = ExtResource("2_tqdti")
+controller = ExtResource("3_xcoq2")
+switch_to_controller = ExtResource("4_ofxlp")
+switch_to_keyboard_and_mouse = ExtResource("5_pahhr")
+
+[node name="Pointable" parent="." instance=ExtResource("7_rhw28")]
+position = Vector2(300, 271)
+
+[node name="Pointable2" parent="." instance=ExtResource("7_rhw28")]
+position = Vector2(1248, 311)
+
+[node name="Pointable3" parent="." instance=ExtResource("7_rhw28")]
+position = Vector2(672, 835)
+
+[node name="Pointer" type="Area2D" parent="."]
+position = Vector2(813, 485)
+script = ExtResource("2_h1nim")
+cursor_2d = ExtResource("7_18ein")
+click = ExtResource("8_sx06i")
+
+[node name="PointerVisual" type="Sprite2D" parent="Pointer"]
+texture = SubResource("CompressedTexture2D_7n6hb")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pointer"]
+shape = SubResource("CircleShape2D_ltt1b")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GuideDebugger" parent="CanvasLayer" instance=ExtResource("8_f1dtb")]
+theme = ExtResource("9_ra860")
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+custom_minimum_size = Vector2(500, 0)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -63.0
+offset_right = -60.0
+offset_bottom = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 21
+text = "This example shows how to use the Virtual Cursor modifier. You can move the cursor both with the mouse or with the gamepad. While the gamepad is used, the Virtual Cursor modifier is emulating the mouse position. "
+horizontal_alignment = 2
+autowrap_mode = 2
