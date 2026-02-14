@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/extremely_fast_atmosphere/atmosphere_icon.png")
 class_name ExtremelyFastAtmpsphere
 extends MeshInstance3D
