@@ -1,0 +1,24 @@
+# res://scripts/core/gravity_bus.gd
+extends Node
+
+signal pulse_received(data: Dictionary)
+signal reality_converged(status: String)
+
+const MOTHER_BRAIN_URL = "http://localhost:5678/webhook/cosmic-key"
+
+func _ready():
+	print("[GRAVITY-BUS] Establishing Worldline Bridges...")
+	_check_mother_brain_status()
+
+func _check_mother_brain_status():
+	var http = HTTPRequest.new()
+	add_child(http)
+	http.request_completed.connect(_on_status_check_completed)
+	http.request(MOTHER_BRAIN_URL + "/status")
+
+func _on_status_check_completed(result, response_code, headers, body):
+	if response_code == 200:
+		emit_signal("reality_converged", "LOCKED")
+		print("[GRAVITY-BUS] Frequency Locked. Mother Brain Online.")
+	else:
+		printerr("[GRAVITY-BUS] Connection Void. Run cosmic_key_launch.sh")
