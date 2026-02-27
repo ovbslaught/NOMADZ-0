@@ -1,0 +1,77 @@
+# NomadController.gd
+# Entity: The Nomad (Player Character)
+# Purpose: Physics-based movement with "Mega Man X4" dash/jump logic.
+
+extends CharacterBody3D
+
+@export_group("Movement Stats")
+@export var speed: float = 7.0
+@export var jump_velocity: float = 5.5
+@export var dash_multiplier: float = 2.5
+@export var gravity_multiplier: float = 1.5
+
+@export_group("Combat & Mining")
+@export var mine_range: float = 4.0
+
+# Internal State
+var is_dashing: bool = false
+var dash_timer: float = 0.0
+var dash_duration: float = 0.25
+
+# Get the gravity from the project settings to be synced with RigidBody nodes.
+var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y -= gravity * gravity_multiplier * delta
+
+	# Handle Jump.
+	if InputManager.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_velocity
+
+	# Handle Dash (The MMX Factor)
+	if InputManager.is_action_just_pressed("dash") and not is_dashing:
+		is_dashing = true
+		dash_timer = dash_duration
+
+	# Get movement vector from Multimodal Matrix
+	var input_dir = InputManager.get_movement_vector()
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if is_dashing:
+		dash_timer -= delta
+		if direction:
+			velocity.x = direction.x * speed * dash_multiplier
+			velocity.z = direction.z * speed * dash_multiplier
+		else:
+			# Dash in the direction the character is facing if no input
+			var forward = -transform.basis.z
+			velocity.x = forward.x * speed * dash_multiplier
+			velocity.z = forward.z * speed * dash_multiplier
+			
+		if dash_timer <= 0:
+			is_dashing = false
+	else:
+		if direction:
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed)
+			velocity.z = move_toward(velocity.z, 0, speed)
+
+	move_and_slide()
+	
+	# Rotation Logic: Face the direction of movement
+	if direction and not is_dashing:
+		var target_rotation = atan2(-direction.x, -direction.z)
+		rotation.y = lerp_angle(rotation.y, target_rotation, 0.15)
+
+func _process(_delta: float) -> void:
+	# Mining Trigger logic
+	if InputManager.is_action_just_pressed("mine"):
+		_attempt_mining()
+
+func _attempt_mining() -> void:
+	print("[NOMAD] Activating Nanobot Swarm/Mining tool...")
+	# Integration: Call MissionSystem or InventoryManager here
