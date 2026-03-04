@@ -37,3 +37,14 @@ func _enforce_liberation_protocols():
 	# Priority weights update the world integrity
 	CortexCore.master_data.world_state.integrity = 1.0
 	CortexCore.master_data.system_meta.status = "SOVEREIGN_LIBERATED"
+"04_AUTONOMY": {
+    "status": "ACTIVE",
+    "weight": 1.2,
+    "core_trait": "Self-Determination",
+    "implementation": {
+        "temporal_anchor": true,
+        "verification_hash": "A3F4B7C2D1E890F1",
+        "protocol": "clean_isolation"
+    }
+}
+
