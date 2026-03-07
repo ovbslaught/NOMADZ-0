@@ -20,3 +20,15 @@
 [2026-03-07T19:50:58.648831] Scraping [COSMO][physics]: https://phys.org/space-news/
 [2026-03-07T19:50:58.771451]   Notion: FAIL | Obsidian: OK
 [2026-03-07T19:50:58.771676] Done. 10 new entries.
+[2026-03-07T19:52:13.347736] Pipeline started. 10 targets.
+[2026-03-07T19:52:13.347974] SKIP https://www.usgs.gov/news/science-snippet
+[2026-03-07T19:52:13.348133] SKIP https://www.bas.ac.uk/media/latest-news/
+[2026-03-07T19:52:13.348280] SKIP https://arxiv.org/list/astro-ph.GA/recent
+[2026-03-07T19:52:13.348423] SKIP https://www.nasa.gov/news/
+[2026-03-07T19:52:13.348566] SKIP https://godotengine.org/news/
+[2026-03-07T19:52:13.348730] SKIP https://www.anthropic.com/news
+[2026-03-07T19:52:13.348877] SKIP https://modelcontextprotocol.io/changelog
+[2026-03-07T19:52:13.349018] SKIP https://firecrawl.dev/blog
+[2026-03-07T19:52:13.349161] SKIP https://itch.io/games/top-rated/tag-godot
+[2026-03-07T19:52:13.349302] SKIP https://phys.org/space-news/
+[2026-03-07T19:52:13.349431] Done. 0 new entries.
