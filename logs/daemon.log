@@ -16,3 +16,25 @@
 [DAEMON][2026-03-07T19:52:13.476335] SNAPSHOT stdout: [OUROBOROS] Snapshot saved: /tmp/ouroboros_snapshots/nomadz0_20260307_195213 (70 files)
 
 [DAEMON][2026-03-07T19:52:13.476422] --- Running git_autopush ---
+[DAEMON][2026-03-07T19:52:15.871939] GITPUSH OK (exit 0)
+[DAEMON][2026-03-07T20:07:15.877811] --- Running firecrawl_pipeline ---
+[DAEMON][2026-03-07T20:07:21.349309] PIPELINE OK (exit 0)
+[DAEMON][2026-03-07T20:07:21.349548] PIPELINE stdout: 2026-03-07T20:07:20.755821] Scraping [VULTURE][firecrawl]: https://firecrawl.dev/blog
+[2026-03-07T20:07:20.994546]   Notion: FAIL | Obsidian: OK
+[2026-03-07T20:07:20.994729] Scraping [NOMADZ-0][gamedev]: https://itch.io/games/top-rated/tag-godot
+[2026-03-07T20:07:21.080798]   Notion: FAIL | Obsidian: OK
+[2026-03-07T20:07:21.080983] Scraping [COSMO][physics]: https://phys.org/space-news/
+[2026-03-07T20:07:21.325729]   Notion: FAIL | Obsidian: OK
+[2026-03-07T20:07:21.325919] Done. 10 new entries.
+
+[DAEMON][2026-03-07T20:22:21.352567] --- Running firecrawl_pipeline ---
+[DAEMON][2026-03-07T20:22:21.735583] PIPELINE OK (exit 0)
+[DAEMON][2026-03-07T20:22:21.735775] PIPELINE stdout: 2:21.718600] SKIP https://www.nasa.gov/news/
+[2026-03-07T20:22:21.718768] SKIP https://godotengine.org/news/
+[2026-03-07T20:22:21.718917] SKIP https://www.anthropic.com/news
+[2026-03-07T20:22:21.719057] SKIP https://modelcontextprotocol.io/changelog
+[2026-03-07T20:22:21.719203] SKIP https://firecrawl.dev/blog
+[2026-03-07T20:22:21.719342] SKIP https://itch.io/games/top-rated/tag-godot
+[2026-03-07T20:22:21.719480] SKIP https://phys.org/space-news/
+[2026-03-07T20:22:21.719608] Done. 0 new entries.
+
