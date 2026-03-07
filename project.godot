@@ -1,0 +1,12 @@
+[gd_resource type="ProjectSettings"]
+
+[application]
+config/name="NOMADZ-0"
+run/main_scene=""
+config/features=PackedStringArray("4.3")
+
+[autoload]
+CortexCore="*res://CortexCore.gd"
+PillarRegistry="*res://PillarRegistry.gd"
+
+[input]
