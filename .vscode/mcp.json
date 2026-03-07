@@ -8,9 +8,9 @@
         "@perplexity-ai/mcp-server"
       ],
       "env": {
-        "PERPLEXITY_API_KEY": "${env:PERPLEXITY_API_KEY}",
-        "PERPLEXITY_TIMEOUT_MS": "600000"
-      }
+        "PERPLEXITY_API_KEY": "${PERPLEXITY_API_KEY}"
+      },
+      "timeout": 600000
     },
     "github": {
       "type": "http",
@@ -24,6 +24,39 @@
         "@modelcontextprotocol/server-filesystem",
         "/workspaces/NOMADZ-0"
       ]
+    },
+    "firecrawl": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mendableai/firecrawl-mcp-server"
+      ],
+      "env": {
+        "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
+      }
+    },
+    "notion": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@notionhq/notion-mcp-server"
+      ],
+      "env": {
+        "OPENAPI_MCP_HEADERS": "{\"Authorization\": \"Bearer ${NOTION_TOKEN}\", \"Notion-Version\": \"2022-06-28\"}"
+      }
+    },
+    "gdrive": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gdrive"
+      ],
+      "env": {
+        "GDRIVE_CREDENTIALS_PATH": "/workspaces/NOMADZ-0/.gdrive_credentials.json"
+      }
     }
   }
 }

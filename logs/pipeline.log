@@ -1,0 +1,22 @@
+[2026-03-07T19:50:46.652283] Pipeline started. 10 targets.
+[2026-03-07T19:50:46.658728] Scraping [GEOLOGOS][geology]: https://www.usgs.gov/news/science-snippet
+[2026-03-07T19:50:49.099745]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:49.099916] Scraping [GEOLOGOS][antarctic]: https://www.bas.ac.uk/media/latest-news/
+[2026-03-07T19:50:53.431594]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:53.431962] Scraping [COSMO][cosmology]: https://arxiv.org/list/astro-ph.GA/recent
+[2026-03-07T19:50:53.601838]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:53.602026] Scraping [NEO-SOL-OMEGA][space]: https://www.nasa.gov/news/
+[2026-03-07T19:50:53.746739]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:53.746904] Scraping [NOMADZ-0][godot]: https://godotengine.org/news/
+[2026-03-07T19:50:54.307871]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:54.308048] Scraping [VULTURE][ai]: https://www.anthropic.com/news
+[2026-03-07T19:50:58.084383]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:58.084562] Scraping [VULTURE][mcp]: https://modelcontextprotocol.io/changelog
+[2026-03-07T19:50:58.236985]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:58.237207] Scraping [VULTURE][firecrawl]: https://firecrawl.dev/blog
+[2026-03-07T19:50:58.526451]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:58.527147] Scraping [NOMADZ-0][gamedev]: https://itch.io/games/top-rated/tag-godot
+[2026-03-07T19:50:58.648578]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:58.648831] Scraping [COSMO][physics]: https://phys.org/space-news/
+[2026-03-07T19:50:58.771451]   Notion: FAIL | Obsidian: OK
+[2026-03-07T19:50:58.771676] Done. 10 new entries.
