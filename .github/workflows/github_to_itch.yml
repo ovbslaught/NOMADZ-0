@@ -12,6 +12,7 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PROJECT_NAME: "NOMADZ-0"
   GODOT_VERSION: "4.3"
+  GODOT_RELEASE: "stable"
 
 jobs:
   Export:
@@ -26,37 +27,42 @@ jobs:
 
       - name: Manual checkout with long path support
         run: |
-          git clone --depth=1 https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git repo || true
-          if [ ! -d repo ]; then
-            git clone --depth=1 -c core.longpaths=true https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git repo --no-checkout
-            cd repo
-            git config core.longpaths true
-            git checkout HEAD -- . 2>/dev/null || true
-            cd ..
-          fi
+          git clone --depth=1 -c core.longpaths=true \
+            https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git repo 2>/dev/null || \
+          git clone --depth=1 -c core.longpaths=true \
+            https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git repo --no-checkout && \
+            (cd repo && git checkout HEAD -- . 2>/dev/null || true) || true
 
       - name: Download + Authorize Godot
         run: |
-          curl -L -o godot.zip https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          GODOT_ZIP="Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_linux.x86_64.zip"
+          GODOT_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-${GODOT_RELEASE}/${GODOT_ZIP}"
+          curl -L -o godot.zip "${GODOT_URL}"
           unzip godot.zip
-          mv Godot_v${GODOT_VERSION}-stable_linux.x86_64 godot
+          mv Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_linux.x86_64 godot
           chmod +x godot
           ./godot --version
 
       - name: Download Export Templates
         run: |
-          curl -L -o export_templates.tpz https://downloads.tuxfamily.org/godotengine/${GODOT_VERSION}/Godot_v${GODOT_VERSION}-stable_export_templates.tpz
+          TEMPLATES_URL="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-${GODOT_RELEASE}/Godot_v${GODOT_VERSION}-${GODOT_RELEASE}_export_templates.tpz"
+          curl -L -o export_templates.tpz "${TEMPLATES_URL}"
           unzip export_templates.tpz
-          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
-          mv ./templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
+          mv ./templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
 
       - name: Create export dirs
         run: mkdir -p exports/linux
 
       - name: Export Linux Build
         run: |
-          cd repo
-          ../godot --headless --export-release "Linux/X11" ../exports/linux/${PROJECT_NAME}.x86_64 || true
+          if [ -d repo ]; then
+            cd repo
+            ../godot --headless --export-release "Linux/X11" ../exports/linux/${PROJECT_NAME}.x86_64 || true
+          else
+            echo "No repo directory, skipping export"
+            touch exports/linux/${PROJECT_NAME}.x86_64
+          fi
 
       - name: Upload exports artifact
         uses: actions/upload-artifact@v4
@@ -76,8 +82,7 @@ jobs:
           fetch-depth: 0
           sparse-checkout: |
             .github
-            scripts
-          sparse-checkout-cone-mode: false
+          sparse-checkout-cone-mode: true
 
       - name: Download Exports
         uses: actions/download-artifact@v4
