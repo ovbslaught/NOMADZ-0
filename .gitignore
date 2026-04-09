@@ -3,3 +3,9 @@
 /android/
 /NOMADZ-O
 .opencode
+gossip.log
+logs/
+omega_memory.db
+package-lock.json
+src/__pycache__/
+WORMHOLE/OMEGA-BRAIN/
