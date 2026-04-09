@@ -33,7 +33,6 @@ jobs:
         run: |
           git config user.name "NOMADZ-0 Feeder Bot"
           git config user.email "ovbslaught@gmail.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ovbslaught/NOMADZ-0.git
 
       - name: Create feed directory structure
         run: |
