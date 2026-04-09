@@ -19,7 +19,21 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Configure git for long paths and special chars
+        run: |
+          git config --global core.longpaths true
+          git config --global core.protectNTFS false
+
+      - name: Manual checkout with long path support
+        run: |
+          git clone --depth=1 https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git repo || true
+          if [ ! -d repo ]; then
+            git clone --depth=1 -c core.longpaths=true https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git repo --no-checkout
+            cd repo
+            git config core.longpaths true
+            git checkout HEAD -- . 2>/dev/null || true
+            cd ..
+          fi
 
       - name: Download + Authorize Godot
         run: |
@@ -41,7 +55,8 @@ jobs:
 
       - name: Export Linux Build
         run: |
-          ./godot --headless --export-release "Linux/X11" exports/linux/${PROJECT_NAME}.x86_64 || true
+          cd repo
+          ../godot --headless --export-release "Linux/X11" ../exports/linux/${PROJECT_NAME}.x86_64 || true
 
       - name: Upload exports artifact
         uses: actions/upload-artifact@v4
@@ -59,6 +74,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          sparse-checkout: |
+            .github
+            scripts
+          sparse-checkout-cone-mode: false
 
       - name: Download Exports
         uses: actions/download-artifact@v4
