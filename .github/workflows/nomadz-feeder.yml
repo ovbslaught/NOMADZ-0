@@ -34,12 +34,7 @@ jobs:
 
       - name: Create feed directory structure
         run: |
-          mkdir -p feeds/cosmic-key
-          mkdir -p feeds/mother-brain
-          mkdir -p feeds/nomadz-wiki
-          mkdir -p feeds/remotely-save
-          mkdir -p feeds/ocean
-          mkdir -p feeds/sync-status
+          mkdir -p feeds/cosmic-key feeds/mother-brain feeds/nomadz-wiki feeds/sync-status
 
       - name: Fetch Cosmic-key feed data
         continue-on-error: true
@@ -47,22 +42,14 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Fetching Cosmic-key wormhole data..."
-          curl -sf -H "Authorization: token $GH_TOKEN" \
-            "https://api.github.com/repos/ovbslaught/Cosmic-key/contents/wormhole-data/sync-status.json" \
-            > /tmp/cosmic-key-raw.json 2>&1 || echo '{"error":"fetch failed"}' > /tmp/cosmic-key-raw.json
-          python3 -c "
-import json, sys, base64
-try:
-    with open('/tmp/cosmic-key-raw.json') as f:
-        data = json.load(f)
-    content = base64.b64decode(data.get('content', '')).decode()
-    with open('feeds/cosmic-key/sync-status.json', 'w') as f:
-        f.write(content)
-    print('Cosmic-key feed fetched')
-except Exception as e:
-    with open('feeds/cosmic-key/sync-status.json', 'w') as f:
-        json.dump({'error': str(e), 'source': 'Cosmic-key'}, f)
-" 2>/dev/null || echo '{"error":"python parse failed"}' > feeds/cosmic-key/sync-status.json
+          RAW=$(curl -sf -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/ovbslaught/Cosmic-key/contents/wormhole-data/sync-status.json" 2>/dev/null)
+          if [ -n "$RAW" ]; then
+            echo "$RAW" | jq -r '.content' | base64 -d > feeds/cosmic-key/sync-status.json 2>/dev/null || echo '{"error":"decode failed"}' > feeds/cosmic-key/sync-status.json
+          else
+            echo '{"error":"fetch failed","source":"Cosmic-key"}' > feeds/cosmic-key/sync-status.json
+          fi
+          echo "Cosmic-key feed: $(cat feeds/cosmic-key/sync-status.json)"
 
       - name: Fetch MOTHER-BRAIN feed data
         continue-on-error: true
@@ -70,84 +57,51 @@ except Exception as e:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Fetching MOTHER-BRAIN wormhole data..."
-          curl -sf -H "Authorization: token $GH_TOKEN" \
-            "https://api.github.com/repos/ovbslaught/MOTHER-BRAIN/contents/wormhole-sync/sync-status.json" \
-            > /tmp/mother-brain-raw.json 2>&1 || echo '{"error":"fetch failed"}' > /tmp/mother-brain-raw.json
-          python3 -c "
-import json, sys, base64
-try:
-    with open('/tmp/mother-brain-raw.json') as f:
-        data = json.load(f)
-    content = base64.b64decode(data.get('content', '')).decode()
-    with open('feeds/mother-brain/sync-status.json', 'w') as f:
-        f.write(content)
-    print('MOTHER-BRAIN feed fetched')
-except Exception as e:
-    with open('feeds/mother-brain/sync-status.json', 'w') as f:
-        json.dump({'error': str(e), 'source': 'MOTHER-BRAIN'}, f)
-" 2>/dev/null || echo '{"error":"python parse failed"}' > feeds/mother-brain/sync-status.json
+          RAW=$(curl -sf -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/ovbslaught/MOTHER-BRAIN/contents/wormhole-sync/sync-status.json" 2>/dev/null)
+          if [ -n "$RAW" ]; then
+            echo "$RAW" | jq -r '.content' | base64 -d > feeds/mother-brain/sync-status.json 2>/dev/null || echo '{"error":"decode failed"}' > feeds/mother-brain/sync-status.json
+          else
+            echo '{"error":"fetch failed","source":"MOTHER-BRAIN"}' > feeds/mother-brain/sync-status.json
+          fi
+          echo "MOTHER-BRAIN feed: $(cat feeds/mother-brain/sync-status.json)"
 
-      - name: Fetch repo metadata for all repos
+      - name: Fetch repo metadata
         continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          mkdir -p feeds/metadata
           for repo in Cosmic-key MOTHER-BRAIN NOMADZ-0-WIKI remotely-save ocean; do
             echo "Fetching metadata for $repo..."
             curl -sf -H "Authorization: token $GH_TOKEN" \
               "https://api.github.com/repos/ovbslaught/$repo" \
-              > /tmp/${repo}-meta.json 2>&1 || echo '{"error":"fetch failed","repo":"'"$repo"'"}' > /tmp/${repo}-meta.json
+              > feeds/metadata/${repo}.json 2>/dev/null || echo '{"error":"fetch failed"}' > feeds/metadata/${repo}.json
           done
 
-      - name: Generate NOMADZ-0 master feed index
+      - name: Generate master feed index
         run: |
           TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          RUN_ID="${{ github.run_id }}"
           TRIGGER="${{ github.event.inputs.trigger_source }}"
-          cat > feeds/sync-status/master-index.json << JSONEOF
-          {
-            "nomadz_feed_version": "1.0",
-            "generated_at": "${TIMESTAMP}",
-            "trigger": "${TRIGGER:-scheduled}",
-            "run_id": "${{ github.run_id }}",
-            "repos_monitored": [
-              "ovbslaught/Cosmic-key",
-              "ovbslaught/MOTHER-BRAIN",
-              "ovbslaught/NOMADZ-0-WIKI",
-              "ovbslaught/remotely-save",
-              "ovbslaught/ocean"
-            ],
-            "feed_paths": {
-              "cosmic-key": "feeds/cosmic-key/sync-status.json",
-              "mother-brain": "feeds/mother-brain/sync-status.json",
-              "master": "feeds/sync-status/master-index.json"
-            }
-          }
-          JSONEOF
-          echo "Master feed index generated at $TIMESTAMP"
+          printf '{"nomadz_feed_version":"1.0","generated_at":"%s","trigger":"%s","run_id":"%s","repos_monitored":["Cosmic-key","MOTHER-BRAIN","NOMADZ-0-WIKI","remotely-save","ocean"]}\n' \
+            "$TIMESTAMP" "${TRIGGER:-scheduled}" "$RUN_ID" > feeds/sync-status/master-index.json
+          echo "Master feed index generated"
+          cat feeds/sync-status/master-index.json
 
       - name: Generate workflow summary
         run: |
-          echo "## NOMADZ-0 Unified Feed Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "## NOMADZ-0 Unified Feed" >> $GITHUB_STEP_SUMMARY
+          echo "**Generated:** $(date -u)" >> $GITHUB_STEP_SUMMARY
           echo "**Trigger:** ${{ github.event.inputs.trigger_source || 'scheduled' }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Run:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Repos Aggregated" >> $GITHUB_STEP_SUMMARY
-          echo "- ovbslaught/Cosmic-key" >> $GITHUB_STEP_SUMMARY
-          echo "- ovbslaught/MOTHER-BRAIN" >> $GITHUB_STEP_SUMMARY
-          echo "- ovbslaught/NOMADZ-0-WIKI" >> $GITHUB_STEP_SUMMARY
-          echo "- ovbslaught/remotely-save" >> $GITHUB_STEP_SUMMARY
-          echo "- ovbslaught/ocean" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Feed Files" >> $GITHUB_STEP_SUMMARY
-          find feeds/ -name '*.json' | while read f; do echo "- $f"; done >> $GITHUB_STEP_SUMMARY
+          echo "- Cosmic-key, MOTHER-BRAIN, NOMADZ-0-WIKI, remotely-save, ocean" >> $GITHUB_STEP_SUMMARY
 
       - name: Commit and push feeds
         run: |
           git add feeds/
           if git diff --staged --quiet; then
-            echo "No feed changes to commit"
+            echo "No feed changes"
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
             git commit -m "NOMADZ-0 feed update: $TIMESTAMP"
