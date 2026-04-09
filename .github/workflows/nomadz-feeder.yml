@@ -30,9 +30,9 @@ jobs:
       - name: Checkout NOMADZ-0
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          repository: ovbslaught/NOMADZ-0
-          ref: main
+          sparse-checkout: |
+            feeds
+            .github
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Git
