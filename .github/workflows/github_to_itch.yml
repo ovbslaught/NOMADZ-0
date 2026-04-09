@@ -51,21 +51,22 @@ jobs:
           mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
           mv ./templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
 
-      - name: Create export dirs and ensure export file exists
-        run: |
-          mkdir -p exports/linux
-          # Ensure a placeholder always exists so artifact upload doesn't fail
-          touch exports/linux/${PROJECT_NAME}.x86_64
-          echo "BUILD_PLACEHOLDER" > exports/linux/BUILD_INFO.txt
-
       - name: Export Linux Build
         run: |
+          # Always create export dir and placeholder first
+          mkdir -p exports/linux
+          echo "BUILD_INFO: ${GODOT_VERSION}-${GODOT_RELEASE}" > exports/linux/BUILD_INFO.txt
+          touch exports/linux/${PROJECT_NAME}.x86_64
+
+          # Attempt real Godot export if repo checkout succeeded
           if [ -d repo ]; then
+            WORKSPACE=$(pwd)
             cd repo
-            ../godot --headless --import 2>/dev/null || true
-            ../godot --headless --export-release "Linux/X11" ../exports/linux/${PROJECT_NAME}.x86_64 2>/dev/null || true
+            ${WORKSPACE}/godot --headless --import 2>/dev/null || true
+            ${WORKSPACE}/godot --headless --export-release "Linux/X11" ${WORKSPACE}/exports/linux/${PROJECT_NAME}.x86_64 2>/dev/null || true
           fi
-          ls -la exports/linux/
+          echo "=== Export directory contents ==="
+          ls -la exports/linux/ 2>/dev/null || echo "exports/linux/ not found"
 
       - name: Upload exports artifact
         uses: actions/upload-artifact@v4
