@@ -84,8 +84,17 @@ jobs:
           TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
           RUN_ID="${{ github.run_id }}"
           TRIGGER="${{ github.event.inputs.trigger_source }}"
-          printf '{"nomadz_feed_version":"1.0","generated_at":"%s","trigger":"%s","run_id":"%s","repos_monitored":["Cosmic-key","MOTHER-BRAIN","NOMADZ-0-WIKI","remotely-save","ocean"]}\n' \
-            "$TIMESTAMP" "${TRIGGER:-scheduled}" "$RUN_ID" > feeds/sync-status/master-index.json
+          python3 -c "
+          import json, sys
+          data = {
+            'nomadz_feed_version': '1.0',
+            'generated_at': sys.argv[1],
+            'trigger': sys.argv[2] if sys.argv[2] else 'scheduled',
+            'run_id': sys.argv[3],
+            'repos_monitored': ['Cosmic-key', 'MOTHER-BRAIN', 'NOMADZ-0-WIKI', 'remotely-save', 'ocean']
+          }
+          print(json.dumps(data))
+          " "$TIMESTAMP" "${TRIGGER:-scheduled}" "$RUN_ID" > feeds/sync-status/master-index.json
           echo "Master feed index generated"
           cat feeds/sync-status/master-index.json
 
