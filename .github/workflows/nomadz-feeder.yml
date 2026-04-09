@@ -3,6 +3,12 @@ name: NOMADZ-0 Unified Feeder
 on:
   schedule:
     - cron: '0 */4 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'feeds/**'
+      - '.github/workflows/nomadz-feeder.yml'
   workflow_dispatch:
     inputs:
       trigger_source:
