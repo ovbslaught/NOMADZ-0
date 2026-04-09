@@ -9,10 +9,7 @@ on:
       - main
 
 env:
-  BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-  DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  IS_MAIN: ${{ contains(github.ref, 'main') }}
   PROJECT_NAME: "NOMADZ-0"
   GODOT_VERSION: "4.3"
 
@@ -40,7 +37,7 @@ jobs:
           mv ./templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
 
       - name: Create export dirs
-        run: mkdir -p exports/linux exports/windows
+        run: mkdir -p exports/linux
 
       - name: Export Linux Build
         run: |
@@ -54,7 +51,7 @@ jobs:
 
   Release:
     needs: Export
-    if: ${{ contains(github.ref, 'main') }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -78,7 +75,7 @@ jobs:
           PATCH=$(echo $LATEST | sed 's/v//' | cut -d. -f3)
           NEW_PATCH=$((PATCH + 1))
           NEW_TAG="v${MAJOR}.${MINOR}.${NEW_PATCH}"
-          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
+          echo "new_tag=${NEW_TAG}" >> $GITHUB_OUTPUT
           echo "new_version=${MAJOR}.${MINOR}.${NEW_PATCH}" >> $GITHUB_OUTPUT
 
       - name: Zip exports
@@ -94,18 +91,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Write VERSION.txt
-        run: echo "${{ steps.tag_version.outputs.new_version }}" > VERSION.txt
-
-      - name: Upload VERSION artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: VERSION
-          path: VERSION.txt
-
   Publish:
     needs: Release
-    if: ${{ contains(github.ref, 'main') && secrets.BUTLER_API_KEY != '' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
