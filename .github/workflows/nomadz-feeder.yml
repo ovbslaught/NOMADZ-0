@@ -25,12 +25,15 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          repository: ovbslaught/NOMADZ-0
+          ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Git
         run: |
           git config user.name "NOMADZ-0 Feeder Bot"
           git config user.email "ovbslaught@gmail.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ovbslaught/NOMADZ-0.git
 
       - name: Create feed directory structure
         run: |
@@ -69,7 +72,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          for repo in Cosmic-key MOTHER-BRAIN NOMADZ-0-WIKI remotely-save ocean; do
+          for repo in NOMADZ-0 Cosmic-key MOTHER-BRAIN NOMADZ-0-WIKI remotely-save ocean; do
             curl -sf -H "Authorization: token $GH_TOKEN" \
               "https://api.github.com/repos/ovbslaught/$repo" \
               > feeds/metadata/${repo}.json 2>/dev/null \
@@ -77,36 +80,36 @@ jobs:
           done
 
       - name: Generate master feed index
+        env:
+          TRIGGER_INPUT: ${{ github.event.inputs.trigger_source }}
+          RUN_ID: ${{ github.run_id }}
         run: |
           TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          TRIGGER="${TRIGGER_INPUT:-scheduled}"
-          RUN_ID="${{ github.run_id }}"
+          TRIGGER=${TRIGGER_INPUT:-scheduled}
           jq -n \
             --arg v "1.0" \
             --arg ts "$TIMESTAMP" \
             --arg tr "$TRIGGER" \
             --arg rid "$RUN_ID" \
-            --argjson repos '["Cosmic-key","MOTHER-BRAIN","NOMADZ-0-WIKI","remotely-save","ocean"]' \
+            --argjson repos '["NOMADZ-0","Cosmic-key","MOTHER-BRAIN","NOMADZ-0-WIKI","remotely-save","ocean"]' \
             '{nomadz_feed_version:$v,generated_at:$ts,trigger:$tr,run_id:$rid,repos_monitored:$repos}' \
             > feeds/sync-status/master-index.json
           cat feeds/sync-status/master-index.json
-        env:
-          TRIGGER_INPUT: ${{ github.event.inputs.trigger_source }}
 
       - name: Generate workflow summary
         run: |
           echo "## NOMADZ-0 Unified Feed" >> "$GITHUB_STEP_SUMMARY"
           echo "**Generated:** $(date -u)" >> "$GITHUB_STEP_SUMMARY"
           echo "### Repos Aggregated" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Cosmic-key, MOTHER-BRAIN, NOMADZ-0-WIKI, remotely-save, ocean" >> "$GITHUB_STEP_SUMMARY"
+          echo "- NOMADZ-0, Cosmic-key, MOTHER-BRAIN, NOMADZ-0-WIKI, remotely-save, ocean" >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Commit and push feeds
+      - name: Commit and push feeds to NOMADZ-0 main
         run: |
           git add feeds/
           if git diff --staged --quiet; then
             echo "No feed changes to commit"
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
-            git commit -m "NOMADZ-0 feed update: $TIMESTAMP"
+            git commit -m "feed update: $TIMESTAMP [NOMADZ-0 origin/main]"
             git push origin main
           fi
