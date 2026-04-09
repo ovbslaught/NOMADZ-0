@@ -7,5 +7,6 @@
         "**/LanguageServer/_generated_/**": true,
         "{**/.c4z/.extsrcs/*.PROTSYM.cbl,**/.c4z/.extsrcs/*.PROTSYM.listing}": true
     },
-    "godotTools.editorPath.godot4": "c:\\Users\\NewUser\\Desktop\\ART-APP\\Godot_v4.5-stable_win64.exe\\Godot_v4.5-stable_win64.exe"
+	"godotTools.editorPath.godot4": "c:\\Users\\NewUser\\Desktop\\ART-APP\\Godot_v4.5-stable_win64.exe\\Godot_v4.5-stable_win64.exe",
+	"python-envs.defaultEnvManager": "ms-python.python:system"
 }
