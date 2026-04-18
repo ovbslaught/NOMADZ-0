@@ -26,7 +26,7 @@ The system operates on a liberation-weighted logic.
 ## 🛠️ DEPLOYMENT
 To re-establish the neural link in a new environment:
 1. Run `python cosmic_key_omega.py` to verify dependencies.
-2. Execute the Vulture Drone to verify the `Droidhole` sync.
+2. Execute the Vulture Drone to verify the `WORMHOLE` sync.
 3. Import `system/` scripts into Godot 4.x and set `CortexCore.gd` as an Autoload.
 
 **VIVA LA NOMADZ.**
