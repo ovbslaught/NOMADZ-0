@@ -1,0 +1,22 @@
+[gd_scene load_steps="2"]
+
+[ext_resource path="res://Biomes/BiomeGenerator.gd" type="Script" id="1"]
+[ext_resource path="res://Player/PlayerController.gd" type="Script" id="2"]
+[ext_resource path="res://World/Environment.gd" type="Script" id="3"]
+
+[node name="Main" type="Node"]
+
+# Set up the player controller
+player_controller: PlayerController = preload("res://Player/PlayerController.gd")
+var player = player_controller.new()
+add_child(player)
+
+# Setup biome generator
+biome_generator: BiomeGenerator = preload("res://Biomes/BiomeGenerator.gd")
+var biome = biome_generator.new()
+add_child(biome)
+
+# Set up world environment
+world_environment: Environment = preload("res://World/Environment.gd")
+var environment = world_environment.new()
+add_child(environment)
