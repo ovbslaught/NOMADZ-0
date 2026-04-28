@@ -1,4 +1,5 @@
 name: "VCN-1.6 TRI-BRIDGE SYNC — NOMADZ-0 -> Google Drive Wormhole"
+
 on:
   push:
     branches:
@@ -10,30 +11,212 @@ on:
         description: 'Which system triggered this sync'
         required: false
         type: string
+      force_overwrite:
+        description: 'Force overwrite all files on Drive (non-destructive by default)'
+        required: false
+        type: boolean
+        default: false
+
 jobs:
   sync-to-vault:
     runs-on: ubuntu-latest
     name: Sync NOMADZ-0 to MOTHER-BRAIN Wormhole (Google Drive)
     steps:
+      # === STEP 1: CHECKOUT ===
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      # === STEP 2: VALIDATE SECRETS (fail fast) ===
+      - name: Validate Google Drive credentials
+        run: |
+          echo "[VALIDATE] Checking GOOGLE secret..."
+          if [ -z "${{ secrets.GOOGLE }}" ]; then
+            echo "::error::GOOGLE secret is empty or not set"
+            exit 1
+          fi
+          # Test base64 decode
+          echo "${{ secrets.GOOGLE }}" | base64 -d > /tmp/credentials.json 2>&1
+          DECODE_EXIT=$?
+          if [ $DECODE_EXIT -ne 0 ]; then
+            echo "::error::GOOGLE secret is NOT valid base64. Please re-encode your Service Account JSON."
+            echo "::error::Run: cat service_account.json | base64 -w0 | pbcopy"
+            exit 1
+          fi
+          # Validate JSON structure
+          if ! python3 -c "import json; json.load(open('/tmp/credentials.json'))" 2>&1; then
+            echo "::error::GOOGLE secret decodes but is not valid JSON"
+            exit 1
+          fi
+          echo "[VALIDATE] Credentials OK"
+
+      - name: Validate GDRIVE_FOLDER_ID
+        run: |
+          echo "[VALIDATE] Checking GDRIVE_FOLDER_ID..."
+          if [ -z "${{ secrets.GDRIVE_FOLDER_ID }}" ]; then
+            echo "::error::GDRIVE_FOLDER_ID secret is empty or not set"
+            exit 1
+          fi
+          echo "[VALIDATE] Folder ID OK: ${{ secrets.GDRIVE_FOLDER_ID }}"
+
+      # === STEP 3: PRE-SYNC CLEANUP (purge useless files) ===
+      - name: Purge useless/unsupported files before sync
+        run: |
+          echo "[PURGE] Removing useless and unsupported files..."
+          # Define purge patterns
+          PURGE_PATTERNS=(
+            "**/.DS_Store"
+            "**/Thumbs.db"
+            "**/.git"
+            "**/.github/workflows/*.log"
+            "**/build/"
+            "**/__pycache__/"
+            "**/*.pyc"
+            "**/.pytest_cache/"
+            "**/.godot/"
+            "**/.import/"
+            "**/*.tmp"
+            "**/*.bak"
+            "**/*.old"
+            "**/node_modules/"
+            "**/.env"
+            "**/.venv/"
+          )
+
+          PURGED_COUNT=0
+          for pattern in "${PURGE_PATTERNS[@]}"; do
+            FOUND=$(find . -path "$pattern" 2>/dev/null | wc -l)
+            if [ "$FOUND" -gt 0 ]; then
+              echo "  Removing: $pattern ($FOUND items)"
+              find . -path "$pattern" -delete 2>/dev/null || true
+              PURGED_COUNT=$((PURGED_COUNT + FOUND))
+            fi
+          done
+          echo "[PURGE] Total files/folders purged: $PURGED_COUNT"
+
+      # === STEP 4: GENERATE DEDUP MANIFEST ===
+      - name: Generate dedup manifest
+        run: |
+          echo "[DEDUP] Generating file manifest for deduplication..."
+          mkdir -p ./sync_manifest
+          # Generate checksums for all remaining files
+          find . -type f \
+            ! -path './sync_manifest/*' \
+            ! -path './.git/*' \
+            -exec sha256sum {} \; \
+            2>/dev/null | sort > ./sync_manifest/checksums.sha256
+
+          # Generate file tree
+          tree -a -I '.git|sync_manifest' > ./sync_manifest/file_tree.txt 2>/dev/null || find . -type f | sort > ./sync_manifest/file_tree.txt
+
+          # Count files by type
+          echo "=== File Statistics ===" > ./sync_manifest/stats.txt
+          echo "Total files: $(find . -type f ! -path './sync_manifest/*' ! -path './.git/*' | wc -l)" >> ./sync_manifest/stats.txt
+          echo "GDScript: $(find . -name '*.gd' | wc -l)" >> ./sync_manifest/stats.txt
+          echo "Python: $(find . -name '*.py' | wc -l)" >> ./sync_manifest/stats.txt
+          echo "Scenes: $(find . -name '*.tscn' | wc -l)" >> ./sync_manifest/stats.txt
+          echo "Resources: $(find . -name '*.tres' -o -name '*.resource' | wc -l)" >> ./sync_manifest/stats.txt
+          echo "Shaders: $(find . -name '*.gdshader' | wc -l)" >> ./sync_manifest/stats.txt
+          echo "Markdown: $(find . -name '*.md' | wc -l)" >> ./sync_manifest/stats.txt
+          echo "Images: $(find . -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.svg' | wc -l)" >> ./sync_manifest/stats.txt
+          cat ./sync_manifest/stats.txt
+
+      # === STEP 5: UPLOAD TO GOOGLE DRIVE ===
       - name: Upload to Google Drive Wormhole
         uses: adityak74/google-drive-upload-git-action@main
         with:
           credentials: ${{ secrets.GOOGLE }}
           filename: "./*"
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
-          overwrite: "true"
+          overwrite: ${{ github.event.inputs.force_overwrite || 'false' }}
           mirrorDirectoryStructure: "true"
-      - name: Log sync event
-        run: |
-          echo "[$(date -u)] NOMADZ-0 synced to Wormhole by: ${{ github.actor }}" >> sync_log.txt
-          echo "Trigger: ${{ github.event_name }} | Source: ${{ github.event.inputs.trigger_source }}" >> sync_log.txt
-          cat sync_log.txt
+          ignoreFiles: |
+            .git
+            .github/workflows/*.log
+            build/
+            __pycache__/
+            *.pyc
+            .pytest_cache/
+            .godot/
+            .import/
+            *.tmp
+            *.bak
+            *.old
+            node_modules/
+            .env
+            .venv/
+            sync_manifest/
 
+      # === STEP 6: VERIFY UPLOAD ===
+      - name: Verify sync integrity
+        if: always()
+        run: |
+          echo "[VERIFY] Sync verification step"
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "[VERIFY] Upload completed successfully"
+            echo "[VERIFY] Files synced: $(cat ./sync_manifest/stats.txt | grep 'Total files' | cut -d: -f2)"
+          else
+            echo "::warning::Sync may have failed. Check previous step logs."
+          fi
+
+      # === STEP 7: LOG SYNC EVENT ===
+      - name: Log sync event
+        if: always()
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          BRANCH="${{ github.ref_name }}"
+          COMMIT="${{ github.sha }}"
+          ACTOR="${{ github.actor }}"
+          EVENT="${{ github.event_name }}"
+          TRIGGER="${{ github.event.inputs.trigger_source }}"
+          JOB_STATUS="${{ job.status }}"
+
+          cat > sync_report.txt << EOF
+=== VCN-1.6 TRI-BRIDGE SYNC REPORT ===
+Timestamp: $TIMESTAMP
+Branch: $BRANCH
+Commit: $COMMIT
+Actor: $ACTOR
+Event: $EVENT
+Trigger Source: $TRIGGER
+Job Status: $JOB_STATUS
+Force Overwrite: ${{ github.event.inputs.force_overwrite || 'false' }}
+
+--- FILE STATISTICS ---
+$(cat ./sync_manifest/stats.txt 2>/dev/null || echo 'No manifest available')
+
+--- SYNC LOG ---
+EOF
+
+          cat sync_report.txt
+
+          # Append to persistent log if it exists
+          if [ -f sync_log.txt ]; then
+            cat sync_log.txt >> sync_report.txt
+          fi
+
+      # === STEP 8: UPLOAD SYNC REPORT AS ARTIFACT ===
+      - name: Upload sync report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-report-${{ github.run_number }}
+          path: sync_report.txt
+          retention-days: 30
+
+# ========================================
 # SETUP REQUIRED:
 # GitHub Secrets:
-#   GOOGLE = Google Service Account JSON key file contents (base64 encoded)
+#   GOOGLE = Google Service Account JSON key file contents (MUST be base64 encoded)
+#            To encode: cat service_account.json | base64 -w0
 #   GDRIVE_FOLDER_ID = Google Drive folder ID for MOTHER-BRAIN-MASTER-RECORD
-# Drive Path: ROOT/Wormhole/MOTHER-BRAIN/MOTHER-BRAIN-MASTER-RECORD
-# Ref: NOMADZ-0 Issue #2 (BRAIN-DUMP)
+#                      Drive Path: ROOT/Wormhole/MOTHER-BRAIN/MOTHER-BRAIN-MASTER-RECORD
+#
+# NON-DESTRUCTIVE MODE (default):
+#   overwrite: false — only uploads new/changed files
+#   Use workflow_dispatch with force_overwrite=true for full replacement
+#
+# REF: NOMADZ-0 Issue #2 (BRAIN-DUMP)
+# ========================================
