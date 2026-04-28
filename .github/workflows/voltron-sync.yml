@@ -1,5 +1,4 @@
 name: "VCN-1.6 TRI-BRIDGE SYNC — NOMADZ-0 -> Google Drive Wormhole"
-
 on:
   push:
     branches:
@@ -11,7 +10,6 @@ on:
         description: 'Which system triggered this sync'
         required: false
         type: string
-
 jobs:
   sync-to-vault:
     runs-on: ubuntu-latest
@@ -19,17 +17,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
       - name: Upload to Google Drive Wormhole
         uses: adityak74/google-drive-upload-git-action@main
         with:
-          credentials: ${{ secrets.GDRIVE_SERVICE_ACCOUNT_JSON }}
+          credentials: ${{ secrets.GOOGLE }}
           filename: "./*"
           folderId: ${{ secrets.GDRIVE_FOLDER_ID }}
           overwrite: "true"
           mirrorDirectoryStructure: "true"
-          exclude: ".git/**, .godot/**, *.tmp, .import/**"
-
       - name: Log sync event
         run: |
           echo "[$(date -u)] NOMADZ-0 synced to Wormhole by: ${{ github.actor }}" >> sync_log.txt
@@ -37,8 +32,8 @@ jobs:
           cat sync_log.txt
 
 # SETUP REQUIRED:
-# Add these GitHub Secrets to NOMADZ-0 repo:
-#   GDRIVE_SERVICE_ACCOUNT_JSON  = Google Service Account JSON key file contents
-#   GDRIVE_FOLDER_ID             = Google Drive folder ID for MOTHER-BRAIN-MASTER-RECORD
+# GitHub Secrets:
+#   GOOGLE = Google Service Account JSON key file contents (base64 encoded)
+#   GDRIVE_FOLDER_ID = Google Drive folder ID for MOTHER-BRAIN-MASTER-RECORD
 # Drive Path: ROOT/Wormhole/MOTHER-BRAIN/MOTHER-BRAIN-MASTER-RECORD
 # Ref: NOMADZ-0 Issue #2 (BRAIN-DUMP)
