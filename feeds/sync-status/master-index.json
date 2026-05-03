@@ -1,8 +1,8 @@
 {
   "nomadz_feed_version": "1.0",
-  "generated_at": "2026-05-03T09:24:05Z",
+  "generated_at": "2026-05-03T13:18:38Z",
   "trigger": "scheduled",
-  "run_id": "25275376816",
+  "run_id": "25280245211",
   "repos_monitored": [
     "NOMADZ-0",
     "Cosmic-key",
