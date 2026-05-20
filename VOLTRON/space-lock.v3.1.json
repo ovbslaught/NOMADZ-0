@@ -1,0 +1,26 @@
+{
+  "schema": "vulture.voltron.space-lock.v3.1",
+  "space": "VOLTRON",
+  "designation": "VCN",
+  "version": "3.1",
+  "timestamp_utc": "2026-05-20T18:08:00Z",
+  "owner": { "name": "Sol", "location": "Courtland, Virginia, US" },
+  "activation_policy": "Candidate becomes ACTIVE when admin-signed ARCHIVEBLOCK hash is chained into masterlatest",
+  "merge_policy": { "mode": "APPENDONLY", "conflict_resolution": "LWW_TIMESTAMP", "deletes": "DISALLOWED" },
+  "prev_lock_ref": "space-lock.v3.0.json",
+  "archiveblock_ref": "ARCHIVEBLOCK-VCN-3.1.json",
+  "governance": {
+    "constitution_ref": "VULTUREBIBLE/system.constitution.md",
+    "articles": [
+      "I: Authority — Sol only",
+      "II: Real-world effects require approved Task",
+      "III: Determinism — replayable from task payload + protocol version + artifact set",
+      "IV: Non-mutation — no self-modification of protocols or approval rules",
+      "V: Revocation — kill-switch instant reset"
+    ]
+  },
+  "integrity": {
+    "status": "LOCKED",
+    "rule": "Any change requires a new lock file with new version"
+  }
+}
