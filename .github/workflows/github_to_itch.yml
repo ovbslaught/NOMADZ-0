@@ -1,3 +1,4 @@
+
 name: Publish NOMADZ-0 to Itch.io
 
 on:
@@ -137,4 +138,111 @@ jobs:
           PUBLISH_STATUS="${{ needs.Publish-Itch.result }}"
           curl -X POST -H "Content-Type: application/json" \
             -d "{\"content\": \"NOMADZ-0 Build: $STATUS | Itch: $PUBLISH_STATUS | Commit: ${GITHUB_SHA:0:7}\"}" \
-            "$DISCORD_WEBHOOK"
+            "$DISCORD_WEBHOOK"name: "NOMADZ-0 CI/CD Deployment"
+
+on:
+  push:
+    branches:
+      - main
+      - Cosmic-key
+
+env:
+  GODOT_VERSION: "4.6"
+  PROJECT_NAME: "NOMADZ-0"
+
+jobs:
+  Export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Godot Engine
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates
+          curl -fsSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linuxx86_64.zip -o godot.zip
+          curl -fsSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz -o templates.tpz
+          unzip godot.zip
+          unzip templates.tpz
+          mv Godot_v${GODOT_VERSION}-stable_linuxx86_64 ~/.local/bin/godot
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv ./templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+
+      - name: Create Export Directories
+        run: mkdir -p exports/linux exports/windows
+
+      - name: Export Linux Build
+        run: godot --headless --export-release "Linux/X11" exports/linux/${{ env.PROJECT_NAME }}.x86_64
+
+      - name: Export Windows Build
+        run: godot --headless --export-release "Windows Desktop" exports/windows/${{ env.PROJECT_NAME }}.exe
+
+      - name: Upload Export Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: game-exports
+          path: exports/
+
+  Release:
+    needs: Export
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/Cosmic-key'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: game-exports
+          path: exports/
+
+      - name: Calculate Next Version Tag
+        id: tag_version
+        run: |
+          LATEST=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          MAJOR=$(echo $LATEST | sed 's/v//' | cut -d. -f1)
+          MINOR=$(echo $LATEST | sed 's/v//' | cut -d. -f2)
+          PATCH=$(echo $LATEST | sed 's/v//' | cut -d. -f3)
+          NEW_PATCH=$((PATCH + 1))
+          NEW_TAG="v${MAJOR}.${MINOR}.${NEW_PATCH}"
+          echo "new_tag=${NEW_TAG}" >> $GITHUB_OUTPUT
+          echo "new_version=${MAJOR}.${MINOR}.${NEW_PATCH}" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          files: |
+            exports/linux/*
+            exports/windows/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  Publish:
+    needs: Release
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/Cosmic-key'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: game-exports
+          path: exports/
+
+      - name: Deploy to Itch.io
+        uses: josephbmanley/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: linux-windows
+          ITCH_GAME: ${{ env.PROJECT_NAME }}
+          ITCH_USER: ${{ secrets.ITCHIO_USERNAME }}
+          PACKAGE: exports/
