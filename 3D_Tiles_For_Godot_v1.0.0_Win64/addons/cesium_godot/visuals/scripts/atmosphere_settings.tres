@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AtmosphereSettings" load_steps=3 format=3 uid="uid://j4qm1sftsmc4"]
+
+[ext_resource type="Script" uid="uid://d2xi05o8ul7aw" path="res://addons/cesium_godot/visuals/scripts/atmosphere_settings.gd" id="1_5go6d"]
+[ext_resource type="Texture2D" uid="uid://b0vakfyntv6y2" path="res://addons/cesium_godot/visuals/textures/optical_depth_texture.tex" id="2_awr0u"]
+
+[resource]
+script = ExtResource("1_5go6d")
+texture_size = 256
+in_scattering_points = 30
+optical_depth_points = 10
+density_falloff = 0.25
+wavelengths = Vector3(700, 530, 460)
+scattering_strength = 9.43
+intensity = 1.0
+dither_strength = 0.8
+dither_scale = 4.0
+atmosphere_scale = 0.05
+optical_depth_texture = ExtResource("2_awr0u")
