@@ -220,7 +220,7 @@ func _physics_process(_delta):
 	
 func _input(_event:InputEvent):
 		# Update current orientation to camera when nothing pressed
-	if !Input.is_anything_pressed():
+	if !ProControllerManager.is_controller_active():
 		current_camera = get_viewport().get_camera_3d()
 	
 	if _event.is_action_pressed("ui_cancel"):
@@ -231,7 +231,7 @@ func _input(_event:InputEvent):
 		set_strafe_targeting()
 		
 	# a helper for keyboard controls, not really used for joypad
-	if Input.is_action_pressed("secondary_action"):
+	if ProControllerManager.get_controller_input("secondary_action") > 0.5:
 		secondary_action = true
 	else:
 		secondary_action = false
@@ -309,7 +309,7 @@ func free_movement():
 	# Get the movement orientation from the angles of the player to the camera.
 	# Using only camera's basis rotation created weird speed inconsistencies at downward angles
 	#dodge_movement()
-	input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	input_dir = Vector2(ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left"), ProControllerManager.get_controller_input("move_down") - ProControllerManager.get_controller_input("move_up"))
 	var new_direction = calc_direction()
 	if new_direction:
 		var rate : float # imiates directional change acceleration rate
@@ -497,7 +497,7 @@ func _on_dodge_timer_timeout():
 
 func ladder_movement():
 	# move up and down ladders per the indicated direction
-	input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	input_dir = Vector2(ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left"), ProControllerManager.get_controller_input("move_down") - ProControllerManager.get_controller_input("move_up"))
 	velocity = (Vector3.DOWN * input_dir.y) * speed
 	# exiting ladder state triggers:
 	last_altitude = global_position

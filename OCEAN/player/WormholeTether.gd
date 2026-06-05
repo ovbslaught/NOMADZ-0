@@ -99,7 +99,7 @@ func _physics_process(delta: float) -> void:
 		_player.velocity = swing_vel + pull
 
 	## Reel in if S held
-	if Input.is_action_pressed("morph"):
+	if ProControllerManager.get_controller_input("morph") > 0.5:
 		tether_length = maxf(MIN_TETHER_LEN, tether_length - REEL_SPEED * delta)
 
 	_update_line()

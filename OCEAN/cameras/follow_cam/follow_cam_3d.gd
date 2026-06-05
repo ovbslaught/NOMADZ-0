@@ -77,7 +77,7 @@ func joystick_control(): # For controlling freecam rotation on gamepad
 
 		#if Input.get_vector("look_left","look_right","look_up","look_down"):
 	# Calculate the target rotation
-	var joy_input = Input.get_vector("look_left","look_right","look_up","look_down")
+	var joy_input = Vector2(ProControllerManager.get_controller_input("look_right") - ProControllerManager.get_controller_input("look_left"), ProControllerManager.get_controller_input("look_down") - ProControllerManager.get_controller_input("look_up"))
 	var temporary_rotation = rotation.x + joy_input.y / 400 * joystick_sensitivity
 	rotation.y -= joy_input.x / 300 * joystick_sensitivity
 	

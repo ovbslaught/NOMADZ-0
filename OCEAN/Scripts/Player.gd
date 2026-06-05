@@ -29,7 +29,7 @@ func _physics_process(delta):
         can_double_jump = true
 
     # Handle Jump.
-    if Input.is_action_just_pressed("ui_accept"):
+    if ProControllerManager.get_controller_input("ui_accept") > 0.5:
         if is_on_floor():
             velocity.y = JUMP_VELOCITY
             copilot.log_action("Thrusters engaged.")
@@ -39,7 +39,7 @@ func _physics_process(delta):
             copilot.log_action("Phase jump executed.")
 
     # Handle Dash
-    if Input.is_action_just_pressed("dash") and GameManager.has_dash:
+    if ProControllerManager.get_controller_input("dash") > 0.5 and GameManager.has_dash:
         is_dashing = true
         dash_timer = DASH_DURATION
         velocity.y = 0
@@ -48,7 +48,7 @@ func _physics_process(delta):
         return
 
     # Get the input direction and handle the movement/deceleration.
-    var direction = Input.get_axis("ui_left", "ui_right")
+    var direction = ProControllerManager.get_controller_input("ui_right") - ProControllerManager.get_controller_input("ui_left")
     if direction:
         velocity.x = direction * SPEED
         facing_right = direction > 0

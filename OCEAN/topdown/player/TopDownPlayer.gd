@@ -112,15 +112,15 @@ func _physics_process(delta: float) -> void:
 	_update_animation()
 
 func _handle_movement(delta: float) -> void:
-	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-	var speed := RUN_SPEED if Input.is_action_pressed("sprint") else WALK_SPEED
+	var input_dir := Vector2(ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left"), ProControllerManager.get_controller_input("move_back") - ProControllerManager.get_controller_input("move_forward"))
+	var speed := RUN_SPEED if ProControllerManager.get_controller_input("sprint") > 0.5 else WALK_SPEED
 	if input_dir != Vector2.ZERO:
 		velocity = velocity.move_toward(input_dir * speed, ACCELERATION * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 
 func _update_facing() -> void:
-	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var input_dir := Vector2(ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left"), ProControllerManager.get_controller_input("move_back") - ProControllerManager.get_controller_input("move_forward"))
 	if input_dir == Vector2.ZERO:
 		return
 	if absf(input_dir.x) > absf(input_dir.y):
@@ -212,7 +212,7 @@ func _try_roll() -> void:
 	if is_rolling or not $RollCooldownTimer.is_stopped():
 		return
 	is_rolling = true
-	var dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var dir := Vector2(ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left"), ProControllerManager.get_controller_input("move_back") - ProControllerManager.get_controller_input("move_forward"))
 	if dir == Vector2.ZERO:
 		dir = _dir_to_vec()
 	velocity = dir * ROLL_SPEED

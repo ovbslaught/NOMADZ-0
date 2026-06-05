@@ -38,14 +38,14 @@ func _ensure_timer(name: String, wait: float, one_shot: bool) -> void:
 		add_child(t)
 
 func _physics_process(delta: float) -> void:
-	var input_dir := Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var input_dir := Vector2(ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left"), ProControllerManager.get_controller_input("move_back") - ProControllerManager.get_controller_input("move_forward"))
 	velocity = input_dir * SPEED
 	move_and_slide()
 	_clamp_to_screen()
 
-	if Input.is_action_pressed("shoot") and $LaserTimer.is_stopped():
+	if ProControllerManager.get_controller_input("shoot") > 0.5 and $LaserTimer.is_stopped():
 		_fire_laser()
-	if Input.is_action_just_pressed("dash") and $BombTimer.is_stopped():
+	if ProControllerManager.get_controller_input("dash") > 0.5 and $BombTimer.is_stopped():
 		_fire_bomb()
 
 func _clamp_to_screen() -> void:

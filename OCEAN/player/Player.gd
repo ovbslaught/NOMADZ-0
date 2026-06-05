@@ -255,7 +255,7 @@ func _handle_movement(delta: float) -> void:
 	if is_dashing:
 		return
 
-	var direction := Input.get_axis("move_left", "move_right")
+	var direction := ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left")
 	var speed     := MORPH_SPEED if is_morphed else WALK_SPEED
 
 	if direction != 0:
@@ -297,7 +297,7 @@ func _handle_jetpack(delta: float) -> void:
 
 	var thrust_mult := JETPACK_BOOST_MULT if GameManager.has_ability("jetpack_boost") else 1.0
 
-	if Input.is_action_pressed("jetpack") and fuel > 0 and not is_on_floor():
+	if ProControllerManager.get_controller_input("jetpack") > 0.5 and fuel > 0 and not is_on_floor():
 		if not jetpack_on:
 			jetpack_on = true
 			jetpack_activated.emit()
@@ -352,7 +352,7 @@ func _try_dash() -> void:
 	if not $DashCooldownTimer.is_stopped():
 		return
 
-	var dir := Input.get_vector("move_left", "move_right", "jump", "morph")
+	var dir := Vector2(ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left"), ProControllerManager.get_controller_input("morph") - ProControllerManager.get_controller_input("jump"))
 	if dir == Vector2.ZERO:
 		dir = Vector2.RIGHT if facing_right else Vector2.LEFT
 
@@ -448,7 +448,7 @@ func _try_interact() -> void:
 
 # ─── FACING ───────────────────────────────────────────────────────────────────
 func _update_facing() -> void:
-	var dir := Input.get_axis("move_left", "move_right")
+	var dir := ProControllerManager.get_controller_input("move_right") - ProControllerManager.get_controller_input("move_left")
 	if dir > 0:
 		facing_right = true
 		if is_instance_valid(sprite):
