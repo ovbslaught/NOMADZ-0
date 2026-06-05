@@ -13,6 +13,7 @@ GameManager="*res://autoloads/GameManager.gd"
 SignalverseManager="*res://autoloads/SignalverseManager.gd"
 LoreDatabase="*res://autoloads/LoreDatabase.gd"
 AudioManager="*res://autoloads/AudioManager.gd"
+ProControllerManager="*res://autoloads/ProControllerManager.gd"
 
 [display]
 window/size/viewport_width=1280
