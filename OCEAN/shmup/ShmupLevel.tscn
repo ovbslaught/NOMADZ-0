@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4c7xo2n1kk7s"]
+
+[ext_resource type="Script" path="res://shmup/ShmupLevel.gd" id="1_oww2c"]
+[ext_resource type="Script" path="res://shmup/ShmupPlayer.gd" id="2_3b5yq"]
+
+[node name="ShmupLevel" type="Node2D"]
+script = ExtResource("1_oww2c")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(640, 600)
+script = ExtResource("2_3b5yq")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+
+[node name="ShootOrigin" type="Marker2D" parent="Player"]
+position = Vector2(0, -20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+
+[node name="EnemySpawner" type="Node2D" parent="."]

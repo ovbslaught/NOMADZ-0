@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm5w1pnnjoqc8"]
+
+[ext_resource type="Script" path="res://topdown/world/Chest.gd" id="1_bq27d"]
+
+[node name="Chest" type="Area2D"]
+script = ExtResource("1_bq27d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("rect")
+
+[sub_resource type="RectangleShape2D" id="rect"]
+size = Vector2(32, 32)

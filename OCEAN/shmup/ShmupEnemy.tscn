@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://3j5id4l7fyss"]
+
+[ext_resource type="Script" path="res://shmup/ShmupEnemy.gd" id="1_km2vg"]
+
+[node name="ShmupEnemy" type="CharacterBody2D"]
+script = ExtResource("1_km2vg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("rect")
+
+[sub_resource type="RectangleShape2D" id="rect"]
+size = Vector2(24, 24)

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://crahm7pibqx3p"]
+
+[ext_resource type="Script" path="res://metroidvania/rooms/RoomBase.gd" id="1_2fiwk"]
+
+[node name="RoomBase" type="Node2D"]
+script = ExtResource("1_2fiwk")
+
+[node name="SpawnPoints" type="Node" parent="."]
+
+[node name="SpawnPoint" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(100, 100)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Doors" type="Node" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl231r1bqnxhh"]
+
+[ext_resource type="PackedScene" uid="uid://dp640r1bqnxhh" path="res://Scenes/Player.tscn" id="1_px"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(1000, 40)
+
+[node name="Level_01" type="Node2D"]
+
+[node name="Environment" type="StaticBody2D" parent="."]
+position = Vector2(0, 100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="ColorRect" type="ColorRect" parent="Environment"]
+offset_left = -500.0
+offset_top = -20.0
+offset_right = 500.0
+offset_bottom = 20.0
+color = Color(0.156863, 0.203922, 0.235294, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_px")]
+position = Vector2(0, 50)

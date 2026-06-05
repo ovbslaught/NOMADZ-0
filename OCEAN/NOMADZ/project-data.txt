@@ -1,0 +1,3 @@
+{"version":"1.2.8","db_type":"idb","start_time":"2026-05-16T06:14:23.900Z","db_info":{"doc_count":1,"update_seq":1,"idb_attachment_format":"binary","db_name":"project-data","auto_compaction":false,"adapter":"idb"}}
+{"docs":[{"projectName":"NOMADZ","createdOnVersion":"0.1.15","_id":"projectSetup","_rev":"1-b8f586f4692cd1b33e4097db9d2ffe20"}]}
+{"seq":1}

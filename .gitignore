@@ -1,3 +1,38 @@
-# Godot 4+ specific ignores
+# Godot
 .godot/
-/android/
+.import/
+*.translation
+export/
+exports/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vs/
+.vscode/
+*.sln
+*.suo
+*.user
+*.workspace
+
+# Secrets
+-VAULT-/
+unified_secrets.env
+
+# Archives
+*.zip
+*.rar
+*.7z
+*.tar.gz
+
+# Build artifacts
+*.dll
+*.exe
+*.pdb
+
+# Large binary assets (exceeds GitHub 100MB limit)
+*.obj
+*.glb

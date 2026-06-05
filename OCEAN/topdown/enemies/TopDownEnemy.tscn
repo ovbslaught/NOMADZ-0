@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5qhkcygyhv2g"]
+
+[ext_resource type="Script" path="res://topdown/enemies/TopDownEnemy.gd" id="1_mva7b"]
+
+[node name="TopDownEnemy" type="CharacterBody2D"]
+script = ExtResource("1_mva7b")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("rect")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+monitoring = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("circ")
+
+[sub_resource type="RectangleShape2D" id="rect"]
+size = Vector2(32, 32)
+
+[sub_resource type="CircleShape2D" id="circ"]
+radius = 160.0
