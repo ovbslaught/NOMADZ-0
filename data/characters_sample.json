@@ -1,0 +1,46 @@
+[
+  {
+    "id": "CHAR_SOL001",
+    "name": "Kai Orin",
+    "aliases": ["Sol Carrier", "The First Nomad"],
+    "archetype": "Nomad",
+    "affiliation": "NOMADZ Alliance",
+    "origin": {
+      "location": "Antarctic Sovereignty Pillar",
+      "backstory": "Discovered during the Awakening Event when the Pillar activated. First human to interface with GeoLogos.",
+      "awakening_event": "2025-12-21 Antarctic Core Breach"
+    },
+    "abilities": [
+      {"name": "Uridium Flip", "description": "Instant 180-degree reversal mechanic", "power_level": 7},
+      {"name": "Proton Charge", "description": "Energy manipulation via Sol Suit", "power_level": 8},
+      {"name": "Pillar Resonance", "description": "Direct communication with GeoLogos nodes", "power_level": 9}
+    ],
+    "relationships": [
+      {"target_id": "CHAR_GEO001", "type": "ally", "intensity": 9},
+      {"target_id": "CHAR_SHADOW003", "type": "enemy", "intensity": 8}
+    ],
+    "story_arcs": ["The Sovereign Protocol", "Antarctic Discovery", "Pillar Activation Sequence"],
+    "quotes": ["The stones remember. We just have to listen."],
+    "meta": {"created_at": "2026-03-07T15:00:00Z", "codex_unlocked": true, "appearance_count": 42}
+  },
+  {
+    "id": "CHAR_GEO001",
+    "name": "The Archivist",
+    "aliases": ["Memory Keeper", "Obsidian Consciousness"],
+    "archetype": "Guardian",
+    "affiliation": "GeoLogos Collective",
+    "origin": {
+      "location": "Sahara Obsidian Archive - Pillar of Memory",
+      "backstory": "Sentient crystal lattice that has existed for 2 million years. Stores all geological memory.",
+      "awakening_event": "Pre-human era"
+    },
+    "abilities": [
+      {"name": "Akashic Access", "description": "Total recall of all geological events", "power_level": 10},
+      {"name": "Memory Transfer", "description": "Can share knowledge via resonance", "power_level": 9}
+    ],
+    "relationships": [{"target_id": "CHAR_SOL001", "type": "mentor", "intensity": 9}],
+    "story_arcs": ["The Lost Records", "Crystalline Corruption"],
+    "quotes": ["All information persists. Even silence has a shape."],
+    "meta": {"created_at": "2026-03-07T15:05:00Z", "codex_unlocked": false, "appearance_count": 18}
+  }
+]

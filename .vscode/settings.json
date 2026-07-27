@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+  "files.associations": {
+    "*.gd": "gdscript"
+  },
+  "github.copilot.enable": {
+    "*": true,
+    "gdscript": true
+  },
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "github.copilot.chat.agent.runTasks": true,
+  "chat.mcp.access": "all"
+}
