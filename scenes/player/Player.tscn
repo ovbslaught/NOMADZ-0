@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/core/PlayerController.gd" id="1_pc"]
 [ext_resource type="Script" path="res://scripts/core/CombatManager.gd" id="2_cm"]
+[ext_resource type="Script" path="res://scripts/core/CameraSystem.gd" id="3_cs"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.5
@@ -27,6 +28,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/CombatManager/HitBox"]
 shape = SubResource("BoxShape3D_hit")
+
+[node name="CameraRig" type="Node3D" parent="Pivot"]
+script = ExtResource("3_cs")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot/CameraRig"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 0)
+spring_length = 4.0
+
+[node name="Camera3D" type="Camera3D" parent="Pivot/CameraRig/SpringArm3D"]
+current = true
 
 [node name="GroundRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
