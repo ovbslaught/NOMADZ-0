@@ -1,13 +1,36 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=5 format=3]
+
 [ext_resource type="Script" path="res://scripts/core/PlayerController.gd" id="1_pc"]
+[ext_resource type="Script" path="res://scripts/core/CombatManager.gd" id="2_cm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.5
+height = 1.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hit"]
+size = Vector3(1.5, 1.5, 1.5)
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 script = ExtResource("1_pc")
 
-[node name="Pivot" type="Node3D" parent="."]
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="CombatManager" type="Node3D" parent="Pivot"]
+script = ExtResource("2_cm")
+
+[node name="HitBox" type="Area3D" parent="Pivot/CombatManager"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/CombatManager/HitBox"]
+shape = SubResource("BoxShape3D_hit")
+
 [node name="GroundRay" type="RayCast3D" parent="."]
-target_position = Vector3(0, -1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+target_position = Vector3(0, -0.6, 0)
 
 [node name="WaterRay" type="RayCast3D" parent="."]
 target_position = Vector3(0, -0.5, 0)
