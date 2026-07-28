@@ -3,7 +3,7 @@ extends Node
 # THE ARCHON BINDING: Total Recall v1.1
 # Syncing the 26 GEOLOGOS Pillars with the physical Termux layer.
 
-const STABLE_STATE_PATH = "/data/data/com.termux/files/home/NOMADZ/stable_state/geologos_pillars.json"
+const STABLE_STATE_PATH = "user://stable_state/geologos_pillars.json"
 
 var pillar_data = {}
 
