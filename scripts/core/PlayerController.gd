@@ -3,6 +3,12 @@ class_name PlayerController
 
 enum MovementState { WALKING, RUNNING, CROUCHING, SWIMMING, FLYING, DRIVING, JUMPING, DASHING }
 
+signal health_changed(current_health, max_health)
+signal player_died
+
+@export var max_health: float = 100.0
+var health: float = 100.0
+
 @export_group("Movement Speeds")
 @export var walk_speed: float = 6.0
 @export var run_speed: float = 12.0
@@ -129,3 +135,21 @@ func execute_flip(new_direction: Vector3) -> void:
         Engine.get_singleton("Director").raise_tension(0.2)
     if camera_rig and camera_rig.has_method("apply_trauma"):
         camera_rig.apply_trauma(0.4)
+
+func take_damage(amount: float) -> void:
+    if health <= 0: return
+    
+    health -= amount
+    emit_signal("health_changed", health, max_health)
+    
+    if camera_rig and camera_rig.has_method("apply_trauma"):
+        camera_rig.apply_trauma(0.5)
+        
+    print("[PLAYER] Took damage! HP: ", health)
+    
+    if health <= 0:
+        health = 0
+        emit_signal("player_died")
+        if Engine.has_singleton("Director"):
+            Engine.get_singleton("Director").on_player_died()
+        print("[PLAYER] CRITICAL SYSTEM FAILURE. UNIT DESTROYED.")
