@@ -1,61 +1,42 @@
-import sqlite3
 import json
-from datetime import datetime
-from fastapi import FastAPI, Request
-import uvicorn
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-app = FastAPI()
-DB_PATH = "omegamemory.db"
+class GossipHandler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        if self.path == '/gossip':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            
+            try:
+                payload = json.loads(post_data.decode('utf-8'))
+                print(f"
+[GOSSIP-VCN8] RECEIVED: {payload}")
+                
+                self.send_response(200)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                self.wfile.write(b'{"status":"acknowledged"}')
+            except Exception as e:
+                self.send_response(400)
+                self.end_headers()
+                print(f"[ERROR] {e}")
+        else:
+            self.send_response(404)
+            self.end_headers()
 
-def init_db():
-    # Initialize the omegamemory database with WAL mode for concurrency
-    conn = sqlite3.connect(DB_PATH)
-    conn.execute("PRAGMA journal_mode=WAL;")
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS vcn_ledger (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp TEXT,
-            node TEXT,
-            pillar INTEGER,
-            event TEXT,
-            payload TEXT
-        )
-    """)
-    conn.commit()
-    conn.close()
+    def log_message(self, format, *args):
+        # Suppress standard HTTP request logging to keep output clean
+        pass
 
-@app.post("/gossip")
-async def receive_gossip(request: Request):
+def run_server(port=7331):
+    server_address = ('127.0.0.1', port)
+    httpd = HTTPServer(server_address, GossipHandler)
+    print(f"[*] VultureDrone Gossip Daemon alive and listening on {server_address[0]}:{port}...")
     try:
-        data = await request.json()
-        
-        # Extract the VCN packet data sent by Godot
-        ts = data.get("ts", datetime.utcnow().isoformat())
-        node = data.get("node", "UNKNOWN_NODE")
-        pillar = data.get("pillar", 0)
-        event = data.get("event", "unspecified_event")
-        payload = json.dumps(data.get("data", {}))
-        
-        # Write to SQLite
-        conn = sqlite3.connect(DB_PATH)
-        conn.execute("PRAGMA journal_mode=WAL;")
-        cursor = conn.cursor()
-        cursor.execute(
-            "INSERT INTO vcn_ledger (timestamp, node, pillar, event, payload) VALUES (?, ?, ?, ?, ?)",
-            (ts, node, pillar, event, payload)
-        )
-        conn.commit()
-        conn.close()
-        
-        print(f"[GOSSIP] Logged event '{event}' from '{node}' into omegamemory.db (WAL)")
-        return {"status": "success", "recorded_ts": ts}
-        
-    except Exception as e:
-        print(f"[GOSSIP] ERROR handling packet: {str(e)}")
-        return {"status": "error", "reason": str(e)}
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    httpd.server_close()
 
-if __name__ == "__main__":
-    print("[*] Initializing omegamemory.db...")
-    init_db()
-    print("[*] VCN Gossip Daemon listening on http://127.0.0.1:7331/gossip")
-    uvicorn.run(app, host="127.0.0.1", port=7331, log_level="warning")
+if __name__ == '__main__':
+    run_server()
