@@ -4,10 +4,15 @@ class_name PlayerController
 enum MovementState { WALKING, RUNNING, CROUCHING, SWIMMING, FLYING, DRIVING, JUMPING, DASHING }
 
 signal health_changed(current_health, max_health)
+signal stamina_changed(current_stamina, max_stamina)
 signal player_died
 
 @export var max_health: float = 100.0
 var health: float = 100.0
+@export var max_stamina: float = 100.0
+@export var dash_cost: float = 40.0
+@export var stamina_regen: float = 25.0
+var stamina: float = 100.0
 
 @export_group("Movement Speeds")
 @export var walk_speed: float = 6.0
@@ -49,6 +54,10 @@ func _physics_process(delta: float) -> void:
         if state in [MovementState.JUMPING, MovementState.FLYING, MovementState.DASHING]:
             state = MovementState.WALKING
 
+    if stamina < max_stamina:
+        stamina = min(stamina + stamina_regen * delta, max_stamina)
+        emit_signal("stamina_changed", stamina, max_stamina)
+
     handle_gamepad_input(delta)
     move_and_slide()
 
@@ -80,7 +89,7 @@ func handle_gamepad_input(delta: float) -> void:
         state = MovementState.JUMPING
 
     # 4. DASH (Right Shoulder/Trigger: R1/R)
-    if Input.is_action_just_pressed("dash") and dashes_remaining > 0 and dash_timer <= 0:
+    if Input.is_action_just_pressed("dash") and stamina >= dash_cost and dash_timer <= 0:
         # If no stick input, dash forward relative to where we're looking
         if direction.length() < 0.01 and pivot:
             direction = -pivot.global_transform.basis.z
@@ -88,6 +97,8 @@ func handle_gamepad_input(delta: float) -> void:
         velocity.x = direction.x * dash_velocity
         velocity.z = direction.z * dash_velocity
         dashes_remaining -= 1
+        stamina -= dash_cost
+        emit_signal("stamina_changed", stamina, max_stamina)
         dash_timer = 0.2
         state = MovementState.DASHING
 

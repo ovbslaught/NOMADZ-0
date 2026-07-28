@@ -3,6 +3,7 @@ extends CanvasLayer
 @export var ocean_fx_rect: ColorRect
 @export var vulture_warning_rect: ColorRect
 @export var health_bar: ProgressBar
+@export var stamina_bar: ProgressBar
 
 func _ready() -> void:
     # Ensure this node is in the HUD group so systems can find it
@@ -57,3 +58,17 @@ func update_health(current: float, max_val: float) -> void:
             sb.bg_color = Color("ff0033") # Critical Red
             
         health_bar.add_theme_stylebox_override("fill", sb)
+
+# Called by PlayerController when dashing or regenerating
+func update_stamina(current: float, max_val: float) -> void:
+    if stamina_bar:
+        stamina_bar.max_value = max_val
+        
+        # Fast, snappy tween for stamina usage
+        var tween = create_tween()
+        tween.tween_property(stamina_bar, "value", current, 0.1)
+        
+        # Solid Neon Magenta for stamina
+        var sb = StyleBoxFlat.new()
+        sb.bg_color = Color("ff00ff") 
+        stamina_bar.add_theme_stylebox_override("fill", sb)
