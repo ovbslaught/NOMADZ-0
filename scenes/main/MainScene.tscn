@@ -1,0 +1,5 @@
+[gd_scene format=3]
+[node name="Main" type="Node3D"]
+[node name="WorldRoot" type="Node3D" parent="."]
+[node name="PlayerSpawn" type="Marker3D" parent="WorldRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
