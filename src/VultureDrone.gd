@@ -1,12 +1,34 @@
 extends Node
-const GOSSIP_URL = "http://127.0.0.1:7331/gossip"
-var http_request: HTTPRequest
+
+var socket = WebSocketPeer.new()
+const VIBE_URL = "ws://127.0.0.1:7331"
+
 func _ready():
-    http_request = HTTPRequest.new()
-    add_child(http_request)
-    http_request.request_completed.connect(self._on_gossip_completed)
-func gossip_broadcast_packet(packet: Dictionary) -> void:
-    var error = http_request.request(GOSSIP_URL, ["Content-Type: application/json"], HTTPClient.METHOD_POST, JSON.stringify(packet))
-func _on_gossip_completed(result, response_code, headers, body):
-    if response_code == 200:
-        print("VultureDrone [VCN-8]: Daemon acknowledged gossip block!")
+    socket.connect_to_url(VIBE_URL)
+    print("[VCN8] Initiating vortex connection to Termux...")
+
+func _process(delta):
+    socket.poll()
+    var state = socket.get_ready_state()
+    if state == WebSocketPeer.STATE_OPEN:
+        while socket.get_available_packet_count() > 0:
+            var packet = socket.get_packet().get_string_from_utf8()
+            _handle_incoming_command(packet)
+    elif state == WebSocketPeer.STATE_CLOSED:
+        var code = socket.get_close_code()
+        var reason = socket.get_close_reason()
+        print("[VCN8] Vortex Closed ", code, ", reason: ", reason)
+        set_process(false) # Stop polling if closed
+
+func gossip_broadcast_packet(payload: Dictionary) -> void:
+    if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
+        socket.send_text(JSON.stringify(payload))
+    else:
+        print("[VCN8] Cannot broadcast; vortex is not open.")
+
+func _handle_incoming_command(raw_json: String) -> void:
+    var parsed = JSON.parse_string(raw_json)
+    if parsed typeof Dictionary and parsed.has("command"):
+        print("[GODOT-RECEIVED] Termux Ordered: ", parsedX"command"])
+        if parsedX"command"] == "spawn_particles":
+            print(" -> Spawning Particles with data: ", parsedX"data"])

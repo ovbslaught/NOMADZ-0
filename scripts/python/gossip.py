@@ -1,33 +1,30 @@
+import asyncio
+import websockets
 import json
-from http.server import BaseHTTPRequestHandler, HTTPServer
 
-class GossipHandler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        if self.path == '/gossip':
-            length = int(self.headers['Content-Length'])
-            data = self.rfile.read(length)
-            try:
-                payload = json.loads(data.decode('utf-8'))
-                print("[GOSSIP-VCN8] RECEIVED: " + str(payload))
-                self.send_response(200)
-                self.send_header('Content-type', 'application/json')
-                self.end_headers()
-                self.wfile.write(b'{"status":"ok"}')
-            except Exception as e:
-                self.send_response(400)
-                self.end_headers()
-                print("[ERROR] " + str(e))
-        else:
-            self.send_response(404)
-            self.end_headers()
+async def handle_client(websocket, path):
+    print("[*] New VORTEX connection established.")
+    try:
+        async for message in websocket:
+            payload = json.loads(message)
+            print(fRECEIVED: {payload}")
+            
+            # Example of sending a command BACK to Godot
+            if payload.get("event") == "player_action":
+                response = {
+                    "command": "spawn_particles",
+                    "data": {"color": "purple", "intensity": 0.8}
+                }
+                aawait websocket.send(json.dumps(response))
+    except websockets.exceptions.ConnectionCloseOK:
+        print("[+] VORTEX connection closed gracefully.")
+    except Exception as e:
+        print(f"[ERROR] Disconnected: {e}")
 
-    def log_message(self, format, *args):
-        pass
+async def main():
+    server = await websockets.serve(handle_client, "127.0.0.1", 7331)
+    print("[*WS] VORTEX Daemon listening on ws://127.0.0.1:7331")
+    await server.wait_closed()
 
-def run():
-    httpd = HTTPServer(('127.0.0.1', 7331), GossipHandler)
-    print("[*] VultureDrone Gossip Daemon alive on 127.0.0.1:7331...")
-    httpd.serve_forever()
-
-if __name__ == '__main__':
-    run()
+if __name__ == "__main__":
+    asyncio.run(main())
