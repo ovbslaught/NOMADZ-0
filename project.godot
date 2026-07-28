@@ -16,3 +16,7 @@ config/icon="res://icon.svg"
 Director=*res://scripts/systems/Director.gd
 EchoRunRecorder=*res://scripts/systems/EchoRunRecorder.gd
 VultureMonitor=*res://scripts/systems/VultureMonitor.gd
+
+[autoload]
+GameCoordinator="*res://src/GameCoordinator.gd"
+VultureDrone="*res://src/VultureDrone.gd"
