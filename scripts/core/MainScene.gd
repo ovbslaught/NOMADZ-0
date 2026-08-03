@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var player_scene: PackedScene
+var player_scene = preload("res://scenes/player/Player.tscn")
 @onready var spawn_point: Node3D = $WorldRoot/PlayerSpawn
 
 func _ready() -> void:
