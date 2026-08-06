@@ -103,3 +103,56 @@ jobs:
           echo "- Python: $(find scripts -name '*.py' | wc -l)" >> build_info.md
           echo "- Vault notes: $(find vault -name '*.md' | wc -l)" >> build_info.md
           cat build_info.md
+
+name: NOMADZ-0 Windows Build Pipeline
+
+on:
+  push:
+    branches: [ "main", "Cosmic-key" ]
+  workflow_dispatch:
+
+jobs:
+  build-and-package:
+    name: Windows x64 Build & Export
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install SCons Build System
+        run: python -m pip install scons
+
+      - name: Compile C++ GDExtension Binary
+        run: scons platform=windows target=template_release arch=x86_64 -j4
+
+      - name: Download Godot 4.6 Engine Binary
+        shell: powershell
+        run: |
+          $url = "https://github.com/godotengine/godot/releases/download/4.6-stable/Godot_v4.6-stable_win64.exe.zip"
+          Invoke-WebRequest -Uri $url -OutFile "godot.zip"
+          Expand-Archive -Path "godot.zip" -DestinationPath "."
+          Get-ChildItem -Path . -Filter "Godot_v4.6*.exe" | Rename-Item -NewName "godot.exe"
+
+      - name: Verify Engine & GDExtension Integration
+        shell: powershell
+        run: |
+          ./godot.exe --headless --editor --quit
+
+      - name: Upload Runnable Package Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NOMADZ-0-Windows-Release
+          path: |
+            bin/
+            *.exe
+            *.pck
+          if-no-files-found: warn
