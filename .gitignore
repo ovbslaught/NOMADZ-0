@@ -1,11 +1,16 @@
-# Godot 4+ specific ignores
+# Godot
 .godot/
 /android/
 /NOMADZ-O
 .opencode
+omega_memory.db
+omegamemory.db
+*.db
+*.db
+*.db-shm
+*.db-wal
 gossip.log
 logs/
-omega_memory.db
+*.log
 package-lock.json
-src/__pycache__/
-WORMHOLE/OMEGA-BRAIN/
+.import/
