@@ -1,0 +1,58 @@
+name: NOMADZ-0 Android Build
+
+on:
+  push:
+    branches: [main, Cosmic-key]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.6
+  EXPORT_NAME: NOMADZ-0
+
+jobs:
+  build-android:
+    name: Android APK Export
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+          include-templates: true
+
+      - name: Setup debug keystore
+        run: |
+          keytool -genkey -v -keystore debug.keystore \
+            -alias androiddebugkey -keyalg RSA -keysize 2048 \
+            -validity 10000 -storepass android -keypass android \
+            -dname "CN=Android Debug,O=Android,C=US"
+
+      - name: Import project
+        run: |
+          mkdir -p .godot/editor
+          godot --headless --editor --quit || true
+
+      - name: Export Android APK
+        run: |
+          mkdir -p build/android
+          godot --headless --export-debug "Android" build/android/${{ env.EXPORT_NAME }}.apk || echo "Export attempted"
+
+      - name: Upload Android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nomadz-0-android
+          path: build/android/
+          if-no-files-found: warn
