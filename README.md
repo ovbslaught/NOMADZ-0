@@ -1,21 +1,11 @@
-# OCEAN
-> 2D NOMADZ Substrate
-> Status: Absorbed into NOMADZ-0
-> Drive: WORMHOLE/OCEAN/
+ NOMADZ-0
+
 
 ---
 
 ## What Is OCEAN?
 
-OCEAN is the **2D substrate layer** of the NOMADZ stack -- side-scrolling, underwater, and 2D game mechanics for the Signalverse universe.
-
-OCEAN has been **absorbed into NOMADZ-0** as its 2D layer. This repo is preserved as a standalone reference and asset source.
-
----
-
-## Integration Status
-
-OCEAN content now lives inside NOMADZ-0:
+OCEAN is the **2D substrate layer** of the NOMADZ stack -- side-scrolling, underwater, and 2D game NOMADZ-0:
 - `NOMADZ-0/scenes/ocean/`
 - `NOMADZ-0/scripts/ocean/`
 - `NOMADZ-0/assets/ocean/`
