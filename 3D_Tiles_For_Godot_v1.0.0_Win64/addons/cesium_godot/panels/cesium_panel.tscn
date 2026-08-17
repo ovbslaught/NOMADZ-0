@@ -1,0 +1,139 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvqjpxi8g18cp"]
+
+[ext_resource type="Texture2D" uid="uid://hiailyk0q8lq" path="res://addons/cesium_godot/panels/ion_logo.svg" id="1_ldapw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_h2mxq"]
+font_size = 24
+
+[node name="Cesium Ion Panel" type="MarginContainer"]
+custom_minimum_size = Vector2(100, 100)
+offset_right = 486.0
+offset_bottom = 551.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VSplitContainer" type="VSplitContainer" parent="ScrollContainer"]
+layout_mode = 2
+
+[node name="ButtonsHContainer" type="HBoxContainer" parent="ScrollContainer/VSplitContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="AddButton" type="Button" parent="ScrollContainer/VSplitContainer/ButtonsHContainer"]
+visible = false
+layout_mode = 2
+text = "Add"
+
+[node name="UploadButton" type="Button" parent="ScrollContainer/VSplitContainer/ButtonsHContainer"]
+layout_mode = 2
+text = "Upload"
+
+[node name="TokenButton" type="Button" parent="ScrollContainer/VSplitContainer/ButtonsHContainer"]
+layout_mode = 2
+text = "Token"
+
+[node name="LearnButton" type="Button" parent="ScrollContainer/VSplitContainer/ButtonsHContainer"]
+layout_mode = 2
+text = "Learn	"
+
+[node name="HelpButton" type="Button" parent="ScrollContainer/VSplitContainer/ButtonsHContainer"]
+layout_mode = 2
+text = "Help"
+
+[node name="SignOutButton" type="Button" parent="ScrollContainer/VSplitContainer/ButtonsHContainer"]
+layout_mode = 2
+text = "Sign out"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="Add assets label" type="Label" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quick Add Basic Assets"
+label_settings = SubResource("LabelSettings_h2mxq")
+
+[node name="HSeparator" type="HSeparator" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Blank 3D Label" type="Label" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Blank 3D Tiles Tileset"
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 1.45519e-11)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BlankTilesetButton" type="Button" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Add"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Dynamic Camera" type="Label" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Dynamic Camera"
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(75, 1.45519e-11)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DynamicCameraButton" type="Button" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "Add"
+
+[node name="Add assets label2" type="Label" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+text = "Quick Add Cesium ION Assets"
+label_settings = SubResource("LabelSettings_h2mxq")
+
+[node name="HSeparator2" type="HSeparator" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="IonAssetButtonHolder" type="VBoxContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+texture = ExtResource("1_ldapw")
+stretch_mode = 4
+
+[node name="MarginContainer4" type="MarginContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 50)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 1.45519e-11)
+layout_mode = 2
+text = "Access global high-resolution 3D content, including photogrammetry, terrain, imagery, and buildings. Bring your own data for tiling, hosting, and streaming to Godot."
+autowrap_mode = 3
+
+[node name="MarginContainer3" type="MarginContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(1.45519e-11, 50)
+layout_mode = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(150, 50)
+layout_mode = 2
+
+[node name="ConnectButton" type="Button" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(1.45519e-11, 50)
+layout_mode = 2
+text = "Connect to Cesium ION"
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer/VSplitContainer/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2

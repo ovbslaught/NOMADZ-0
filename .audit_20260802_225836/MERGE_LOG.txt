@@ -1,0 +1,89 @@
+[✓] Current Branch: main
+[✓] Current HEAD:   2cdd124b0ac72c59e8b7d66e536b52f86394651e
+[✓] Baseline checksums recorded.
+Merge made by the 'ort' strategy.
+ .github/workflows/ci-build-matrix.yml |  82 ++++++++++++++++++
+ NOMADZ_WIRING_GUIDE.md                |  60 +++++++++++++
+ PillarRegistry.gd                     |   2 +-
+ PillarRegristry.gd                    |   2 +-
+ antigravity_setup.py                  |  46 ++++++++++
+ generate_player.py                    |  28 ++++++
+ omegamemory.db                        | Bin 0 -> 12288 bytes
+ project.godot                         |   7 ++
+ scenes/main/MainScene.tscn            |  18 +++-
+ scenes/player/Player.tscn             |  40 ++++++++-
+ scripts/ai/EnemyAIAdapter.gd          |  42 +++++++++
+ scripts/ai/LimboSpawner.gd            |  63 ++++++++++++++
+ scripts/core/CombatManager.gd         |  79 +++++++++++++++++
+ scripts/core/MainScene.gd             |   2 +-
+ scripts/core/PlayerController.gd      | 157 ++++++++++++++++++++++++++++++----
+ scripts/core/VoxelHammer.gd           |  54 ++++++++++++
+ scripts/python/gossip.py              |  30 +++++++
+ scripts/systems/Director.gd           |  51 ++++++++++-
+ scripts/systems/EchoRunRecorder.gd    |  40 +++++++++
+ scripts/systems/VultureMonitor.gd     |  77 +++++++++++++++++
+ scripts/ui/HUD.gd                     |  74 ++++++++++++++++
+ scripts/world/OceanMatrix.gd          |  42 +++++++++
+ shaders/OceanAbsorption.gdshader      |  40 +++++++++
+ shaders/TriRender.gdshader            |  39 +++++++++
+ shaders/TriRenderCel.gdshader         |  46 ++++++++++
+ src/GameCoordinator.gd                |   4 +
+ src/Player.gd                         |  19 ++++
+ src/VultureDrone.gd                   |  34 ++++++++
+ 28 files changed, 1149 insertions(+), 29 deletions(-)
+ create mode 100644 .github/workflows/ci-build-matrix.yml
+ create mode 100644 NOMADZ_WIRING_GUIDE.md
+ create mode 100644 antigravity_setup.py
+ create mode 100644 generate_player.py
+ create mode 100644 omegamemory.db
+ create mode 100644 scripts/ai/EnemyAIAdapter.gd
+ create mode 100644 scripts/ai/LimboSpawner.gd
+ create mode 100644 scripts/core/CombatManager.gd
+ create mode 100644 scripts/core/VoxelHammer.gd
+ create mode 100644 scripts/python/gossip.py
+ create mode 100644 scripts/systems/EchoRunRecorder.gd
+ create mode 100644 scripts/systems/VultureMonitor.gd
+ create mode 100644 scripts/ui/HUD.gd
+ create mode 100644 scripts/world/OceanMatrix.gd
+ create mode 100644 shaders/OceanAbsorption.gdshader
+ create mode 100644 shaders/TriRender.gdshader
+ create mode 100644 shaders/TriRenderCel.gdshader
+ create mode 100644 src/GameCoordinator.gd
+ create mode 100644 src/Player.gd
+ create mode 100644 src/VultureDrone.gd
+Merge made by the 'ort' strategy.
+ .../Scripts/Operativesuitcontroller.gd             |   0
+ .../Scripts/suitstatesensor.gd                     |   0
+ voxelhammer.gd => OCEAN/Scripts/voxelhammer.gd     |   0
+ warp.gd => OCEAN/Scripts/warp.gd                   |   0
+ CodexManager.gd => OCEAN/autoloads/CodexManager.gd |   0
+ .../autoloads/CombatManager.gd                     |   0
+ CortexCore.gd => OCEAN/autoloads/CortexCore.gd     |   0
+ GalaxyGen.gd => OCEAN/autoloads/GalaxyGen.gd       |   0
+ .../autoloads/PillarDisplay.gd                     |   0
+ .../autoloads/PillarRegistry.gd                    |   0
+ VisorOverlay.gd => OCEAN/autoloads/VisorOverlay.gd |   0
+ .../nomadz_signal_descent/player/WormholeTether.gd | 180 ---------------
+ OCEAN/nomadz_signal_descent/ui/HUD.gd              | 251 ---------------------
+ OCEAN/nomadz_signal_descent/world/RoomBase.gd      | 208 -----------------
+ PillarRegristry.gd                                 |  50 ----
+ 15 files changed, 689 deletions(-)
+ rename Operativesuitcontroller.gd => OCEAN/Scripts/Operativesuitcontroller.gd (100%)
+ rename suitstatesensor.gd => OCEAN/Scripts/suitstatesensor.gd (100%)
+ rename voxelhammer.gd => OCEAN/Scripts/voxelhammer.gd (100%)
+ rename warp.gd => OCEAN/Scripts/warp.gd (100%)
+ rename CodexManager.gd => OCEAN/autoloads/CodexManager.gd (100%)
+ rename CombatManager.gd => OCEAN/autoloads/CombatManager.gd (100%)
+ rename CortexCore.gd => OCEAN/autoloads/CortexCore.gd (100%)
+ rename GalaxyGen.gd => OCEAN/autoloads/GalaxyGen.gd (100%)
+ rename PillarDisplay.gd => OCEAN/autoloads/PillarDisplay.gd (100%)
+ rename PillarRegistry.gd => OCEAN/autoloads/PillarRegistry.gd (100%)
+ rename VisorOverlay.gd => OCEAN/autoloads/VisorOverlay.gd (100%)
+ delete mode 100644 OCEAN/nomadz_signal_descent/player/WormholeTether.gd
+ delete mode 100644 OCEAN/nomadz_signal_descent/ui/HUD.gd
+ delete mode 100644 OCEAN/nomadz_signal_descent/world/RoomBase.gd
+ delete mode 100644 PillarRegristry.gd
+[✓] Post-merge HEAD: 9c1c70ba86eb92ed25609c6d50d1de730018bf27
+[✓] Total Tracked Files: 1381
+To https://github.com/ovbslaught/NOMADZ-0.git
+   2cdd124..9c1c70b  main -> main

@@ -1,0 +1,396 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Graph",
+  "name": "NOMADZ-0 Knowledge Graph",
+  "nodes": [
+    {
+      "@id": "bbfc6193a0635804d9d58acf320615da",
+      "@type": "Note",
+      "title": "20260307_1950_httpsmodelcontextprotocoliochangelo.md",
+      "path": "VULTURE/20260307_1950_httpsmodelcontextprotocoliochangelo.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "6b59cbde964ee4acc08fca6ba56984fc",
+      "@type": "Note",
+      "title": "20260307_1950_httpsfirecrawldevblog.md",
+      "path": "VULTURE/20260307_1950_httpsfirecrawldevblog.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "d4826a0ff5d24fa9040076db9df8cf99",
+      "@type": "Note",
+      "title": "20260307_2007_httpsmodelcontextprotocoliochangelo.md",
+      "path": "VULTURE/20260307_2007_httpsmodelcontextprotocoliochangelo.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "41f00a7e883d9fb9473bdad2f3e21ab7",
+      "@type": "Note",
+      "title": "20260307_1950_httpswwwanthropiccomnews.md",
+      "path": "VULTURE/20260307_1950_httpswwwanthropiccomnews.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "40662d7bb0b2ac84202f83528f6e71dd",
+      "@type": "Note",
+      "title": "20260307_2007_httpswwwanthropiccomnews.md",
+      "path": "VULTURE/20260307_2007_httpswwwanthropiccomnews.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "14f85e01b54a2da825b4931f1263beef",
+      "@type": "Note",
+      "title": "20260307_2007_httpsfirecrawldevblog.md",
+      "path": "VULTURE/20260307_2007_httpsfirecrawldevblog.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "e24e8e6f743a14476ff9b3d26b32dba4",
+      "@type": "Note",
+      "title": "20260307_1950_httpswwwbasacukmedialatest-news.md",
+      "path": "GEOLOGOS/20260307_1950_httpswwwbasacukmedialatest-news.md",
+      "tags": [
+        "0b0c0c",
+        "website",
+        "breadcrumb",
+        "breadcrumb",
+        "website",
+        "organization",
+        "organization",
+        "/schema/logo/image/",
+        "/schema/logo/image/"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "780ff782c11a8bc34d1b10749aeffa76",
+      "@type": "Note",
+      "title": "20260307_2007_httpswwwusgsgovnewsscience-snippet.md",
+      "path": "GEOLOGOS/20260307_2007_httpswwwusgsgovnewsscience-snippet.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "a058c3d02df0d00523c1ae297791ba05",
+      "@type": "Note",
+      "title": "20260307_2007_httpswwwbasacukmedialatest-news.md",
+      "path": "GEOLOGOS/20260307_2007_httpswwwbasacukmedialatest-news.md",
+      "tags": [
+        "0b0c0c",
+        "website",
+        "breadcrumb",
+        "breadcrumb",
+        "website",
+        "organization",
+        "organization",
+        "/schema/logo/image/",
+        "/schema/logo/image/"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "dc16b23ac3945ed405e6ebdd0d56ac15",
+      "@type": "Note",
+      "title": "20260307_1950_httpswwwusgsgovnewsscience-snippet.md",
+      "path": "GEOLOGOS/20260307_1950_httpswwwusgsgovnewsscience-snippet.md",
+      "tags": [],
+      "links_out": 0
+    },
+    {
+      "@id": "3f8666b20e8966969e9dae151f206b37",
+      "@type": "Note",
+      "title": "20260307_2007_httpsphysorgspace-news.md",
+      "path": "COSMO/20260307_2007_httpsphysorgspace-news.md",
+      "tags": [
+        "f5f5f5",
+        "1a1a1a",
+        "1537a4",
+        "861e8c",
+        "1a1a1a",
+        "e5e5e5",
+        "666"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "3a82fe993280cc6d5f755425191e2b7c",
+      "@type": "Note",
+      "title": "20260307_2007_httpsarxivorglistastro-phGArecent.md",
+      "path": "COSMO/20260307_2007_httpsarxivorglistastro-phGArecent.md",
+      "tags": [
+        "5bbad5",
+        "da532c",
+        "ffffff",
+        "content"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "2c506b671d19320f646834be0bcb6579",
+      "@type": "Note",
+      "title": "20260307_1950_httpsphysorgspace-news.md",
+      "path": "COSMO/20260307_1950_httpsphysorgspace-news.md",
+      "tags": [
+        "f5f5f5",
+        "1a1a1a",
+        "1537a4",
+        "861e8c",
+        "1a1a1a",
+        "e5e5e5",
+        "666"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "18c717545922e9c9698edc23d835f10c",
+      "@type": "Note",
+      "title": "20260307_1950_httpsarxivorglistastro-phGArecent.md",
+      "path": "COSMO/20260307_1950_httpsarxivorglistastro-phGArecent.md",
+      "tags": [
+        "5bbad5",
+        "da532c",
+        "ffffff",
+        "content"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "30c4a7ef5b82f9e77669c5da22850940",
+      "@type": "Note",
+      "title": "20260307_2007_httpsgodotengineorgnews.md",
+      "path": "NOMADZ-0/20260307_2007_httpsgodotengineorgnews.md",
+      "tags": [
+        "fff",
+        "fff"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "abe9929309ba28a57e1285575ee46a4b",
+      "@type": "Note",
+      "title": "20260307_1950_httpsgodotengineorgnews.md",
+      "path": "NOMADZ-0/20260307_1950_httpsgodotengineorgnews.md",
+      "tags": [
+        "fff",
+        "fff"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "e345b69a5295f3709b0cf35000151932",
+      "@type": "Note",
+      "title": "20260307_1950_httpsitchiogamestop-ratedtag-godot.md",
+      "path": "NOMADZ-0/20260307_1950_httpsitchiogamestop-ratedtag-godot.md",
+      "tags": [
+        "313131",
+        "challenge-error-text"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "2e821285cb0748bdfe945cfa8ad58817",
+      "@type": "Note",
+      "title": "20260307_2007_httpsitchiogamestop-ratedtag-godot.md",
+      "path": "NOMADZ-0/20260307_2007_httpsitchiogamestop-ratedtag-godot.md",
+      "tags": [
+        "313131",
+        "challenge-error-text"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "6932ec326f5d65ce65e345ca08f6c9ac",
+      "@type": "Note",
+      "title": "20260307_2007_httpswwwnasagovnews.md",
+      "path": "NEO-SOL-OMEGA/20260307_2007_httpswwwnasagovnews.md",
+      "tags": [
+        "039"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "cf579daa72a5748fec48f771698f669a",
+      "@type": "Note",
+      "title": "20260307_1950_httpswwwnasagovnews.md",
+      "path": "NEO-SOL-OMEGA/20260307_1950_httpswwwnasagovnews.md",
+      "tags": [
+        "039"
+      ],
+      "links_out": 0
+    },
+    {
+      "@id": "e066fa604d1ffde16292c40628e03d28",
+      "@type": "WebResource",
+      "url": "https://www.usgs.gov/news/science-snippet",
+      "tag": "geology",
+      "project": "GEOLOGOS",
+      "title": "https://www.usgs.gov/news/science-snippet"
+    },
+    {
+      "@id": "9820a01139ea733f28af92608a7fb929",
+      "@type": "WebResource",
+      "url": "https://www.bas.ac.uk/media/latest-news/",
+      "tag": "antarctic",
+      "project": "GEOLOGOS",
+      "title": "https://www.bas.ac.uk/media/latest-news/"
+    },
+    {
+      "@id": "23a974fc44b999b3ed069497e8ff28d2",
+      "@type": "WebResource",
+      "url": "https://arxiv.org/list/astro-ph.GA/recent",
+      "tag": "cosmology",
+      "project": "COSMO",
+      "title": "https://arxiv.org/list/astro-ph.GA/recent"
+    },
+    {
+      "@id": "1c3ceda7926cc74a8b23395c61cd80eb",
+      "@type": "WebResource",
+      "url": "https://www.nasa.gov/news/",
+      "tag": "space",
+      "project": "NEO-SOL-OMEGA",
+      "title": "https://www.nasa.gov/news/"
+    },
+    {
+      "@id": "c49349098087ba0cfe3092c957a2dbce",
+      "@type": "WebResource",
+      "url": "https://godotengine.org/news/",
+      "tag": "godot",
+      "project": "NOMADZ-0",
+      "title": "https://godotengine.org/news/"
+    },
+    {
+      "@id": "1ccb2e90f708d6170273ab090e680acd",
+      "@type": "WebResource",
+      "url": "https://www.anthropic.com/news",
+      "tag": "ai",
+      "project": "VULTURE",
+      "title": "https://www.anthropic.com/news"
+    },
+    {
+      "@id": "456014c355e4681c83d7545fc8d3b4eb",
+      "@type": "WebResource",
+      "url": "https://modelcontextprotocol.io/changelog",
+      "tag": "mcp",
+      "project": "VULTURE",
+      "title": "https://modelcontextprotocol.io/changelog"
+    },
+    {
+      "@id": "4f2b8f9b363f67bcc20673fe906fe30a",
+      "@type": "WebResource",
+      "url": "https://firecrawl.dev/blog",
+      "tag": "firecrawl",
+      "project": "VULTURE",
+      "title": "https://firecrawl.dev/blog"
+    },
+    {
+      "@id": "7ad3039754d4a184e68e4ce65fa09451",
+      "@type": "WebResource",
+      "url": "https://itch.io/games/top-rated/tag-godot",
+      "tag": "gamedev",
+      "project": "NOMADZ-0",
+      "title": "https://itch.io/games/top-rated/tag-godot"
+    },
+    {
+      "@id": "e277c50ce1abb3b35286a388cac57526",
+      "@type": "WebResource",
+      "url": "https://phys.org/space-news/",
+      "tag": "physics",
+      "project": "COSMO",
+      "title": "https://phys.org/space-news/"
+    },
+    {
+      "@id": "e066fa604d1ffde16292c40628e03d28",
+      "@type": "WebResource",
+      "url": "https://www.usgs.gov/news/science-snippet",
+      "tag": "geology",
+      "project": "GEOLOGOS",
+      "title": "https://www.usgs.gov/news/science-snippet"
+    },
+    {
+      "@id": "9820a01139ea733f28af92608a7fb929",
+      "@type": "WebResource",
+      "url": "https://www.bas.ac.uk/media/latest-news/",
+      "tag": "antarctic",
+      "project": "GEOLOGOS",
+      "title": "https://www.bas.ac.uk/media/latest-news/"
+    },
+    {
+      "@id": "23a974fc44b999b3ed069497e8ff28d2",
+      "@type": "WebResource",
+      "url": "https://arxiv.org/list/astro-ph.GA/recent",
+      "tag": "cosmology",
+      "project": "COSMO",
+      "title": "https://arxiv.org/list/astro-ph.GA/recent"
+    },
+    {
+      "@id": "1c3ceda7926cc74a8b23395c61cd80eb",
+      "@type": "WebResource",
+      "url": "https://www.nasa.gov/news/",
+      "tag": "space",
+      "project": "NEO-SOL-OMEGA",
+      "title": "https://www.nasa.gov/news/"
+    },
+    {
+      "@id": "c49349098087ba0cfe3092c957a2dbce",
+      "@type": "WebResource",
+      "url": "https://godotengine.org/news/",
+      "tag": "godot",
+      "project": "NOMADZ-0",
+      "title": "https://godotengine.org/news/"
+    },
+    {
+      "@id": "1ccb2e90f708d6170273ab090e680acd",
+      "@type": "WebResource",
+      "url": "https://www.anthropic.com/news",
+      "tag": "ai",
+      "project": "VULTURE",
+      "title": "https://www.anthropic.com/news"
+    },
+    {
+      "@id": "456014c355e4681c83d7545fc8d3b4eb",
+      "@type": "WebResource",
+      "url": "https://modelcontextprotocol.io/changelog",
+      "tag": "mcp",
+      "project": "VULTURE",
+      "title": "https://modelcontextprotocol.io/changelog"
+    },
+    {
+      "@id": "4f2b8f9b363f67bcc20673fe906fe30a",
+      "@type": "WebResource",
+      "url": "https://firecrawl.dev/blog",
+      "tag": "firecrawl",
+      "project": "VULTURE",
+      "title": "https://firecrawl.dev/blog"
+    },
+    {
+      "@id": "7ad3039754d4a184e68e4ce65fa09451",
+      "@type": "WebResource",
+      "url": "https://itch.io/games/top-rated/tag-godot",
+      "tag": "gamedev",
+      "project": "NOMADZ-0",
+      "title": "https://itch.io/games/top-rated/tag-godot"
+    },
+    {
+      "@id": "e277c50ce1abb3b35286a388cac57526",
+      "@type": "WebResource",
+      "url": "https://phys.org/space-news/",
+      "tag": "physics",
+      "project": "COSMO",
+      "title": "https://phys.org/space-news/"
+    }
+  ],
+  "edges": [],
+  "stats": {
+    "vault_notes": 20,
+    "web_resources": 20,
+    "total_edges": 0,
+    "unique_tags": 19
+  }
+}

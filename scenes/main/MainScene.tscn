@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/core/MainScene.gd" id="1_ms"]
+[ext_resource type="Script" path="res://scripts/core/VoxelHammer.gd" id="2_vh"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_ms")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 15, 0)
+shadow_enabled = true
+
+[node name="WorldRoot" type="Node3D" parent="."]
+
+[node name="VoxelHammer" type="Node3D" parent="WorldRoot"]
+script = ExtResource("2_vh")
+
+[node name="PlayerSpawn" type="Marker3D" parent="WorldRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 15, 16)

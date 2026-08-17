@@ -1,0 +1,22 @@
+# Godot
+.godot/
+/android/
+/NOMADZ-O
+.opencode
+omega_memory.db
+omegamemory.db
+*.db
+*.db
+*.db-shm
+*.db-wal
+gossip.log
+logs/
+*.log
+package-lock.json
+.import/
+gossip.log
+logs/
+omega_memory.db
+package-lock.json
+src/__pycache__/
+WORMHOLE/OMEGA-BRAIN/

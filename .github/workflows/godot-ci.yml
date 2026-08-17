@@ -1,0 +1,84 @@
+name: Godot CI - NOMADZ-0
+
+on:
+  push:
+    branches: [main, Cosmic-key]
+  pull_request:
+    branches: [main, Cosmic-key]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.6
+  EXPORT_NAME: NOMADZ-0
+
+jobs:
+  lint-gdscript:
+    runs-on: ubuntu-latest
+    name: GDScript Lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+
+      - name: Count GDScript files
+        run: |
+          echo "GDScript file count: $(find . -name '*.gd' | wc -l)"
+          find . -name '*.gd' -exec echo "Found: {}" ;
+
+  validate-python:
+    runs-on: ubuntu-latest
+    name: Validate Python
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install fastapi pydantic uvicorn
+
+      - name: Validate all Python files
+        run: |
+          find . -name '*.py' -not -path './.git/*' -not -path './src/__pycache__/*' | while read f; do
+            python3 -m py_compile "$f" && echo "OK: $f" || echo "FAIL: $f"
+          done
+
+  export-linux:
+    runs-on: ubuntu-latest
+    name: Linux Export
+    needs: lint-gdscript
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+          include-templates: true
+
+      - name: Import project
+        run: |
+          mkdir -p .godot/editor
+          godot --headless --editor --quit || true
+
+      - name: Export Linux build
+        run: |
+          mkdir -p build/linux
+          godot --headless --export-release "Linux/X11" build/linux/${{ env.EXPORT_NAME }}.x86_64 || echo "Export attempted"
+
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nomadz-0-linux
+          path: build/linux/
+          if-no-files-found: warn

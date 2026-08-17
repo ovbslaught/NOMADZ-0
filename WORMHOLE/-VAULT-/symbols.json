@@ -1,0 +1,649 @@
+{
+  "metadata": {
+    "authority": "SOL",
+    "system": "NOMADZ/OMEGA-BRAIN",
+    "motto": "NOMADZ: This is the way, this is the COSMIC-KEY",
+    "schema_version": "1.0.0_GLOBAL_GLYPH"
+  },
+  "symbol_categories": {
+    "mathematical_and_logic": [
+      {
+        "glyph": "∀",
+        "name": "FOR ALL",
+        "unicode": "U+2200"
+      },
+      {
+        "glyph": "∃",
+        "name": "THERE EXISTS",
+        "unicode": "U+2203"
+      },
+      {
+        "glyph": "∈",
+        "name": "ELEMENT OF",
+        "unicode": "U+2208"
+      },
+      {
+        "glyph": "∉",
+        "name": "NOT AN ELEMENT OF",
+        "unicode": "U+2209"
+      },
+      {
+        "glyph": "∋",
+        "name": "CONTAINS AS MEMBER",
+        "unicode": "U+220B"
+      },
+      {
+        "glyph": "∏",
+        "name": "N-ARY PRODUCT",
+        "unicode": "U+220F"
+      },
+      {
+        "glyph": "∑",
+        "name": "N-ARY SUMMATION",
+        "unicode": "U+2211"
+      },
+      {
+        "glyph": "√",
+        "name": "SQUARE ROOT",
+        "unicode": "U+221A"
+      },
+      {
+        "glyph": "∝",
+        "name": "PROPORTIONAL TO",
+        "unicode": "U+221D"
+      },
+      {
+        "glyph": "∞",
+        "name": "INFINITY",
+        "unicode": "U+221E"
+      },
+      {
+        "glyph": "∧",
+        "name": "LOGICAL AND",
+        "unicode": "U+2227"
+      },
+      {
+        "glyph": "∨",
+        "name": "LOGICAL OR",
+        "unicode": "U+2228"
+      },
+      {
+        "glyph": "∩",
+        "name": "INTERSECTION",
+        "unicode": "U+2229"
+      },
+      {
+        "glyph": "∪",
+        "name": "UNION",
+        "unicode": "U+222A"
+      },
+      {
+        "glyph": "∫",
+        "name": "INTEGRAL",
+        "unicode": "U+222B"
+      },
+      {
+        "glyph": "∬",
+        "name": "DOUBLE INTEGRAL",
+        "unicode": "U+222C"
+      },
+      {
+        "glyph": "∭",
+        "name": "TRIPLE INTEGRAL",
+        "unicode": "U+222D"
+      },
+      {
+        "glyph": "∮",
+        "name": "CONTOUR INTEGRAL",
+        "unicode": "U+222E"
+      },
+      {
+        "glyph": "∴",
+        "name": "THEREFORE",
+        "unicode": "U+2234"
+      },
+      {
+        "glyph": "∵",
+        "name": "BECAUSE",
+        "unicode": "U+2235"
+      },
+      {
+        "glyph": "≈",
+        "name": "ALMOST EQUAL TO",
+        "unicode": "U+2248"
+      },
+      {
+        "glyph": "≠",
+        "name": "NOT EQUAL TO",
+        "unicode": "U+2260"
+      },
+      {
+        "glyph": "≡",
+        "name": "IDENTICAL TO",
+        "unicode": "U+2261"
+      },
+      {
+        "glyph": "≤",
+        "name": "LESS-THAN OR EQUAL TO",
+        "unicode": "U+2264"
+      },
+      {
+        "glyph": "≥",
+        "name": "GREATER-THAN OR EQUAL TO",
+        "unicode": "U+2265"
+      },
+      {
+        "glyph": "⊂",
+        "name": "SUBSET OF",
+        "unicode": "U+2282"
+      },
+      {
+        "glyph": "⊃",
+        "name": "SUPERSET OF",
+        "unicode": "U+2283"
+      },
+      {
+        "glyph": "⊆",
+        "name": "SUBSET OF OR EQUAL TO",
+        "unicode": "U+2286"
+      },
+      {
+        "glyph": "⊇",
+        "name": "SUPERSET OF OR EQUAL TO",
+        "unicode": "U+2287"
+      },
+      {
+        "glyph": "⊕",
+        "name": "CIRCLED PLUS",
+        "unicode": "U+2295"
+      },
+      {
+        "glyph": "⊗",
+        "name": "CIRCLED TIMES",
+        "unicode": "U+2297"
+      },
+      {
+        "glyph": "⊥",
+        "name": "UPTACK / PERPENDICULAR",
+        "unicode": "U+22A5"
+      },
+      {
+        "glyph": "⊨",
+        "name": "TRUE / SATISFIES",
+        "unicode": "U+22A8"
+      }
+    ],
+    "astronomy_and_alchemy": [
+      {
+        "glyph": "☉",
+        "name": "SUN / SOL",
+        "unicode": "U+2609"
+      },
+      {
+        "glyph": "☽",
+        "name": "FIRST QUARTER MOON",
+        "unicode": "U+263D"
+      },
+      {
+        "glyph": "☾",
+        "name": "LAST QUARTER MOON",
+        "unicode": "U+263E"
+      },
+      {
+        "glyph": "☿",
+        "name": "MERCURY",
+        "unicode": "U+263F"
+      },
+      {
+        "glyph": "♀",
+        "name": "VENUS / FEMALE",
+        "unicode": "U+2640"
+      },
+      {
+        "glyph": "♁",
+        "name": "EARTH",
+        "unicode": "U+2641"
+      },
+      {
+        "glyph": "♂",
+        "name": "MARS / MALE",
+        "unicode": "U+2642"
+      },
+      {
+        "glyph": "♃",
+        "name": "JUPITER",
+        "unicode": "U+2643"
+      },
+      {
+        "glyph": "♄",
+        "name": "SATURN",
+        "unicode": "U+2644"
+      },
+      {
+        "glyph": "♅",
+        "name": "URANUS",
+        "unicode": "U+2645"
+      },
+      {
+        "glyph": "♆",
+        "name": "NEPTUNE",
+        "unicode": "U+2646"
+      },
+      {
+        "glyph": "♇",
+        "name": "PLUTO",
+        "unicode": "U+2647"
+      },
+      {
+        "glyph": "♈",
+        "name": "ARIES",
+        "unicode": "U+2648"
+      },
+      {
+        "glyph": "♉",
+        "name": "TAURUS",
+        "unicode": "U+2649"
+      },
+      {
+        "glyph": "♊",
+        "name": "GEMINI",
+        "unicode": "U+264A"
+      },
+      {
+        "glyph": "♋",
+        "name": "CANCER",
+        "unicode": "U+264B"
+      },
+      {
+        "glyph": "♌",
+        "name": "LEO",
+        "unicode": "U+264C"
+      },
+      {
+        "glyph": "♍",
+        "name": "VIRGO",
+        "unicode": "U+264D"
+      },
+      {
+        "glyph": "♎",
+        "name": "LIBRA",
+        "unicode": "U+264E"
+      },
+      {
+        "glyph": "♏",
+        "name": "SCORPIO",
+        "unicode": "U+264F"
+      },
+      {
+        "glyph": "♐",
+        "name": "SAGITTARIUS",
+        "unicode": "U+2650"
+      },
+      {
+        "glyph": "♑",
+        "name": "CAPRICORN",
+        "unicode": "U+2651"
+      },
+      {
+        "glyph": "♒",
+        "name": "AQUARIUS",
+        "unicode": "U+2652"
+      },
+      {
+        "glyph": "♓",
+        "name": "PISCES",
+        "unicode": "U+2653"
+      },
+      {
+        "glyph": "🜔",
+        "name": "SALT",
+        "unicode": "U+1F714"
+      },
+      {
+        "glyph": "🜍",
+        "name": "SULPHUR",
+        "unicode": "U+1F70D"
+      },
+      {
+        "glyph": "🜞",
+        "name": "MERCURY SUBSTANCE",
+        "unicode": "U+1F71E"
+      },
+      {
+        "glyph": "🜚",
+        "name": "GOLD / SOL",
+        "unicode": "U+1F72A"
+      }
+    ],
+    "ancient_runes_elder_futhark": [
+      {
+        "glyph": "ᚠ",
+        "name": "FEHU (WEALTH)",
+        "unicode": "U+16A0"
+      },
+      {
+        "glyph": "ᚢ",
+        "name": "URUZ (STRENGTH)",
+        "unicode": "U+16A2"
+      },
+      {
+        "glyph": "ᚦ",
+        "name": "THURISAZ (GIANT/THORN)",
+        "unicode": "U+16A6"
+      },
+      {
+        "glyph": "ᚨ",
+        "name": "ANSUZ (GOD/ODIN)",
+        "unicode": "U+16A8"
+      },
+      {
+        "glyph": "ᚱ",
+        "name": "RAIDO (JOURNEY)",
+        "unicode": "U+16B1"
+      },
+      {
+        "glyph": "ᚲ",
+        "name": "KENAZ (TORCH/KNOWLEDGE)",
+        "unicode": "U+16B2"
+      },
+      {
+        "glyph": "ᚷ",
+        "name": "GEBO (GIFT)",
+        "unicode": "U+16B7"
+      },
+      {
+        "glyph": "ᚹ",
+        "name": "WUNJO (JOY)",
+        "unicode": "U+16B9"
+      },
+      {
+        "glyph": "ᚺ",
+        "name": "HAGALAZ (HAIL/DESTRUCTION)",
+        "unicode": "U+16BA"
+      },
+      {
+        "glyph": "ᚾ",
+        "name": "NAUTHIZ (NEED/CONSTRAINT)",
+        "unicode": "U+16BE"
+      },
+      {
+        "glyph": "ᛁ",
+        "name": "ISA (ICE)",
+        "unicode": "U+16C1"
+      },
+      {
+        "glyph": "ᛃ",
+        "name": "JERA (HARVEST/YEAR)",
+        "unicode": "U+16C3"
+      },
+      {
+        "glyph": "ᛇ",
+        "name": "EIHWAZ (YEW TREE)",
+        "unicode": "U+16C7"
+      },
+      {
+        "glyph": "ᛈ",
+        "name": "PERTHRO (CHANCE/FATE)",
+        "unicode": "U+16C8"
+      },
+      {
+        "glyph": "ᛉ",
+        "name": "ALGIZ (PROTECTION)",
+        "unicode": "U+16C9"
+      },
+      {
+        "glyph": "ᛋ",
+        "name": "SOWILO (SUN/SOL)",
+        "unicode": "U+16CB"
+      },
+      {
+        "glyph": "ᛏ",
+        "name": "TIWAZ (HONOR/TYR)",
+        "unicode": "U+16CF"
+      },
+      {
+        "glyph": "ᛒ",
+        "name": "BERKANA (BIRTH/GROWTH)",
+        "unicode": "U+16D2"
+      },
+      {
+        "glyph": "ᛖ",
+        "name": "EHWAZ (HORSE/MOVEMENT)",
+        "unicode": "U+16D6"
+      },
+      {
+        "glyph": "ᛗ",
+        "name": "MANNAZ (HUMANITY)",
+        "unicode": "U+16D7"
+      },
+      {
+        "glyph": "ᛚ",
+        "name": "LAGUZ (WATER/FLOW)",
+        "unicode": "U+16DA"
+      },
+      {
+        "glyph": "ᛝ",
+        "name": "INGWAZ (SEED/FERTILITY)",
+        "unicode": "U+16DD"
+      },
+      {
+        "glyph": "ᛟ",
+        "name": "OTHALA (HERITAGE/HOME)",
+        "unicode": "U+16DF"
+      },
+      {
+        "glyph": "ᛞ",
+        "name": "DAGAZ (DAY/BREAKTHROUGH)",
+        "unicode": "U+16DE"
+      }
+    ],
+    "ancient_egyptian_hieroglyphs": [
+      {
+        "glyph": "𓋹",
+        "name": "ANKH (LIFE)",
+        "unicode": "U+132F9"
+      },
+      {
+        "glyph": "𓏤",
+        "name": "VERTICAL STROKE",
+        "unicode": "U+133E4"
+      },
+      {
+        "glyph": "𓁹",
+        "name": "EYE OF HORUS (WEDJAT)",
+        "unicode": "U+13079"
+      },
+      {
+        "glyph": "𓆣",
+        "name": "SCARAB (KHEPRI)",
+        "unicode": "U+131A3"
+      },
+      {
+        "glyph": "𓇳",
+        "name": "RA / SUN",
+        "unicode": "U+131F3"
+      },
+      {
+        "glyph": "𓎟",
+        "name": "LORD / ALL (NEB)",
+        "unicode": "U+1339F"
+      },
+      {
+        "glyph": "𓍝",
+        "name": "SHEN RING (ETERNITY)",
+        "unicode": "U+1335D"
+      }
+    ],
+    "sacred_and_spiritual": [
+      {
+        "glyph": "☸",
+        "name": "WHEEL OF DHARMA",
+        "unicode": "U+2638"
+      },
+      {
+        "glyph": "☯",
+        "name": "YIN YANG",
+        "unicode": "U+262F"
+      },
+      {
+        "glyph": "🕉",
+        "name": "OM / AUM",
+        "unicode": "U+1F549"
+      },
+      {
+        "glyph": "✝",
+        "name": "LATIN CROSS",
+        "unicode": "U+271D"
+      },
+      {
+        "glyph": "☪",
+        "name": "STAR AND CRESCENT",
+        "unicode": "U+262A"
+      },
+      {
+        "glyph": "✡",
+        "name": "STAR OF DAVID",
+        "unicode": "U+2721"
+      },
+      {
+        "glyph": "☬",
+        "name": "KHANDA",
+        "unicode": "U+262C"
+      },
+      {
+        "glyph": "🪯",
+        "name": "KHANDA VARIANT",
+        "unicode": "U+1FAAF"
+      },
+      {
+        "glyph": "⚛",
+        "name": "ATOM SYMBOL",
+        "unicode": "U+269B"
+      },
+      {
+        "glyph": "⚜",
+        "name": "FLEUR-DE-LIS",
+        "unicode": "U+269C"
+      }
+    ],
+    "currencies": [
+      {
+        "glyph": "$",
+        "name": "DOLLAR",
+        "unicode": "U+0024"
+      },
+      {
+        "glyph": "€",
+        "name": "EURO",
+        "unicode": "U+20AC"
+      },
+      {
+        "glyph": "£",
+        "name": "POUND STERLING",
+        "unicode": "U+00A3"
+      },
+      {
+        "glyph": "¥",
+        "name": "YEN / YUAN",
+        "unicode": "U+00A5"
+      },
+      {
+        "glyph": "₿",
+        "name": "BITCOIN",
+        "unicode": "U+20BF"
+      },
+      {
+        "glyph": "Ξ",
+        "name": "ETHEREUM / GREEK XI",
+        "unicode": "U+039E"
+      },
+      {
+        "glyph": "₹",
+        "name": "INDIAN RUPEE",
+        "unicode": "U+20B9"
+      },
+      {
+        "glyph": "₽",
+        "name": "RUBLE",
+        "unicode": "U+20BD"
+      },
+      {
+        "glyph": "₩",
+        "name": "WON",
+        "unicode": "U+20A9"
+      },
+      {
+        "glyph": "₺",
+        "name": "TURKISH LIRA",
+        "unicode": "U+20BA"
+      }
+    ],
+    "miscellaneous_technical_and_gaming": [
+      {
+        "glyph": "⌘",
+        "name": "PLACE OF INTEREST / COMMAND",
+        "unicode": "U+2318"
+      },
+      {
+        "glyph": "⌥",
+        "name": "OPTION KEY",
+        "unicode": "U+2325"
+      },
+      {
+        "glyph": "⎋",
+        "name": "ESCAPE KEY",
+        "unicode": "U+238B"
+      },
+      {
+        "glyph": "⌫",
+        "name": "ERASE TO THE LEFT / BACKSPACE",
+        "unicode": "U+232B"
+      },
+      {
+        "glyph": "⚡",
+        "name": "HIGH VOLTAGE",
+        "unicode": "U+26A1"
+      },
+      {
+        "glyph": "☠",
+        "name": "SKULL AND CROSSBONES",
+        "unicode": "U+2620"
+      },
+      {
+        "glyph": "☣",
+        "name": "BIOHAZARD",
+        "unicode": "U+2622"
+      },
+      {
+        "glyph": "☢",
+        "name": "RADIOACTIVE",
+        "unicode": "U+2623"
+      },
+      {
+        "glyph": "⚔",
+        "name": "CROSSED SWORDS",
+        "unicode": "U+2694"
+      },
+      {
+        "glyph": "⚙",
+        "name": "GEAR",
+        "unicode": "U+2699"
+      },
+      {
+        "glyph": "🛡",
+        "name": "SHIELD",
+        "unicode": "U+1F6E1"
+      },
+      {
+        "glyph": "🔑",
+        "name": "KEY",
+        "unicode": "U+1F511"
+      },
+      {
+        "glyph": "👁",
+        "name": "EYE",
+        "unicode": "U+1F441"
+      }
+    ]
+  }
+}

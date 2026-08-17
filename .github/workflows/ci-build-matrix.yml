@@ -1,0 +1,82 @@
+name: NOMADZ-0 CI/CD Deployment
+
+on:
+  push:
+    branches:
+      - Cosmic-key
+      - main
+  pull_request:
+    branches:
+      - Cosmic-key
+
+jobs:
+  build-and-export:
+    name: Compile Godot 4.7 Builds
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. Checkout the code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      # 2. Setup Godot
+      - name: Setup Godot Engine
+        uses: chickensoft-games/setup-godot@v1
+        with:
+          version: 4.7.0
+          use-dotnet: false
+
+      # 3. Export Windows Desktop
+      - name: Export Windows Executable
+        run: |
+          mkdir -p build/windows
+          godot --headless --export-release "Windows Desktop" build/windows/NOMADZ-0.exe
+
+      # 4. Export Android APK
+      - name: Export Android APK
+        run: |
+          mkdir -p build/android
+          godot --headless --export-release "Android" build/android/NOMADZ-0.apk
+          
+      # 5. Upload Windows Artifact
+      - name: Upload Windows Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: NOMADZ-0-Windows
+          path: build/windows/
+          retention-days: 7
+
+      # 6. Upload Android Artifact
+      - name: Upload Android Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: NOMADZ-0-Android
+          path: build/android/
+          retention-days: 7
+          
+  sync-mother-brain:
+    name: Sync NOMADZ-0 to MOTHER-BRAIN Wormhole
+    runs-on: ubuntu-latest
+    needs: build-and-export # Only runs if compilation succeeds
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - name: Install Rclone
+        run: |
+          curl https://rclone.org/install.sh | sudo bash
+          
+      - name: Rclone Google Drive Sync
+        env:
+          RCLONE_CONF: ${{ secrets.RCLONE_CONF }}
+        run: |
+          # Write the secret to a config file
+          mkdir -p ~/.config/rclone
+          echo "$RCLONE_CONF" > ~/.config/rclone/rclone.conf
+          
+          # Sync the repository to the WORMHOLE
+          rclone sync . gdrive:WORMHOLE/NOMADZ-0 \
+            --exclude ".git/**" \
+            --exclude "build/**" \
+            --verbose

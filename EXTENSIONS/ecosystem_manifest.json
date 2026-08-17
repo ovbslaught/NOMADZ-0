@@ -1,0 +1,30 @@
+{
+  "ecosystem": {
+    "core_network": {
+      "name": "Game-Maker-Studio-2-Server-Library",
+      "role": "TCP/UDP/WebSocket Bridge to OMEGA-BRAIN",
+      "status": "DEPLOYED",
+      "path": "WORMHOLE\\NOMADZ-0\\EXTENSIONS\\GMS2_SERVER_LIBRARY"
+    },
+    "suggested_plugins": [
+      {
+        "name": "GMLive.gml",
+        "url": "https://yellowafterlife.itch.io/gmlive",
+        "role": "AI Code Injection & Hot-Reloading",
+        "integration_path": "WORMHOLE\\NOMADZ-0\\EXTENSIONS\\GMLIVE"
+      },
+      {
+        "name": "ImGuiGML",
+        "url": "https://github.com/Babyjeans/ImGuiGML",
+        "role": "Swarm Telemetry & Developer HUD",
+        "integration_path": "WORMHOLE\\NOMADZ-0\\EXTENSIONS\\IMGUI_GML"
+      },
+      {
+        "name": "GMS2 File System Un-Sandboxed",
+        "url": "https://yellowafterlife.itch.io/gamemaker-file-system",
+        "role": "Direct WAL SQLite Access for BRAIN-FOOD",
+        "integration_path": "WORMHOLE\\NOMADZ-0\\EXTENSIONS\\FILE_SYSTEM_UNSANDBOXED"
+      }
+    ]
+  }
+}
