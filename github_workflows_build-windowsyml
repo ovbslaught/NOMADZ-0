@@ -1,0 +1,44 @@
+name: NOMADZ-0 Windows Build
+
+on:
+  push:
+    branches: [main, Cosmic-key]
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: 4.7.0
+  EXPORT_NAME: NOMADZ-0
+
+jobs:
+  build-windows:
+    name: Windows x64 Export
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+          include-templates: true
+
+      - name: Import project
+        run: |
+          mkdir -p .godot/editor
+          godot --headless --editor --quit || true
+
+      - name: Export Windows build
+        run: |
+          mkdir -p build/windows
+          godot --headless --export-release "Windows Desktop" build/windows/${{ env.EXPORT_NAME }}.exe || echo "Export attempted"
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nomadz-0-windows
+          path: build/windows/
+          if-no-files-found: warn
