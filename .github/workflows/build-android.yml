@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  GODOT_VERSION: 4.6
+  GODOT_VERSION: 4.6.0
   EXPORT_NAME: NOMADZ-0
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -23,15 +23,33 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Setup Android SDK (manual)
+        env:
+          ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
+        run: |
+          set -e
+          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+          cd "$HOME"
+          echo "Downloading Android command line tools..."
+          curl -fsSL https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -o cmdline-tools.zip
+          unzip -q cmdline-tools.zip -d "$ANDROID_SDK_ROOT/cmdline-tools"
+          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+          mv "$ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools"/* "$ANDROID_SDK_ROOT/cmdline-tools/latest/" || true
+          export PATH="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH"
+          echo "y" | sdkmanager --sdk_root="$ANDROID_SDK_ROOT" --licenses || true
+          sdkmanager --sdk_root="$ANDROID_SDK_ROOT" "platform-tools" "platforms;android-33" "build-tools;33.0.2"
+          echo "Android SDK installed to $ANDROID_SDK_ROOT"
 
       - name: Setup Godot
-        uses: chickensoft-games/setup-godot@v1
-        with:
-          version: ${{ env.GODOT_VERSION }}
-          use-dotnet: false
-          include-templates: true
+        run: |
+          mkdir -p ~/.local/share/godot/export_templates
+          curl -fsSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linuxx86_64.zip -o godot.zip
+          curl -fsSL https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz -o templates.tpz
+          unzip godot.zip
+          unzip templates.tpz
+          mv Godot_v${GODOT_VERSION}-stable_linuxx86_64 ~/.local/bin/godot
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+          mv ./templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
 
       - name: Setup debug keystore
         run: |
@@ -46,6 +64,9 @@ jobs:
           godot --headless --editor --quit || true
 
       - name: Export Android APK
+        env:
+          ANDROID_SDK_ROOT: ${{ runner.temp }}/android-sdk
+          PATH: ${{ runner.temp }}/android-sdk/cmdline-tools/latest/bin:${{ runner.temp }}/android-sdk/platform-tools:${PATH}
         run: |
           mkdir -p build/android
           godot --headless --export-debug "Android" build/android/${{ env.EXPORT_NAME }}.apk || echo "Export attempted"
