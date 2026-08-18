@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  GODOT_VERSION: 4.6
+  GODOT_VERSION: 4.6.0
   EXPORT_NAME: NOMADZ-0
 
 jobs:
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          submodules: false
 
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v1
