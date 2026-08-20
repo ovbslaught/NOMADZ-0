@@ -1,93 +1,3 @@
-    status TEXT NOT NULL
-);
-
--- Morphogenesis Signal Sigma Branches
-CREATE TABLE IF NOT EXISTS sigma_branches (
-    branch_id TEXT PRIMARY KEY,
-    session_id TEXT,
-    parent_id TEXT,
-    depth INTEGER,
-    node_type TEXT,
-    score REAL,
-    novelty REAL,
-    cost REAL,
-    fitness REAL,
-    status TEXT,
-    payload_json TEXT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- Autobuild & System Event Stream
-CREATE TABLE IF NOT EXISTS build_history (
-    build_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    repo_name TEXT NOT NULL,
-    target TEXT NOT NULL,
-    commit_hash TEXT,
-    status TEXT NOT NULL,
-    duration_sec REAL NOT NULL,
-    output_log TEXT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS event_log (
-    event_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    actor TEXT NOT NULL,
-    action TEXT NOT NULL,
-    target TEXT NOT NULL,
-    status TEXT NOT NULL,
-    meta_payload JSON
-);
-EOF
-
-echo "[+] Schema successfully compiled to omega_memory_LIVE.db"
-#!/usr/bin/env bash
-echo "=== WORMHOLE HEALTH AUDIT ==="
-# Check Database WAL status
-if [ -f "$HOME/WORMHOLE/NOMADZ-SPINE/omega_memory_LIVE.db" ]; then   TABLES=$(sqlite3 "$HOME/WORMHOLE/NOMADZ-SPINE/omega_memory_LIVE.db" "SELECT count(*) FROM sqlite_master WHERE type='table';");   echo "[OK] omega_memory_LIVE.db online ($TABLES tables detected)"; else   echo "[FAIL] omega_memory_LIVE.db missing at $HOME/WORMHOLE/NOMADZ-SPINE/"; fi
-# Check Ports
-echo "--- Port Bindings ---"
-for PORT in 8000 7424 7422 8080; do   if ss -tulpn 2>/dev/null | grep -q ":$PORT " || netstat -tuln 2>/dev/null | grep -q ":$PORT "; then     echo "[ONLINE] Port :$PORT is active";   else     echo "[OFFLINE] Port :$PORT is idle";   fi; done
-# Check Running Python Daemons
-echo "--- Active Daemons ---"
-ps aux 2>/dev/null | grep -E "morphogenesis_api|sigma_generator|gravity_validator|ant_router|ultimo" | grep -v grep || echo "No active daemons found in process tree."
-# Verify existing tables
-sqlite3 "$HOME/WORMHOLE/NOMADZ-SPINE/omega_memory_LIVE.db" "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;"
-# Clean idempotent table patch (safe to run multiple times)
-sqlite3 "$HOME/WORMHOLE/NOMADZ-SPINE/omega_memory_LIVE.db" << 'EOF'
-CREATE TABLE IF NOT EXISTS knowledge_state (
-    file_path TEXT PRIMARY KEY,
-    content_hash TEXT NOT NULL,
-    file_size INTEGER NOT NULL,
-    last_modified REAL NOT NULL,
-    chunk_count INTEGER NOT NULL,
-    indexed_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS embedding_cache (
-    chunk_hash TEXT PRIMARY KEY,
-    model TEXT NOT NULL,
-    vector_json TEXT NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-EOF
-
-# Generate test Sigma branch (depth 4) into omega_memory_LIVE.db
-python3 -c "
-import os, sys
-from services.morphogenesis.sigma_generator import SigmaGenerator
-gen = SigmaGenerator()
-tree = gen.generate_tree(depth=4)
-count = gen.commit_to_wal(tree, 'TEST-BOOT-001')
-print(f'[+] Successfully committed {count} Sigma nodes to omega_memory_LIVE.db')
-" 2>/dev/null || echo "[!] Test run: Ensure PYTHONPATH includes the morphogenesis repo root."
-echo "=== ACTIVE PROCESSES ==="
-ps aux | grep -E "python3|uvicorn" | grep -v grep
-echo "=== BOUND PORTS ==="
-for PORT in 8000 8080 7424 7422; do   nc -z -v 127.0.0.1 $PORT 2>&1 | grep -q "succeeded" && echo "Port $PORT: ONLINE" || echo "Port $PORT: IDLE"; done
-#!/usr/bin/env bash
-set -euo pipefail
-sqlite3 "$HOME/WORMHOLE/NOMADZ-SPINE/omega_memory_LIVE.db" << 'EOF'
 PRAGMA journal_mode=WAL;
 PRAGMA synchronous=NORMAL;
 
@@ -498,3 +408,93 @@ if [ -d "${COSMIC_DIR}" ]; then     echo "✅ COSMIC-BRAIN correctly checked out
 echo "=== [4/4] Workspace Automation Ready ==="
 # Ingest raw source into Bronze Layer
 python WORMHOLE/GEO-BRAIN/TOOLS/geologosctl.py ingest --pillar pillar-01-physics --dataset cern001 --source /data/cern_events.txt
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+VAULT_DIR="$HOME/storage/shared/WORMHOLE/MOTHER-BRAIN"
+LOGS_DIR="$VAULT_DIR/99_System_Logs"
+INBOX_DIR="$VAULT_DIR/00_Inbox"
+mkdir -p "$VAULT_DIR" "$LOGS_DIR" "$INBOX_DIR" "$HOME/bin" "$HOME/.termux/boot"
+echo "[1/3] Writing COMMAND_CENTER.md to vault..."
+cat << 'EOF' > "$VAULT_DIR/COMMAND_CENTER.md"
+---
+system_node: S23_ULTRA
+phi_target: 0.886
+state: NOMINAL
+---
+
+# 🛸 MOTHER-BRAIN // COMMAND CENTER
+
+> **Substrate:** `~/storage/shared/WORMHOLE/MOTHER-BRAIN`  
+> **Telemetry:** `99_System_Logs/omega_memory.db` (WAL)
+
+---
+
+### 🕹️ Dynamic Dispatch Triggers
+
+```meta-bind-button
+label: "Force Drive Sync"
+style: primary
+action:
+  type: "command"
+  command: "quickadd:choice:dispatch_sync_trigger"
+label: "Flush WAL & Checkpoint DB"
+style: default
+action:
+  type: "command"
+  command: "quickadd:choice:dispatch_checkpoint_trigger"
+let inbox = app.vault.getMarkdownFiles().filter(f => f.path.startsWith("00_Inbox"));
+dv.table(["File", "Modified", "Size"], 
+  inbox.map(f => [f.file.link, moment(f.file.mtime).fromNow(), f.file.size + " B"])
+);
+let logs = app.vault.getFiles().filter(f => f.path.startsWith("99_System_Logs") && (f.name.endsWith(".log") || f.name.endsWith(".json")));
+dv.table(["Log File", "Last Update", "Bytes"],
+  logs.map(l => [l.name, moment(l.stat.mtime).format("YYYY-MM-DD HH:mm:ss"), l.stat.size + " B"])
+);
+EOF
+
+​echo "[2/3] Deploying headless trigger listener..."
+#!/data/data/com.termux/files/usr/bin/bash
+set -euo pipefail
+VAULT_DIR="$HOME/storage/shared/WORMHOLE/MOTHER-BRAIN"
+LOGS_DIR="$VAULT_DIR/99_System_Logs"
+INBOX_DIR="$VAULT_DIR/00_Inbox"
+mkdir -p "$VAULT_DIR" "$LOGS_DIR" "$INBOX_DIR" "$HOME/bin" "$HOME/.termux/boot"
+echo "[1/3] Writing COMMAND_CENTER.md to vault..."
+cat << 'EOF' > "$VAULT_DIR/COMMAND_CENTER.md"
+---
+system_node: S23_ULTRA
+phi_target: 0.886
+state: NOMINAL
+---
+
+# 🛸 MOTHER-BRAIN // COMMAND CENTER
+
+> **Substrate:** `~/storage/shared/WORMHOLE/MOTHER-BRAIN`  
+> **Telemetry:** `99_System_Logs/omega_memory.db` (WAL)
+
+---
+
+### 🕹️ Dynamic Dispatch Triggers
+
+```meta-bind-button
+label: "Force Drive Sync"
+style: primary
+action:
+  type: "command"
+  command: "quickadd:choice:dispatch_sync_trigger"
+label: "Flush WAL & Checkpoint DB"
+style: default
+action:
+  type: "command"
+  command: "quickadd:choice:dispatch_checkpoint_trigger"
+let inbox = app.vault.getMarkdownFiles().filter(f => f.path.startsWith("00_Inbox"));
+dv.table(["File", "Modified", "Size"], 
+  inbox.map(f => [f.file.link, moment(f.file.mtime).fromNow(), f.file.size + " B"])
+);
+let logs = app.vault.getFiles().filter(f => f.path.startsWith("99_System_Logs") && (f.name.endsWith(".log") || f.name.endsWith(".json")));
+dv.table(["Log File", "Last Update", "Bytes"],
+  logs.map(l => [l.name, moment(l.stat.mtime).format("YYYY-MM-DD HH:mm:ss"), l.stat.size + " B"])
+);
+EOF
+
+​echo "[2/3] Deploying headless trigger listener..."
