@@ -1,0 +1,21 @@
+# System & Termux files
+.ssh/
+.termux/
+.npm/
+storage/
+downloads/
+
+# Secrets & Environment
+.env
+*.env
+*.pem
+*.key
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+
+# OS & Zip archives
+*.zip
+*.tar.gz
