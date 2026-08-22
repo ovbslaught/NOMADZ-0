@@ -19,3 +19,10 @@ __pycache__/
 # OS & Zip archives
 *.zip
 *.tar.gz
+.cache/
+.config/
+.nomadz/
+.python_history
+*.wal
+*.db-wal
+*.db-shm

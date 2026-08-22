@@ -1,0 +1,2 @@
+CERN Proton collision invariant mass peak detected at 125.09 GeV corresponding to the Standard Model Higgs Boson decay into photon pairs.
+Schrodinger wave function evolution maintains unitarity under unitary time evolution operator U(t) = exp(-iHt/hbar).
