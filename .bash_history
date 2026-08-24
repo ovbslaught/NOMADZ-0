@@ -1,500 +1,500 @@
-pillars_json = os.path.join(geo_dir, "registry/pillars.json")
-pillars_dir = os.path.join(geo_dir, "pillars")
-
-if os.path.exists(pillars_json):
-    try:
-        with open(pillars_json, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        pillars = data.get("pillars", data)
-        print(f"  - registry/pillars.json: [EXISTS] ({len(pillars)} pillars registered)")
-        if isinstance(pillars, list) and pillars:
-            sample = pillars[:3]
-            for p in sample:
-                name = p.get("name", p.get("id", "Unknown"))
-                desc = p.get("scope", p.get("description", p.get("domain", "")))[:70]
-                print(f"    * Pillar: {name} -> {desc}")
-        elif isinstance(pillars, dict):
-            for k in list(pillars.keys())[:3]:
-                print(f"    * Pillar {k}: {str(pillars[k])[:70]}")
-    except Exception as e:
-        print(f"  - Error reading pillars.json: {e}")
-else:
-    print(f"  - registry/pillars.json: [MISSING] at {pillars_json}")
-
-if os.path.exists(pillars_dir):
-    pfiles = [f for f in os.listdir(pillars_dir) if f.endswith((".json", ".md", ".txt"))]
-    print(f"  - pillars/ directory: [EXISTS] ({len(pfiles)} definition files)")
-    if pfiles:
-        sample_path = os.path.join(pillars_dir, pfiles[0])
-        size = os.path.getsize(sample_path)
-        print(f"    Sample ({pfiles[0]}): {size} bytes")
-else:
-    print(f"  - pillars/ directory: [MISSING] at {pillars_dir}")
-
-# 4. BACKGROUND DAEMONS & NETWORK HEALTH
-print("\n[+] 4. ACTIVE PORT & DAEMON HEALTH CHECK")
-services = [
-    (8000, "NOMADZ-0 Morphogenesis API"),
-    (8080, "VULTURE ULTIMO Backbone"),
-    (7424, "SWARM-SUBSTRATE-01 Engine")
-]
-for port, name in services:
-    try:
-        res = subprocess.run(["curl", "-s", f"http://127.0.0.1:{port}/health"], capture_output=True, text=True, timeout=2)
-        if "ONLINE" in res.stdout:
-            print(f"  [ONLINE]  Port {port:<5} | {name}")
-        else:
-            print(f"  [STANDBY] Port {port:<5} | {name}")
-    except Exception:
-        print(f"  [STANDBY] Port {port:<5} | {name}")
-
-# 5. RUNNING PROCESSES
-print("\n[+] 5. PROCESS MONITOR & ACTIVE ENGINES")
-try:
-    ps_res = subprocess.run(["ps", "-ef"], capture_output=True, text=True).stdout
-    py_procs = [l for l in ps_res.splitlines() if "python" in l and "audit" not in l]
-    print(f"  - Active Python processes: {len(py_procs)}")
-    for p in py_procs[:3]:
-        print(f"    PID Line: {p[:90]}")
-except Exception as e:
-    print(f"  - Process check notice: {e}")
-
-print("\n" + "=" * 60)
-print(" AUDIT SCAN COMPLETE")
-print("=" * 60)
-EOF
-
-# Execute the audit script
-python ~/WORMHOLE/audit_system_clarity.py
-# One-liner you can drop directly into your terminal or add to the setup script
-cat >> "${MB_DIR}/.gitignore" << 'EOF'
-Security/secrets.json
--VAULT-/
-*.env
-*.env.*
-*.key
-*.pem
-EOF
-
-git -C "${MB_DIR}" add .gitignore
-git -C "${MB_DIR}" commit -m "chore: add security exclusions to gitignore"
-git -C "${MB_DIR}" push
-commit_msg = f"[skip ci] Auto-Sync: {datetime.now(timezone.utc).isoformat()}"
-# In mb_daemon.py, change this one line:
-if time.time() - last_sync >= 300:  # 5 min instead of 60s
-processed = set()
-# inside main loop:
-for inbox_file in os.listdir(INBOX_DIR):
-nano "${MB_DIR}/scripts/mb_daemon.py"
-echo "${MB_DIR}"
-export MB_DIR="/data/data/com.termux/files/home/storage/shared/WORMHOLE/MOTHER-BRAIN"
-find /data/data/com.termux/files/home/storage/shared/WORMHOLE -name "mb_daemon.py" 2>/dev/null
-cat << 'PYEOF' > "${MB_DIR}/scripts/mb_daemon.py"
-#!/usr/bin/env python3
-import os, re, time, json, shutil, subprocess
-from datetime import datetime, timezone
-
-WORMHOLE_ROOT = os.environ.get("WORMHOLE_DIR", "/data/data/com.termux/files/home/storage/shared/WORMHOLE")
-MB_ROOT       = os.environ.get("MB_DIR", os.path.join(WORMHOLE_ROOT, "MOTHER-BRAIN"))
-INBOX_DIR     = os.path.join(MB_ROOT, "00_Inbox")
-SECRETS_FILE  = os.path.join(MB_ROOT, "Security", "secrets.json")
-LOG_FILE      = os.path.join(MB_ROOT, "99_System_Logs", "daemon.log")
-
-VAULT_EXCLUDE = {"-VAULT-", ".env", ".env.local", "secrets.json"}
-
-API_PATTERNS = {
-    "openai":   r"sk-[a-zA-Z0-9]{32,51}",
-    "github":   r"gh[pousr]-[A-Za-z0-9_]{36,255}",
-    "firecrawl":r"fc-[a-zA-Z0-9]{32,}"
-}
-
-def log(msg):
-    entry = f"[{datetime.now(timezone.utc).isoformat()}] {msg}"
-    print(entry)
-    with open(LOG_FILE, "a") as f:
-        f.write(entry + "
-")
-
-def scan_creds(path):
-    try:
-        content = open(path, "r", errors="ignore").read()
-        found = {p: list(set(re.findall(r, content))) for p, r in API_PATTERNS.items() if re.findall(r, content)}
-        if not found:
-            return
-        log(f"[SECURITY] Keys found in {os.path.basename(path)}: {list(found.keys())}")
-        store = {}
-        if os.path.exists(SECRETS_FILE):
-            try: store = json.load(open(SECRETS_FILE))
-            except: pass
-        for p, keys in found.items():
-            store[p] = list(set(store.get(p, []) + keys))
-        json.dump(store, open(SECRETS_FILE, "w"), indent=2)
-        if "key" in os.path.basename(path).lower():
-            os.remove(path)
-            log(f"[SECURITY] Purged {path}")
-    except Exception as e:
-        log(f"[ERROR] scan_creds: {e}")
-
-def ingest():
-    try:
-        for entry in os.listdir(WORMHOLE_ROOT):
-            if entry in VAULT_EXCLUDE or entry.startswith(".") or entry == "MOTHER-BRAIN":
-                continue
-            full = os.path.join(WORMHOLE_ROOT, entry)
-            if os.path.isfile(full):
-                dest = os.path.join(INBOX_DIR, entry)
-                shutil.move(full, dest)
-                log(f"[INBOX] {entry}")
-                scan_creds(dest)
-    except Exception as e:
-        log(f"[ERROR] ingest: {e}")
-
-def git_sync():
-    try:
-        status = subprocess.run(["git","-C",MB_ROOT,"status","--porcelain"], capture_output=True, text=True)
-        if status.stdout.strip():
-            subprocess.run(["git","-C",MB_ROOT,"add","."], check=True)
-            subprocess.run(["git","-C",MB_ROOT,"commit","-m",f"[skip ci] NOMADZ-0 sync {datetime.now(timezone.utc).isoformat()}"], check=True)
-            subprocess.run(["git","-C",MB_ROOT,"push"], check=False)
-            log("[GIT] Sync pushed.")
-    except Exception as e:
-        log(f"[ERROR] git_sync: {e}")
-
-def main():
-    log("[START] NOMADZ-0 MOTHER-BRAIN daemon online.")
-    processed = set()
-    last_sync = time.time()
-    while True:
-        ingest()
-        for f in os.listdir(INBOX_DIR):
-            if f in processed: continue
-            fp = os.path.join(INBOX_DIR, f)
-            if os.path.isfile(fp):
-                scan_creds(fp)
-                processed.add(f)
-        if time.time() - last_sync >= 300:
-            git_sync()
-            last_sync = time.time()
-        time.sleep(5)
+    print(f"[+] Physical telemetry written -> {packet_path}")
 
 if __name__ == "__main__":
     main()
-PYEOF
+EOF
 
-chmod +x "${MB_DIR}/scripts/mb_daemon.py"
-echo "[✓] mb_daemon.py written"
-cat "${MB_DIR}/scripts/mb_daemon.py" | head -5
-cat << 'PYEOF' > "${MB_DIR}/scripts/mb_daemon.py"
+chmod +x ~/termux_sensor_ingest.py && python3 ~/termux_sensor_ingest.py
+cat << 'EOF' > ~/recursive_healer.py
 #!/usr/bin/env python3
-import os, re, time, json, shutil, subprocess
+"""recursive_healer.py — Closed-loop execution monitor, WAL logger, and auto-patching harness."""
+
+import subprocess
+import json
+import os
+import sys
+from pathlib import Path
 from datetime import datetime, timezone
 
-WORMHOLE_ROOT = os.environ.get("WORMHOLE_DIR", "/data/data/com.termux/files/home/storage/shared/WORMHOLE")
-MB_ROOT       = os.environ.get("MB_DIR", os.path.join(WORMHOLE_ROOT, "MOTHER-BRAIN"))
-INBOX_DIR     = os.path.join(MB_ROOT, "00_Inbox")
-SECRETS_FILE  = os.path.join(MB_ROOT, "Security", "secrets.json")
-LOG_FILE      = os.path.join(MB_ROOT, "99_System_Logs", "daemon.log")
+MAX_RECURSION_DEPTH = 3
+WAL_FILE = Path(os.environ.get("NOMADZ_WAL", "/sdcard/WORMHOLE/nomadz.wal"))
 
-VAULT_EXCLUDE = {"-VAULT-", ".env", ".env.local", "secrets.json"}
-
-API_PATTERNS = {
-    "openai":   r"sk-[a-zA-Z0-9]{32,51}",
-    "github":   r"gh[pousr]-[A-Za-z0-9_]{36,255}",
-    "firecrawl":r"fc-[a-zA-Z0-9]{32,}"
-}
-
-def log(msg):
-    entry = f"[{datetime.now(timezone.utc).isoformat()}] {msg}"
-    print(entry)
-    with open(LOG_FILE, "a") as f:
-        f.write(entry + "
-")
-
-def scan_creds(path):
+def wal_append(app: str, level: str, msg: str, payload: dict = None):
     try:
-        content = open(path, "r", errors="ignore").read()
-        found = {p: list(set(re.findall(r, content))) for p, r in API_PATTERNS.items() if re.findall(r, content)}
-        if not found:
-            return
-        log(f"[SECURITY] Keys found in {os.path.basename(path)}: {list(found.keys())}")
-        store = {}
-        if os.path.exists(SECRETS_FILE):
-            try: store = json.load(open(SECRETS_FILE))
-            except: pass
-        for p, keys in found.items():
-            store[p] = list(set(store.get(p, []) + keys))
-        json.dump(store, open(SECRETS_FILE, "w"), indent=2)
-        if "key" in os.path.basename(path).lower():
-            os.remove(path)
-            log(f"[SECURITY] Purged {path}")
+        WAL_FILE.parent.mkdir(parents=True, exist_ok=True)
+        entry = {
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "app": app,
+            "level": level,
+            "msg": msg,
+            "payload": payload or {}
+        }
+        with open(WAL_FILE, "a") as f:
+            f.write(json.dumps(entry) + "\n")
     except Exception as e:
-        log(f"[ERROR] scan_creds: {e}")
+        print(f"[!] WAL write failed: {e}", file=sys.stderr)
 
-def ingest():
+def run_cmd(cmd: list, cwd: str = None) -> dict:
     try:
-        for entry in os.listdir(WORMHOLE_ROOT):
-            if entry in VAULT_EXCLUDE or entry.startswith(".") or entry == "MOTHER-BRAIN":
-                continue
-            full = os.path.join(WORMHOLE_ROOT, entry)
-            if os.path.isfile(full):
-                dest = os.path.join(INBOX_DIR, entry)
-                shutil.move(full, dest)
-                log(f"[INBOX] {entry}")
-                scan_creds(dest)
+        res = subprocess.run(
+            cmd, cwd=cwd,
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            text=True, timeout=120
+        )
+        return {
+            "ok": res.returncode == 0,
+            "rc": res.returncode,
+            "out": res.stdout.strip(),
+            "err": res.stderr.strip()
+        }
     except Exception as e:
-        log(f"[ERROR] ingest: {e}")
+        return {"ok": False, "rc": -1, "out": "", "err": str(e)}
 
-def git_sync():
-    try:
-        status = subprocess.run(["git","-C",MB_ROOT,"status","--porcelain"], capture_output=True, text=True)
-        if status.stdout.strip():
-            subprocess.run(["git","-C",MB_ROOT,"add","."], check=True)
-            subprocess.run(["git","-C",MB_ROOT,"commit","-m",f"[skip ci] NOMADZ-0 sync {datetime.now(timezone.utc).isoformat()}"], check=True)
-            subprocess.run(["git","-C",MB_ROOT,"push"], check=False)
-            log("[GIT] Sync pushed.")
-    except Exception as e:
-        log(f"[ERROR] git_sync: {e}")
+def self_heal_run(target_cmd: list, cwd: str = None, depth: int = 1) -> bool:
+    target_name = target_cmd[0]
+    wal_append("self_heal", "info", f"Executing target: {' '.join(target_cmd)} (Attempt {depth})")
 
-def main():
-    log("[START] NOMADZ-0 MOTHER-BRAIN daemon online.")
-    processed = set()
-    last_sync = time.time()
-    while True:
-        ingest()
-        for f in os.listdir(INBOX_DIR):
-            if f in processed: continue
-            fp = os.path.join(INBOX_DIR, f)
-            if os.path.isfile(fp):
-                scan_creds(fp)
-                processed.add(f)
-        if time.time() - last_sync >= 300:
-            git_sync()
-            last_sync = time.time()
-        time.sleep(5)
+    res = run_cmd(target_cmd, cwd=cwd)
+    if res["ok"]:
+        wal_append("self_heal", "ok", f"Execution successful for {target_name}", {"stdout": res["out"]})
+        print(f"[+] Success (Attempt {depth}):\n{res['out']}")
+        return True
+
+    wal_append("self_heal", "warn", f"Failure in {target_name} (Attempt {depth})", {"stderr": res["err"]})
+    print(f"[-] Execution failed on attempt {depth}:\n{res['err']}")
+
+    if depth >= MAX_RECURSION_DEPTH:
+        wal_append("self_heal", "error", f"Max recursion depth ({MAX_RECURSION_DEPTH}) reached for {target_name}")
+        print(f"[!] Max recursion depth reached for {target_name}. Escalation required.")
+        return False
+
+    # Diagnostic Payload Construction for Gemini / Local LLM
+    script_path = Path(cwd or ".", target_name)
+    source_code = script_path.read_text() if script_path.exists() and script_path.is_file() else "N/A"
+    
+    diagnostic_packet = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "target": target_name,
+        "depth": depth,
+        "stderr": res["err"],
+        "source": source_code
+    }
+    
+    packet_out = WAL_FILE.parent / f"heal_request_{int(datetime.now().timestamp())}.json"
+    packet_out.write_text(json.dumps(diagnostic_packet, indent=2))
+    wal_append("self_heal", "info", f"Heal packet generated -> {packet_out.name}")
+    print(f"[*] Diagnostic heal request queued -> {packet_out}")
+    
+    return False
 
 if __name__ == "__main__":
-    main()
-PYEOF
+    # Self-test harness against telemetry ingest
+    test_target = [sys.executable, str(Path.home() / "termux_sensor_ingest.py")]
+    self_heal_run(test_target)
+EOF
 
-chmod +x "${MB_DIR}/scripts/mb_daemon.py"
-echo "[✓] mb_daemon.py written"
-cat "${MB_DIR}/scripts/mb_daemon.py" | head -5
+chmod +x ~/recursive_healer.py && python3 ~/recursive_healer.py
+pkg install nodejs -y
+cd ~
+npm create vite@latest nomadz-ui -- --template react-ts
+npm run dev -- --host
 #!/usr/bin/env bash
+# ==============================================================================
+# NOMADZ AUTOMATION DEPLOYMENT & EXECUTION ENGINE (v2.0)
+# Target: WORMHOLE Architecture (PC / Termux / Linux)
+# ==============================================================================
 set -euo pipefail
-TARGET_BRANCH="Cosmic-key"
-FAILED_COMMIT="bb4f398"
-DB_PATH="omega_memory.db"
-echo "[1/5] Checking Git working tree state..."
-git status --short
-echo "[2/5] Verifying branch and commit context..."
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [ "$CURRENT_BRANCH" != "$TARGET_BRANCH" ]; then     echo "Switching to target branch: $TARGET_BRANCH";     git checkout "$TARGET_BRANCH"; fi
-#!/usr/bin/env bash
-set -e
-# 1. Setup Termux shared storage link if missing
-if [ ! -d "$HOME/storage/shared" ]; then     echo "[*] Initializing termux storage...";     termux-setup-storage;     sleep 2; fi
-# 2. Define canonical paths targeting external shared storage
-W_ROOT="$HOME/storage/shared/WORMHOLE"
-VAULT_PATH="$W_ROOT/-VAULT-"
-OMEGA_ROOT="$W_ROOT/OMEGA-BRAIN"
-MB_ROOT="$W_ROOT/MOTHER-BRAIN"
-# 3. Create all canonical directory trees
-mkdir -p "$VAULT_PATH"
-mkdir -p "$OMEGA_ROOT"
-mkdir -p "$MB_ROOT/00_INBOX"
-mkdir -p "$MB_ROOT/01_KNOWLEDGE_GRAPH/EXTERNAL_SOURCE"
-mkdir -p "$MB_ROOT/04_RESEARCH"
-mkdir -p "$MB_ROOT/SECURITY"
-# 4. Write pure ingestion engine directly to shared WORMHOLE node
-cat << 'PY_EOF' > "$OMEGA_ROOT/ingest_engine.py"
+# 1. PATH RESOLUTION & DIRECTORY INITIALIZATION
+BASE_DIR="${WORMHOLE_DIR:-$HOME/WORMHOLE}"
+if [ -d "/storage/emulated/0/WORMHOLE" ]; then     BASE_DIR="/storage/emulated/0/WORMHOLE"; elif [ -d "G:/WORMHOLE" ]; then     BASE_DIR="G:/WORMHOLE"; elif [ -d "D:/WORMHOLE" ]; then     BASE_DIR="D:/WORMHOLE"; fi
+export WORMHOLE_DIR="$BASE_DIR"
+DIRS=(     "$WORMHOLE_DIR/-VAULT-"     "$WORMHOLE_DIR/FATHER-BRAIN/FATHER-LIFE"     "$WORMHOLE_DIR/MOTHER-BRAIN"     "$WORMHOLE_DIR/OMEGA-BRAIN"     "$WORMHOLE_DIR/COSMIC-BRAIN"     "$WORMHOLE_DIR/GEO-BRAIN"     "$WORMHOLE_DIR/VULTURE-BRAIN"     "$WORMHOLE_DIR/NOMADZ-0/queue"     "$WORMHOLE_DIR/NOMADZ-0/outputs"     "$WORMHOLE_DIR/NOMADZ-0/godot_project" )
+for d in "${DIRS[@]}"; do     if [ ! -d "$d" ]; then         mkdir -p "$d";         echo "[INIT] Created directory: $d";     fi; done
+# Keep Termux awake if applicable
+command -v termux-wake-lock >/dev/null 2>&1 && termux-wake-lock
+# 2. WRITE-AHEAD LOG & DATABASE INIT (SQLite WAL)
+DB_PATH="$WORMHOLE_DIR/OMEGA-BRAIN/omega_memory.db"
+if command -v sqlite3 >/dev/null 2>&1; then
+    sqlite3 "$DB_PATH" <<'EOF'
+PRAGMA journal_mode = WAL;
+PRAGMA synchronous = NORMAL;
+CREATE TABLE IF NOT EXISTS task_ledger (
+    task_id TEXT PRIMARY KEY,
+    timestamp TEXT NOT NULL,
+    action TEXT NOT NULL,
+    status TEXT NOT NULL,
+    payload TEXT,
+    result TEXT
+);
+CREATE TABLE IF NOT EXISTS system_telemetry (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp TEXT NOT NULL,
+    subsystem TEXT NOT NULL,
+    metric_key TEXT NOT NULL,
+    metric_value REAL
+);
+EOF
+     echo "[INIT] SQLite schema initialized at: $DB_PATH"; fi
+# 3. WRITE PRODUCTION ORCHESTRATOR SCRIPT
+cat <<'EOF' > "$WORMHOLE_DIR/nomadz_orchestrator.py"
+#!/usr/bin/env python3
 import os
 import sys
 import json
+import time
+import shlex
 import sqlite3
-import hashlib
+import argparse
+import subprocess
+from pathlib import Path
 from datetime import datetime, timezone
 
-HOME_DIR = os.path.expanduser("~")
-W_ROOT = os.path.join(HOME_DIR, "storage", "shared", "WORMHOLE")
-VAULT_DIR = os.path.join(W_ROOT, "-VAULT-")
-DB_PATH = os.path.join(VAULT_DIR, "omega_memory.db")
+WORMHOLE_ROOT = Path(os.environ.get("WORMHOLE_DIR", Path.home() / "WORMHOLE"))
+QUEUE_DIR = WORMHOLE_ROOT / "NOMADZ-0" / "queue"
+OUTPUTS_DIR = WORMHOLE_ROOT / "NOMADZ-0" / "outputs"
+DB_PATH = WORMHOLE_ROOT / "OMEGA-BRAIN" / "omega_memory.db"
+WAL_LOG = WORMHOLE_ROOT / "nomadz.wal"
 
-def init_db():
-    os.makedirs(VAULT_DIR, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH, timeout=15.0)
-    conn.execute("PRAGMA journal_mode=WAL;")
-    conn.execute("PRAGMA synchronous=NORMAL;")
-    with conn:
-        conn.executescript("""
-        CREATE TABLE IF NOT EXISTS system_events (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-            actor TEXT,
-            event_type TEXT,
-            details TEXT
-        );
-        CREATE TABLE IF NOT EXISTS notebook_memory (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            cell_hash TEXT UNIQUE NOT NULL,
-            file_path TEXT NOT NULL,
-            notebook_name TEXT NOT NULL,
-            cell_index INTEGER NOT NULL,
-            cell_type TEXT NOT NULL,
-            source_content TEXT NOT NULL,
-            ingested_at TEXT NOT NULL
-        );
-        CREATE INDEX IF NOT EXISTS idx_nb_hash ON notebook_memory(cell_hash);
-        """)
-    return conn
+def log_event(subsystem: str, action: str, status: str, payload: dict = None, result: dict = None):
+    now = datetime.now(timezone.utc).isoformat()
+    record = {
+        "timestamp": now,
+        "subsystem": subsystem,
+        "action": action,
+        "status": status,
+        "payload": payload or {},
+        "result": result or {}
+    }
+    
+    # Append to plain WAL file
+    WAL_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with open(WAL_LOG, "a", encoding="utf-8") as f:
+        f.write(json.dumps(record) + "\n")
+        
+    # Append to SQLite task ledger
+    try:
+        with sqlite3.connect(str(DB_PATH), timeout=10.0) as conn:
+            conn.execute("PRAGMA journal_mode = WAL;")
+            conn.execute("PRAGMA busy_timeout = 5000;")
+            cursor = conn.cursor()
+            task_id = payload.get("task_id", f"AUTO_{int(time.time()*1000)}") if payload else f"SYS_{int(time.time()*1000)}"
+            cursor.execute(
+                "INSERT OR REPLACE INTO task_ledger (task_id, timestamp, action, status, payload, result) VALUES (?, ?, ?, ?, ?, ?)",
+                (task_id, now, action, status, json.dumps(payload or {}), json.dumps(result or {}))
+            )
+            conn.commit()
+    except Exception as db_err:
+        with open(WAL_LOG, "a", encoding="utf-8") as f:
+            f.write(json.dumps({"timestamp": now, "subsystem": "DB_ERROR", "error": str(db_err)}) + "\n")
 
-def hash_payload(filepath: str, idx: int, content: str) -> str:
-    raw = f"{filepath}:{idx}:{content}"
-    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+def run_cmd(cmd: list, cwd: Path = None, timeout: int = 600) -> dict:
+    try:
+        proc = subprocess.run(
+            cmd,
+            cwd=str(cwd) if cwd else None,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=timeout
+        )
+        return {
+            "ok": proc.returncode == 0,
+            "rc": proc.returncode,
+            "stdout": proc.stdout.strip(),
+            "stderr": proc.stderr.strip()
+        }
+    except Exception as e:
+        return {"ok": False, "rc": -1, "stdout": "", "stderr": str(e)}
 
-def ingest_notebooks(conn):
-    ingested = 0
-    skipped = 0
-    now_iso = datetime.now(timezone.utc).isoformat()
-    cursor = conn.cursor()
+def dispatch_task(task_path: Path):
+    try:
+        data = json.loads(task_path.read_text(encoding="utf-8"))
+    except Exception as err:
+        log_event("DISPATCHER", "PARSE_MANIFEST", "FAILED", {"file": task_path.name}, {"error": str(err)})
+        task_path.unlink(missing_ok=True)
+        return
 
-    for root, _, files in os.walk(W_ROOT):
-        for f in files:
-            if f.endswith(".ipynb") and not f.startswith(".ipynb_checkpoints"):
-                full_path = os.path.join(root, f)
-                try:
-                    with open(full_path, "r", encoding="utf-8", errors="ignore") as nbf:
-                        data = json.load(nbf)
-                    cells = data.get("cells", [])
-                    for idx, cell in enumerate(cells):
-                        cell_type = cell.get("cell_type", "unknown")
-                        src = "".join(cell.get("source", []))
-                        if not src.strip():
-                            continue
-                        chash = hash_payload(full_path, idx, src)
-                        try:
-                            cursor.execute(
-                                """
-                                INSERT INTO notebook_memory 
-                                (cell_hash, file_path, notebook_name, cell_index, cell_type, source_content, ingested_at)
-                                VALUES (?, ?, ?, ?, ?, ?, ?)
-                                """,
-                                (chash, full_path, f, idx, cell_type, src, now_iso)
-                            )
-                            ingested += 1
-                        except sqlite3.IntegrityError:
-                            skipped += 1
-                except Exception as err:
-                    print(f"[ERROR] Skipping corrupt notebook {f}: {err}")
+    task_id = data.get("task_id", task_path.stem)
+    action = data.get("action", "UNKNOWN")
+    params = data.get("params", {})
 
-    conn.commit()
-    print(f"[INGEST COMPLETE] Processed cells -> Imported: {ingested} | Existing: {skipped}")
+    log_event("DISPATCHER", action, "RUNNING", {"task_id": task_id, "params": params})
+    res = {"ok": False, "msg": f"Unsupported action: {action}"}
+
+    try:
+        if action == "SYNC_GDRIVE":
+            res = run_cmd(["rclone", "sync", str(WORMHOLE_ROOT), "gdrive:WORMHOLE", "--exclude", "*.tmp", "--transfers=4", "--checkers=8"])
+        elif action == "GODOT_IMPORT":
+            proj = Path(params.get("project_path", WORMHOLE_ROOT / "NOMADZ-0" / "godot_project"))
+            res = run_cmd(["godot", "--headless", "--import"], cwd=proj)
+        elif action == "SHELL_EXEC":
+            raw_cmd = params.get("command", [])
+            if isinstance(raw_cmd, str):
+                cmd_list = shlex.split(raw_cmd)
+            else:
+                cmd_list = raw_cmd
+            res = run_cmd(cmd_list, cwd=WORMHOLE_ROOT)
+    except Exception as exec_err:
+        res = {"ok": False, "rc": -1, "stdout": "", "stderr": str(exec_err)}
+    finally:
+        final_status = "SUCCESS" if res.get("ok") else "FAILED"
+        log_event("DISPATCHER", action, final_status, {"task_id": task_id, "params": params}, res)
+
+        OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+        out_file = OUTPUTS_DIR / f"{task_id}_result.json"
+        out_file.write_text(json.dumps({"task_id": task_id, "status": final_status, "result": res}, indent=2), encoding="utf-8")
+        task_path.unlink(missing_ok=True)
+
+def run_loop(poll_interval: int = 5):
+    print(f"[*] NOMADZ Orchestrator Active. Root: {WORMHOLE_ROOT}")
+    QUEUE_DIR.mkdir(parents=True, exist_ok=True)
+    while True:
+        manifests = sorted(QUEUE_DIR.glob("*.json"))
+        for m in manifests:
+            if m.is_file():
+                dispatch_task(m)
+        time.sleep(poll_interval)
 
 if __name__ == "__main__":
-    db_conn = init_db()
-    ingest_notebooks(db_conn)
-    db_conn.close()
-PY_EOF
+    parser = argparse.ArgumentParser(description="Headless NOMADZ Engine")
+    parser.add_argument("--daemon", action="store_true", help="Start polling loop")
+    parser.add_argument("--sync", action="store_true", help="Direct gdrive sync")
+    args = parser.parse_args()
 
-# 5. Execute engine via python3 binary
-python3 "$OMEGA_ROOT/ingest_engine.py"
-# 6. Verify SQLite tables and WAL state
-sqlite3 "$VAULT_PATH/omega_memory.db" "PRAGMA journal_mode;"
-sqlite3 "$VAULT_PATH/omega_memory.db" "SELECT name FROM sqlite_master WHERE type='table';"
-sqlite3 "$VAULT_PATH/omega_memory.db" "SELECT COUNT(*) FROM notebook_memory;"
-# 1. Ingest across both shared storage and local Termux home
-python3 -c '
-import os
-import json
-import sqlite3
-import hashlib
-from datetime import datetime, timezone
-
-HOME_DIR = os.path.expanduser("~")
-DB_PATH = os.path.join(HOME_DIR, "storage", "shared", "WORMHOLE", "-VAULT-", "omega_memory.db")
-
-SEARCH_PATHS = [
-    os.path.join(HOME_DIR, "storage", "shared"),
-    HOME_DIR
-]
-
-def hash_payload(filepath: str, idx: int, content: str) -> str:
-    raw = f"{filepath}:{idx}:{content}"
-    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
-
-conn = sqlite3.connect(DB_PATH, timeout=15.0)
-conn.execute("PRAGMA journal_mode=WAL;")
-cursor = conn.cursor()
-
-ingested = 0
-skipped = 0
-now_iso = datetime.now(timezone.utc).isoformat()
-
-for base in SEARCH_PATHS:
-    if not os.path.exists(base):
-        continue
-    for root, _, files in os.walk(base):
-        # Skip hidden git and cache trees
-        if "/.git" in root or "/.cache" in root or "-VAULT-" in root:
-            continue
-        for f in files:
-            if f.endswith(".ipynb") and not f.startswith(".ipynb_checkpoints"):
-                full_path = os.path.join(root, f)
-                try:
-                    with open(full_path, "r", encoding="utf-8", errors="ignore") as nbf:
-                        data = json.load(nbf)
-                    cells = data.get("cells", [])
-                    for idx, cell in enumerate(cells):
-                        cell_type = cell.get("cell_type", "unknown")
-                        src = "".join(cell.get("source", []))
-                        if not src.strip():
-                            continue
-                        chash = hash_payload(full_path, idx, src)
-                        try:
-                            cursor.execute(
-                                """
-                                INSERT INTO notebook_memory
-                                (cell_hash, file_path, notebook_name, cell_index, cell_type, source_content, ingested_at)
-                                VALUES (?, ?, ?, ?, ?, ?, ?)
-                                """,
-                                (chash, full_path, f, idx, cell_type, src, now_iso)
-                            )
-                            ingested += 1
-                        except sqlite3.IntegrityError:
-                            skipped += 1
-                except Exception as err:
-                    print(f"[ERROR] Corrupt file {full_path}: {err}")
-
-conn.commit()
-conn.close()
-print(f"[GLOBAL INGEST COMPLETE] Imported: {ingested} | Existing: {skipped}")
-'
-# 2. Check updated database records
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" "SELECT COUNT(*) FROM notebook_memory;"
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" "SELECT DISTINCT notebook_name FROM notebook_memory;"
-# Query breakdown by cell type across all ingested notebooks
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" "SELECT cell_type, COUNT(*) FROM notebook_memory GROUP BY cell_type;"
-# Check SQLite WAL checkpoint integrity
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" "PRAGMA wal_checkpoint(TRUNCATE);"
-# Verify sample notebook code blocks from OMEGA_SPACE.ipynb
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" "SELECT cell_index, substr(source_content, 1, 120) FROM notebook_memory WHERE notebook_name='OMEGA_SPACE.ipynb' AND cell_type='code' LIMIT 5;"
-# Check full schema definition including indexes
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" ".schema"
-# Verify top 5 largest code notebooks by cell volume
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" "SELECT notebook_name, COUNT(*) as cell_count FROM notebook_memory WHERE cell_type='code' GROUP BY notebook_name ORDER BY cell_count DESC LIMIT 5;"
-# Set up FTS5 full-text search table for fast retrieval of scripts and cells
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" << 'EOF'
-CREATE VIRTUAL TABLE IF NOT EXISTS notebook_search USING fts5(
-    notebook_name,
-    cell_type,
-    source_content,
-    content='notebook_memory',
-    content_rowid='id'
-);
-
--- Populate search index
-INSERT INTO notebook_search(rowid, notebook_name, cell_type, source_content)
-SELECT id, notebook_name, cell_type, source_content FROM notebook_memory;
+    if args.sync:
+        res = run_cmd(["rclone", "sync", str(WORMHOLE_ROOT), "gdrive:WORMHOLE", "--exclude", "*.tmp"])
+        log_event("CLI", "SYNC_GDRIVE", "SUCCESS" if res["ok"] else "FAILED", {}, res)
+        print(json.dumps(res, indent=2))
+    else:
+        run_loop()
 EOF
 
-# Test keyword query across all ingested notebook cells (e.g. 'torch' or 'sqlite3')
-sqlite3 "$HOME/storage/shared/WORMHOLE/-VAULT-/omega_memory.db" "SELECT notebook_name, cell_index, substr(source_content, 1, 80) FROM notebook_search WHERE notebook_search MATCH 'sqlite3' LIMIT 5;"
+chmod +x "$WORMHOLE_DIR/nomadz_orchestrator.py"
+# 4. INJECT INITIAL TEST/SYNC TASK
+INIT_TASK="$WORMHOLE_DIR/NOMADZ-0/queue/task_init_sync.json"
+cat <<'EOF' > "$INIT_TASK"
+{
+  "task_id": "TASK_INIT_SYNC_001",
+  "action": "SYNC_GDRIVE",
+  "params": {
+    "source": "LOCAL_WORMHOLE",
+    "target": "gdrive:WORMHOLE"
+  }
+}
+EOF
+
+# 5. START DAEMON BACKGROUND PROCESS (Unbuffered)
+python3 -u "$WORMHOLE_DIR/nomadz_orchestrator.py" --daemon > "$WORMHOLE_DIR/nomadz_daemon.log" 2>&1 &
+PID=$!
+echo "[ONLINE] NOMADZ Orchestrator daemon running with PID: $PID (Log: $WORMHOLE_DIR/nomadz_daemon.log)"
+#!/usr/bin/env bash
+# ==============================================================================
+# NOMADZ AUTOMATION DEPLOYMENT & EXECUTION ENGINE (v2.0)
+# Target: WORMHOLE Architecture (PC / Termux / Linux)
+# ==============================================================================
+set -euo pipefail
+# 1. PATH RESOLUTION & DIRECTORY INITIALIZATION
+BASE_DIR="${WORMHOLE_DIR:-$HOME/WORMHOLE}"
+if [ -d "/storage/emulated/0/WORMHOLE" ]; then     BASE_DIR="/storage/emulated/0/WORMHOLE"; elif [ -d "G:/WORMHOLE" ]; then     BASE_DIR="G:/WORMHOLE"; elif [ -d "D:/WORMHOLE" ]; then     BASE_DIR="D:/WORMHOLE"; fi
+export WORMHOLE_DIR="$BASE_DIR"
+DIRS=(     "$WORMHOLE_DIR/-VAULT-"     "$WORMHOLE_DIR/FATHER-BRAIN/FATHER-LIFE"     "$WORMHOLE_DIR/MOTHER-BRAIN"     "$WORMHOLE_DIR/OMEGA-BRAIN"     "$WORMHOLE_DIR/COSMIC-BRAIN"     "$WORMHOLE_DIR/GEO-BRAIN"     "$WORMHOLE_DIR/VULTURE-BRAIN"     "$WORMHOLE_DIR/NOMADZ-0/queue"     "$WORMHOLE_DIR/NOMADZ-0/outputs"     "$WORMHOLE_DIR/NOMADZ-0/godot_project" )
+for d in "${DIRS[@]}"; do     if [ ! -d "$d" ]; then         mkdir -p "$d";         echo "[INIT] Created directory: $d";     fi; done
+# Keep Termux awake if applicable
+command -v termux-wake-lock >/dev/null 2>&1 && termux-wake-lock
+# 2. WRITE-AHEAD LOG & DATABASE INIT (SQLite WAL)
+DB_PATH="$WORMHOLE_DIR/OMEGA-BRAIN/omega_memory.db"
+if command -v sqlite3 >/dev/null 2>&1; then
+    sqlite3 "$DB_PATH" <<'EOF'
+PRAGMA journal_mode = WAL;
+PRAGMA synchronous = NORMAL;
+CREATE TABLE IF NOT EXISTS task_ledger (
+    task_id TEXT PRIMARY KEY,
+    timestamp TEXT NOT NULL,
+    action TEXT NOT NULL,
+    status TEXT NOT NULL,
+    payload TEXT,
+    result TEXT
+);
+CREATE TABLE IF NOT EXISTS system_telemetry (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp TEXT NOT NULL,
+    subsystem TEXT NOT NULL,
+    metric_key TEXT NOT NULL,
+    metric_value REAL
+);
+EOF
+     echo "[INIT] SQLite schema initialized at: $DB_PATH"; fi
+# 3. WRITE PRODUCTION ORCHESTRATOR SCRIPT
+cat <<'EOF' > "$WORMHOLE_DIR/nomadz_orchestrator.py"
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import time
+import shlex
+import sqlite3
+import argparse
+import subprocess
+from pathlib import Path
+from datetime import datetime, timezone
+
+WORMHOLE_ROOT = Path(os.environ.get("WORMHOLE_DIR", Path.home() / "WORMHOLE"))
+QUEUE_DIR = WORMHOLE_ROOT / "NOMADZ-0" / "queue"
+OUTPUTS_DIR = WORMHOLE_ROOT / "NOMADZ-0" / "outputs"
+DB_PATH = WORMHOLE_ROOT / "OMEGA-BRAIN" / "omega_memory.db"
+WAL_LOG = WORMHOLE_ROOT / "nomadz.wal"
+
+def log_event(subsystem: str, action: str, status: str, payload: dict = None, result: dict = None):
+    now = datetime.now(timezone.utc).isoformat()
+    record = {
+        "timestamp": now,
+        "subsystem": subsystem,
+        "action": action,
+        "status": status,
+        "payload": payload or {},
+        "result": result or {}
+    }
+    
+    # Append to plain WAL file
+    WAL_LOG.parent.mkdir(parents=True, exist_ok=True)
+    with open(WAL_LOG, "a", encoding="utf-8") as f:
+        f.write(json.dumps(record) + "\n")
+        
+    # Append to SQLite task ledger
+    try:
+        with sqlite3.connect(str(DB_PATH), timeout=10.0) as conn:
+            conn.execute("PRAGMA journal_mode = WAL;")
+            conn.execute("PRAGMA busy_timeout = 5000;")
+            cursor = conn.cursor()
+            task_id = payload.get("task_id", f"AUTO_{int(time.time()*1000)}") if payload else f"SYS_{int(time.time()*1000)}"
+            cursor.execute(
+                "INSERT OR REPLACE INTO task_ledger (task_id, timestamp, action, status, payload, result) VALUES (?, ?, ?, ?, ?, ?)",
+                (task_id, now, action, status, json.dumps(payload or {}), json.dumps(result or {}))
+            )
+            conn.commit()
+    except Exception as db_err:
+        with open(WAL_LOG, "a", encoding="utf-8") as f:
+            f.write(json.dumps({"timestamp": now, "subsystem": "DB_ERROR", "error": str(db_err)}) + "\n")
+
+def run_cmd(cmd: list, cwd: Path = None, timeout: int = 600) -> dict:
+    try:
+        proc = subprocess.run(
+            cmd,
+            cwd=str(cwd) if cwd else None,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=timeout
+        )
+        return {
+            "ok": proc.returncode == 0,
+            "rc": proc.returncode,
+            "stdout": proc.stdout.strip(),
+            "stderr": proc.stderr.strip()
+        }
+    except Exception as e:
+        return {"ok": False, "rc": -1, "stdout": "", "stderr": str(e)}
+
+def dispatch_task(task_path: Path):
+    try:
+        data = json.loads(task_path.read_text(encoding="utf-8"))
+    except Exception as err:
+        log_event("DISPATCHER", "PARSE_MANIFEST", "FAILED", {"file": task_path.name}, {"error": str(err)})
+        task_path.unlink(missing_ok=True)
+        return
+
+    task_id = data.get("task_id", task_path.stem)
+    action = data.get("action", "UNKNOWN")
+    params = data.get("params", {})
+
+    log_event("DISPATCHER", action, "RUNNING", {"task_id": task_id, "params": params})
+    res = {"ok": False, "msg": f"Unsupported action: {action}"}
+
+    try:
+        if action == "SYNC_GDRIVE":
+            res = run_cmd(["rclone", "sync", str(WORMHOLE_ROOT), "gdrive:WORMHOLE", "--exclude", "*.tmp", "--transfers=4", "--checkers=8"])
+        elif action == "GODOT_IMPORT":
+            proj = Path(params.get("project_path", WORMHOLE_ROOT / "NOMADZ-0" / "godot_project"))
+            res = run_cmd(["godot", "--headless", "--import"], cwd=proj)
+        elif action == "SHELL_EXEC":
+            raw_cmd = params.get("command", [])
+            if isinstance(raw_cmd, str):
+                cmd_list = shlex.split(raw_cmd)
+            else:
+                cmd_list = raw_cmd
+            res = run_cmd(cmd_list, cwd=WORMHOLE_ROOT)
+    except Exception as exec_err:
+        res = {"ok": False, "rc": -1, "stdout": "", "stderr": str(exec_err)}
+    finally:
+        final_status = "SUCCESS" if res.get("ok") else "FAILED"
+        log_event("DISPATCHER", action, final_status, {"task_id": task_id, "params": params}, res)
+
+        OUTPUTS_DIR.mkdir(parents=True, exist_ok=True)
+        out_file = OUTPUTS_DIR / f"{task_id}_result.json"
+        out_file.write_text(json.dumps({"task_id": task_id, "status": final_status, "result": res}, indent=2), encoding="utf-8")
+        task_path.unlink(missing_ok=True)
+
+def run_loop(poll_interval: int = 5):
+    print(f"[*] NOMADZ Orchestrator Active. Root: {WORMHOLE_ROOT}")
+    QUEUE_DIR.mkdir(parents=True, exist_ok=True)
+    while True:
+        manifests = sorted(QUEUE_DIR.glob("*.json"))
+        for m in manifests:
+            if m.is_file():
+                dispatch_task(m)
+        time.sleep(poll_interval)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Headless NOMADZ Engine")
+    parser.add_argument("--daemon", action="store_true", help="Start polling loop")
+    parser.add_argument("--sync", action="store_true", help="Direct gdrive sync")
+    args = parser.parse_args()
+
+    if args.sync:
+        res = run_cmd(["rclone", "sync", str(WORMHOLE_ROOT), "gdrive:WORMHOLE", "--exclude", "*.tmp"])
+        log_event("CLI", "SYNC_GDRIVE", "SUCCESS" if res["ok"] else "FAILED", {}, res)
+        print(json.dumps(res, indent=2))
+    else:
+        run_loop()
+EOF
+
+chmod +x "$WORMHOLE_DIR/nomadz_orchestrator.py"
+# 4. INJECT INITIAL TEST/SYNC TASK
+INIT_TASK="$WORMHOLE_DIR/NOMADZ-0/queue/task_init_sync.json"
+cat <<'EOF' > "$INIT_TASK"
+{
+  "task_id": "TASK_INIT_SYNC_001",
+  "action": "SYNC_GDRIVE",
+  "params": {
+    "source": "LOCAL_WORMHOLE",
+    "target": "gdrive:WORMHOLE"
+  }
+}
+EOF
+
+# 5. START DAEMON BACKGROUND PROCESS (Unbuffered)
+python3 -u "$WORMHOLE_DIR/nomadz_orchestrator.py" --daemon > "$WORMHOLE_DIR/nomadz_daemon.log" 2>&1 &
+PID=$!
+echo "[ONLINE] NOMADZ Orchestrator daemon running with PID: $PID (Log: $WORMHOLE_DIR/nomadz_daemon.log)"
+# Initialize git if not already tracked
+git init
+# Verify or link the remote upstream repository
+git remote remove origin 2>/dev/null
+git remote add origin https://github.com/ovbslaught/NOMADZ-0.git
+# Pull latest state to avoid merge conflicts
+git pull origin main --rebase || true
+# Stage core manifests, schemas, GDScripts, and config files
+git add .
+# Commit system snapshot
+git commit -m "feat(nomadz-0): sync engine scripts, manifests, and export pipelines"
+# Set branch to main and push
+git branch -M main
+git push -u origin main
+cd
+#!/usr/bin/env bash
+set -euo pipefail
+# Ensure remote is set
+git remote remove origin 2>/dev/null || true
+git remote add origin https://github.com/ovbslaught/NOMADZ-0.git
+# Stage all files, commit snapshot, and push
+git add -A

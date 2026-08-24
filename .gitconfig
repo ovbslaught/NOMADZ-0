@@ -1,11 +1,15 @@
 [core]
 	excludesfile = /data/data/com.termux/files/home/.gitignore
 [user]
-	name = Brett Slaughter
-	email = ovbslaught@gmail.com
+	name = Sol-Autobuild-Bot
+	email = cosmickey001@gmail.com
 [credential "https://github.com"]
 	helper = 
 	helper = !/data/data/com.termux/files/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/data/data/com.termux/files/usr/bin/gh auth git-credential
+[safe]
+	directory = *
+	directory = *
+	directory = *
