@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dg4ulkadaqpab"]
+
+[ext_resource type="PackedScene" uid="uid://xhla57ruhkbn" path="res://maincity.tscn" id="1_3qucy"]
+[ext_resource type="PackedScene" uid="uid://ew48f0tqob7u" path="res://scene2.tscn" id="2_ulkbk"]
+[ext_resource type="PackedScene" uid="uid://dj47h6ng8njef" path="res://NOMADZ-O/WORLD/world.tscn" id="3_1f7ly"]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(2.048864, 0, 0, 0, 6.2509446, 0, 0, 0, 5.594617, 0, 0, 0)
+
+[node name="Node3D" parent="." instance=ExtResource("1_3qucy")]
+transform = Transform3D(-0.11374081, 0, -0.9935105, 0, 1, 0, 0.9935105, 0, -0.11374081, -143.1492, -1842.21, 2155.2275)
+
+[node name="Node3D2" parent="." instance=ExtResource("2_ulkbk")]
+transform = Transform3D(-0.99901366, 0, 0.04440412, 0, 1, 0, -0.04440412, 0, -0.99901366, 0, -2110.893, -2194.2979)
+
+[node name="Node3D3" parent="." instance=ExtResource("1_3qucy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2322998, 118.752655, -194.14102)
+
+[node name="WORLD" parent="." instance=ExtResource("3_1f7ly")]
+
+[node name="Camera3D" type="Camera3D" parent="."]

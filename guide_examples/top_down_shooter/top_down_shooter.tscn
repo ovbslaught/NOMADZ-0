@@ -1,0 +1,138 @@
+[gd_scene load_steps=18 format=3 uid="uid://kmamxwy5rcyc"]
+
+[ext_resource type="Script" path="res://guide_examples/top_down_shooter/top_down_shooter.gd" id="1_gvlv5"]
+[ext_resource type="Script" path="res://guide_examples/top_down_shooter/player/player.gd" id="1_pm1t3"]
+[ext_resource type="Resource" uid="uid://dhp7nup127wxw" path="res://guide_examples/top_down_shooter/mapping_contexts/keyboard_and_mouse.tres" id="2_bl5ot"]
+[ext_resource type="Texture2D" uid="uid://c22k1y6rbntlw" path="res://guide_examples/top_down_shooter/player/mrg0000.png" id="2_rc4yh"]
+[ext_resource type="Resource" uid="uid://dysrgn1ubf15g" path="res://guide_examples/top_down_shooter/mapping_contexts/controller.tres" id="3_tldv6"]
+[ext_resource type="Resource" uid="uid://byu565ktximg2" path="res://guide_examples/top_down_shooter/mapping_contexts/switch_to_controller.tres" id="4_rfvaw"]
+[ext_resource type="Resource" uid="uid://vpsh1myp67ws" path="res://guide_examples/top_down_shooter/mapping_contexts/look_relative.tres" id="5_hxqcn"]
+[ext_resource type="Resource" uid="uid://bnd2jguy7tfti" path="res://guide_examples/top_down_shooter/mapping_contexts/switch_to_keyboard_and_mouse.tres" id="5_usevy"]
+[ext_resource type="Resource" uid="uid://c4tpipfhludsi" path="res://guide_examples/top_down_shooter/mapping_contexts/look_absolute.tres" id="6_viqho"]
+[ext_resource type="Resource" uid="uid://ch070wegl722t" path="res://guide_examples/top_down_shooter/mapping_contexts/move.tres" id="7_gtewy"]
+[ext_resource type="Resource" uid="uid://coktqyup12g3w" path="res://guide_examples/top_down_shooter/mapping_contexts/fire.tres" id="8_kmeb0"]
+[ext_resource type="PackedScene" uid="uid://dkr80d2pi0d41" path="res://addons/guide/debugger/guide_debugger.tscn" id="9_kqgcv"]
+[ext_resource type="PackedScene" uid="uid://c0fqv8e3tljmp" path="res://guide_examples/top_down_shooter/bolt/bolt.tscn" id="9_ybbsa"]
+[ext_resource type="Theme" uid="uid://dot0gi1yoqmrl" path="res://guide_examples/shared/ui_theme.tres" id="14_ipln3"]
+[ext_resource type="Script" path="res://guide_examples/shared/instructions_label.gd" id="15_d8ctw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jh0ar"]
+radius = 118.54
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_duktp"]
+
+[node name="TopDownShooter" type="Node2D"]
+script = ExtResource("1_gvlv5")
+keyboard_and_mouse = ExtResource("2_bl5ot")
+controller = ExtResource("3_tldv6")
+switch_to_controller = ExtResource("4_rfvaw")
+switch_to_keyboard_and_mouse = ExtResource("5_usevy")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(911, 479)
+motion_mode = 1
+script = ExtResource("1_pm1t3")
+look_relative = ExtResource("5_hxqcn")
+look_absolute = ExtResource("6_viqho")
+move = ExtResource("7_gtewy")
+fire = ExtResource("8_kmeb0")
+bolt = ExtResource("9_ybbsa")
+
+[node name="Mrg0000" type="Sprite2D" parent="Player"]
+texture = ExtResource("2_rc4yh")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_jh0ar")
+metadata/_edit_lock_ = true
+
+[node name="LeftHand" type="Marker2D" parent="Player"]
+unique_name_in_owner = true
+position = Vector2(41, -105)
+metadata/_edit_lock_ = true
+
+[node name="RightHand" type="Marker2D" parent="Player"]
+unique_name_in_owner = true
+position = Vector2(41, 109)
+metadata/_edit_lock_ = true
+
+[node name="Boundary" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary"]
+position = Vector2(831, 1077)
+shape = SubResource("WorldBoundaryShape2D_duktp")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Boundary"]
+position = Vector2(950, 1)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_duktp")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Boundary"]
+position = Vector2(1919, 523)
+rotation = 4.71239
+shape = SubResource("WorldBoundaryShape2D_duktp")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Boundary"]
+position = Vector2(-1, 530)
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_duktp")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GuideDebugger" parent="CanvasLayer" instance=ExtResource("9_kqgcv")]
+theme = ExtResource("14_ipln3")
+
+[node name="BG" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BG"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0869374, 0.147497, 0.00609748, 1)
+
+[node name="UI Layer" type="CanvasLayer" parent="."]
+
+[node name="Instructions Label Controller" type="RichTextLabel" parent="UI Layer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -352.0
+offset_top = 15.0
+offset_right = -105.0
+offset_bottom = 38.0
+grow_horizontal = 0
+theme = ExtResource("14_ipln3")
+script = ExtResource("15_d8ctw")
+instructions_text = "Look around with %s.
+Move with %s.
+Fire with %s.
+
+Press any key or move the mouse to switch to 
+keyboard and mouse."
+actions = Array[Resource("res://addons/guide/guide_action.gd")]([ExtResource("5_hxqcn"), ExtResource("7_gtewy"), ExtResource("8_kmeb0")])
+limit_to_context = ExtResource("3_tldv6")
+metadata/_edit_use_anchors_ = true
+
+[node name="Instructions Label Keyboard and Mouse" type="RichTextLabel" parent="UI Layer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -352.0
+offset_top = 15.0
+offset_right = -105.0
+offset_bottom = 38.0
+grow_horizontal = 0
+theme = ExtResource("14_ipln3")
+script = ExtResource("15_d8ctw")
+instructions_text = "Look around with %s.
+Move with %s.
+Fire with %s.
+
+Use any controller input to switch to controller."
+actions = Array[Resource("res://addons/guide/guide_action.gd")]([ExtResource("6_viqho"), ExtResource("7_gtewy"), ExtResource("8_kmeb0")])
+limit_to_context = ExtResource("2_bl5ot")
+metadata/_edit_use_anchors_ = true

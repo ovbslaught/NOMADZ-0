@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LLMProviderResource" load_steps=2 format=3 uid="uid://dh02cksootrsy"]
+
+[ext_resource type="Script" uid="uid://nu6vlj1a7op2" path="res://addons/ai_autonomous_agent/llm_providers/llm_provider_resource.gd" id="1_xlijg"]
+
+[resource]
+script = ExtResource("1_xlijg")
+api_id = "ollamaturbo_api"
+name = "Ollama Turbo"
+description = "Run open models on Ollama Turbo."
+requires_key = true
+get_key_url = "https://ollama.com/settings/keys"
+fix_url = "https://ollama.com/"
+models_url_postfix = "/api/tags"
+chat_url_postfix = "/api/chat"

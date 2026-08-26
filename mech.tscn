@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8ns48iacx0wx"]
+
+[ext_resource type="Script" uid="uid://du0o38h08jie7" path="res://addons/Control3D/Nodes/Control3D.gd" id="1_e4nkn"]
+[ext_resource type="Script" uid="uid://c112qoo706btg" path="res://NOMADZ-O/Bones/addons/bone_editor.gd" id="2_oxu1v"]
+[ext_resource type="PackedScene" uid="uid://cw7f373qn6m11" path="res://NOMADZ-O/PLAYER-1/meka.glb" id="3_ijhdg"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Control3D" type="Node3D" parent="."]
+script = ExtResource("1_e4nkn")
+metadata/_custom_type_script = "uid://du0o38h08jie7"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1.5465786, 0, 0.06124983, 0.09595797)
+
+[node name="Skeleton3D" type="Skeleton3D" parent="."]
+transform = Transform3D(9.873169, 0, 0, 0, 16.0708, 0, 0, 0, 10.434143, 0, 0.030212358, 0)
+script = ExtResource("2_oxu1v")
+
+[node name="meka" parent="Skeleton3D" instance=ExtResource("3_ijhdg")]
+transform = Transform3D(103.960335, 0, 0, 0, 41.087288, 0, 0, 0, 16.899105, 0, 0, 0)

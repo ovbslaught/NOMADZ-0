@@ -1,0 +1,257 @@
+[gd_scene format=3 uid="uid://c5d12f133cpv7"]
+
+[ext_resource type="Script" uid="uid://drq3puinudups" path="res://addons/GodAgent/ai_chat.gd" id="1_v0kvm"]
+[ext_resource type="Texture2D" uid="uid://bdfivtgkir8xe" path="res://addons/GodAgent/graphics/icons/stop-icon.png" id="3_bdt53"]
+[ext_resource type="Texture2D" uid="uid://hwy804tq723h" path="res://addons/GodAgent/graphics/icons/user-icon.png" id="4_xk24s"]
+[ext_resource type="Texture2D" uid="uid://4a7ctel1nat" path="res://addons/GodAgent/graphics/icons/GodagentLogo.png" id="5_5vowy"]
+[ext_resource type="Texture2D" uid="uid://bp7q1iwu0lj0f" path="res://addons/GodAgent/graphics/icons/system-icon.png" id="6_4svod"]
+[ext_resource type="Texture2D" uid="uid://cyv6lhofvn777" path="res://addons/GodAgent/graphics/icons/history-icon.png" id="7_bdt53"]
+[ext_resource type="Texture2D" uid="uid://dvvlc7ylg2wur" path="res://addons/GodAgent/graphics/icons/Add.svg" id="7_xk24s"]
+[ext_resource type="Texture2D" uid="uid://celbuuk6d6m3r" path="res://addons/GodAgent/graphics/icons/clear-history.png" id="8_xk24s"]
+[ext_resource type="Texture2D" uid="uid://cpfdn03e35xkv" path="res://addons/GodAgent/graphics/icons/settings-icon.png" id="9_4svod"]
+[ext_resource type="Texture2D" uid="uid://bhcv5roxwj81f" path="res://addons/GodAgent/graphics/icons/send-icon.png" id="10_xk24s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.12, 0.12, 0.12, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.87241614, 0.10158038, 0.7053307, 1)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_header"]
+content_margin_left = 12.0
+content_margin_top = 8.0
+content_margin_right = 12.0
+content_margin_bottom = 8.0
+bg_color = Color(0.15, 0.15, 0.15, 1)
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.87241614, 0.10158038, 0.7053307, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_input"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(0.18, 0.18, 0.18, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.87241614, 0.10158038, 0.7053307, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_prompt"]
+
+[node name="AIChat" type="PanelContainer" unique_id=2047808222]
+clip_contents = true
+custom_minimum_size = Vector2(0, 100)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+script = ExtResource("1_v0kvm")
+icon_available = ExtResource("10_xk24s")
+icon_thinking = ExtResource("3_bdt53")
+icon_user = ExtResource("4_xk24s")
+icon_bot = ExtResource("5_5vowy")
+icon_system = ExtResource("6_4svod")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=2045075087]
+unique_name_in_owner = true
+
+[node name="ModelsHTTPRequest" type="HTTPRequest" parent="." unique_id=1908393744]
+unique_name_in_owner = true
+
+[node name="MainLayout" type="VBoxContainer" parent="." unique_id=1773602346]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ChatHeader" type="PanelContainer" parent="MainLayout" unique_id=793409425]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_header")
+
+[node name="HBox" type="HBoxContainer" parent="MainLayout/ChatHeader" unique_id=115110044]
+layout_mode = 2
+
+[node name="NewChat" type="Button" parent="MainLayout/ChatHeader/HBox" unique_id=139304773]
+layout_mode = 2
+icon = ExtResource("7_xk24s")
+
+[node name="Spacer2" type="Control" parent="MainLayout/ChatHeader/HBox" unique_id=1042321655]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainLayout/ChatHeader/HBox" unique_id=732844918]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Title" type="Label" parent="MainLayout/ChatHeader/HBox/VBoxContainer" unique_id=1386074632]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0.9019608, 0.9019608, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 14
+text = "GodAgent"
+clip_text = true
+
+[node name="ChatName" type="Label" parent="MainLayout/ChatHeader/HBox/VBoxContainer" unique_id=445524974]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 9
+clip_text = true
+
+[node name="Spacer" type="Control" parent="MainLayout/ChatHeader/HBox" unique_id=269525446]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="History" type="Button" parent="MainLayout/ChatHeader/HBox" unique_id=1810749536]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+tooltip_text = "History"
+icon = ExtResource("7_bdt53")
+flat = true
+expand_icon = true
+
+[node name="ClearBtn" type="Button" parent="MainLayout/ChatHeader/HBox" unique_id=1018936203]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+tooltip_text = "Clear history"
+icon = ExtResource("8_xk24s")
+flat = true
+expand_icon = true
+
+[node name="Settings" type="Button" parent="MainLayout/ChatHeader/HBox" unique_id=1520412857]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+tooltip_text = "Settings"
+theme_override_font_sizes/font_size = 16
+icon = ExtResource("9_4svod")
+expand_icon = true
+
+[node name="ContentSplitter" type="VSplitContainer" parent="MainLayout" unique_id=1130474192]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+split_offsets = PackedInt32Array(100)
+split_offset = 100
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MainLayout/ContentSplitter" unique_id=1837069022]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MessageList" type="VBoxContainer" parent="MainLayout/ContentSplitter/ScrollContainer" unique_id=1459175248]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="InputArea" type="MarginContainer" parent="MainLayout/ContentSplitter" unique_id=2116614065]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="MainLayout/ContentSplitter/InputArea" unique_id=105069040]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MainLayout/ContentSplitter/InputArea/VBox" unique_id=947662428]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_input")
+
+[node name="HBox" type="HBoxContainer" parent="MainLayout/ContentSplitter/InputArea/VBox/PanelContainer" unique_id=252248332]
+layout_mode = 2
+
+[node name="PromptTxt" type="TextEdit" parent="MainLayout/ContentSplitter/InputArea/VBox/PanelContainer/HBox" unique_id=1355353099]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxEmpty_prompt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_prompt")
+placeholder_text = "Ask anything..."
+wrap_mode = 1
+scroll_fit_content_height = true
+caret_blink = true
+
+[node name="SendButton" type="Button" parent="MainLayout/ContentSplitter/InputArea/VBox/PanelContainer/HBox" unique_id=1244902360]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(35, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+icon = ExtResource("10_xk24s")
+expand_icon = true
+
+[node name="SettingsHBox" type="HFlowContainer" parent="MainLayout/ContentSplitter/InputArea/VBox" unique_id=1968994016]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 5
+alignment = 1
+
+[node name="MaxStepsSpinBox" type="SpinBox" parent="MainLayout/ContentSplitter/InputArea/VBox/SettingsHBox" unique_id=99425002]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+tooltip_text = "Steps"
+min_value = 1.0
+max_value = 12.0
+value = 7.0
+prefix = "Steps:"
+
+
+[node name="ModeOptionButton" type="OptionButton" parent="MainLayout/ContentSplitter/InputArea/VBox/SettingsHBox" unique_id=1412769062]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "Chat"
+popup/item_0/id = 0
+popup/item_1/text = "Agent"
+popup/item_1/id = 1
+popup/item_2/text = "Plain"
+popup/item_2/id = 2
+
+[node name="AutoPlanCheckButton" type="CheckBox" parent="MainLayout/ContentSplitter/InputArea/VBox/SettingsHBox" unique_id=1891348990]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "If active, the agent will execute plans automatically without asking for confirmation."
+button_pressed = true
+text = "Auto"
+
+[node name="QuickPromptsPanel" type="VBoxContainer" parent="." unique_id=898322450]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="OutputWindow" type="RichTextLabel" parent="." unique_id=2020630990]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_completed"]
+[connection signal="pressed" from="MainLayout/ChatHeader/HBox/NewChat" to="." method="_on_new_chat_pressed"]
+[connection signal="pressed" from="MainLayout/ChatHeader/HBox/History" to="." method="_on_history_pressed"]
+[connection signal="pressed" from="MainLayout/ChatHeader/HBox/ClearBtn" to="." method="_on_clear_btn_pressed"]
+[connection signal="pressed" from="MainLayout/ChatHeader/HBox/Settings" to="." method="_on_settings_pressed"]

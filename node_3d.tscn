@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgyx4mkvn40n0"]
+
+[ext_resource type="PackedScene" uid="uid://uwjofkm4iyb2" path="res://NOMADZ-O/P1/AdvancedCharacter/RIGID/rigid_player.tscn" id="1_a202f"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="RigidPlayer" parent="." instance=ExtResource("1_a202f")]
+script = null

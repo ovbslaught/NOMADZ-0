@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LLMProviderResource" load_steps=2 format=3 uid="uid://c2qi8o2prly31"]
+
+[ext_resource type="Script" uid="uid://nu6vlj1a7op2" path="res://addons/ai_autonomous_agent/llm_providers/llm_provider_resource.gd" id="1_0qmth"]
+
+[resource]
+script = ExtResource("1_0qmth")
+api_id = "jan_api"
+name = "Jan"
+description = "Locally run open source LLMs models (requires Janâ€™s OpenAIâ€‘compatible server)"
+requires_key = true
+get_key_url = "https://www.jan.ai/docs/desktop/api-server"
+models_url_postfix = "/v1/models"
+chat_url_postfix = "/v1/chat/completions"

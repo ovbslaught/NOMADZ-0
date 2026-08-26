@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://w66d7li3eeim"]
+
+[ext_resource type="PackedScene" uid="uid://w1f4dho36qy2" path="res://addons/GodAgent/ai_assistant_hub.tscn" id="1_o0onr"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Agent" parent="." instance=ExtResource("1_o0onr")]

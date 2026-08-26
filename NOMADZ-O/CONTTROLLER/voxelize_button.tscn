@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://l8c3uvqv2t4m"]
+
+[ext_resource type="Script" uid="uid://c2qeljeekftmy" path="res://addons/flight_navigation_3d/voxelize_button.gd" id="1_3cbmt"]
+
+[node name="VoxelizeButton" type="Button"]
+custom_minimum_size = Vector2(100, 30)
+offset_right = 100.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "Voxelize"
+script = ExtResource("1_3cbmt")
+
+[node name="ProgressDialog" type="Window" parent="."]
+oversampling_override = 1.0
+title = "Progress Log"
+initial_position = 4
+size = Vector2i(800, 600)
+visible = false
+always_on_top = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ProgressDialog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+vertical_scroll_mode = 2
+
+[node name="Log" type="Label" parent="ProgressDialog/ScrollContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+autowrap_mode = 2
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
+[connection signal="close_requested" from="ProgressDialog" to="." method="_on_progress_dialog_close_requested"]

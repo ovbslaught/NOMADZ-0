@@ -1,0 +1,154 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5d12f133cpv7"]
+
+[ext_resource type="Script" uid="uid://drq3puinudups" path="res://addons/ai_autonomous_agent/ai_chat.gd" id="1_v0kvm"]
+[ext_resource type="Texture2D" uid="uid://bjpu38k6fvw1p" path="res://addons/ai_autonomous_agent/graphics/icons/status_available.svg" id="4_available"]
+[ext_resource type="Texture2D" uid="uid://3rrd4y5c26au" path="res://addons/ai_autonomous_agent/graphics/icons/status_thinking.svg" id="5_thinking"]
+
+[node name="AIChat" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_v0kvm")
+icon_available = ExtResource("4_available")
+icon_thinking = ExtResource("5_thinking")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[node name="ModelsHTTPRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="QuickPromptsPanel" type="VBoxContainer" parent="HBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VSplitContainer" type="VSplitContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 7
+theme_override_constants/autohide = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="OutputWindow" type="RichTextLabel" parent="HBoxContainer/VBoxContainer/VSplitContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+focus_mode = 2
+bbcode_enabled = true
+scroll_following = true
+selection_enabled = true
+deselect_on_focus_loss_enabled = false
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="PromptTxt" type="TextEdit" parent="HBoxContainer/VBoxContainer/VSplitContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Initializing..."
+placeholder_text = "Ask something..."
+editable = false
+wrap_mode = 1
+
+[node name="StatusButton" type="Button" parent="HBoxContainer/VBoxContainer/VSplitContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Assistant is available"
+disabled = true
+icon = ExtResource("4_available")
+flat = true
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="SaveCheckButton" type="CheckButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 2
+layout_mode = 2
+tooltip_text = "If selected this chat will still be here the next time you open Godot."
+text = "Save"
+
+[node name="VSeparator" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="APILabel" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+auto_translate_mode = 1
+layout_mode = 2
+text = "API"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+auto_translate_mode = 1
+layout_mode = 2
+text = "Model"
+vertical_alignment = 1
+
+[node name="ModelOptionsBtn" type="OptionButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="VSeparator3" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="LabelMaxSteps" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Max Steps"
+vertical_alignment = 1
+
+[node name="MaxStepsSpinBox" type="SpinBox" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 5.0
+max_value = 50.0
+value = 5.0
+
+[node name="VSeparator4" type="VSeparator" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="EditHistory" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+auto_translate_mode = 2
+layout_mode = 2
+text = "History"
+
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_completed"]
+[connection signal="request_completed" from="ModelsHTTPRequest" to="." method="_on_models_http_request_request_completed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/VSplitContainer/HBoxContainer2/StatusButton" to="." method="_abandon_button_pressed"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer/SaveCheckButton" to="." method="_on_save_check_button_toggled"]
+[connection signal="item_selected" from="HBoxContainer/VBoxContainer/HBoxContainer/ModelOptionsBtn" to="." method="_on_model_options_btn_item_selected"]
+[connection signal="value_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/MaxStepsSpinBox" to="." method="_on_max_steps_spin_box_value_changed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/EditHistory" to="." method="_on_edit_history_pressed"]

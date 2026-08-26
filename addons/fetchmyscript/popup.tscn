@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dfvnwk61l0e75"]
+
+[node name="Popup" type="Window"]
+oversampling_override = 1.0
+title = "fetch repo scripts"
+initial_position = 4
+size = Vector2i(400, 400)
+visible = false
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(400, 400)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6

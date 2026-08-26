@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://dar1y7o5qcxic"]
+
+[ext_resource type="Script" uid="uid://ci3o0cnwiet6" path="res://addons/curved_lines_2d/assign_collision_object_inspector_form.gd" id="1_csmls"]
+[ext_resource type="PackedScene" uid="uid://cjbkvx1pj7gq2" path="res://addons/curved_lines_2d/collision_object_type_option_button.tscn" id="2_ks3po"]
+
+[node name="AssignCollisionObjectInspectorForm" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
+script = ExtResource("1_csmls")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Assign a new CollisionObject2D to this shape.
+This will hold any generated CollisionPolygon2D nodes.
+
+Selecting 'none' will unassign any existing node, but will not delete the node."
+mouse_filter = 0
+text = "Collision Object* "
+
+[node name="CollisionObjectTypeOptionButton" parent="HBoxContainer" instance=ExtResource("2_ks3po")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GoToCollisionObjectButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Go To Node"
+
+[connection signal="type_selected" from="HBoxContainer/CollisionObjectTypeOptionButton" to="." method="_on_collision_object_type_option_button_type_selected"]
+[connection signal="pressed" from="HBoxContainer/GoToCollisionObjectButton" to="." method="_on_go_to_collision_object_button_pressed"]

@@ -1,0 +1,185 @@
+[gd_scene load_steps=8 format=3 uid="uid://c2vk4emclmyfd"]
+
+[ext_resource type="Script" uid="uid://mk3r6d801wbn" path="res://addons/curved_lines_2d/arc_settings_popup_panel.gd" id="1_3bjn8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3bjn8"]
+font_color = Color(0.552956, 0.552956, 0.552956, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3bjn8"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_kcp7s"]
+line_spacing = 0.0
+font_color = Color(0.54, 0.33696, 0.2808, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2efm4"]
+font_color = Color(0.345098, 0.47451, 0.396078, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kcp7s"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1vtg0"]
+bg_color = Color(0.0588235, 0.0588235, 0.0588235, 1)
+
+[node name="ArcSettingsPopupPanel" type="PopupPanel"]
+size = Vector2i(250, 251)
+script = ExtResource("1_3bjn8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 5
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "Arc settings"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Radius"
+label_settings = SubResource("LabelSettings_3bjn8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.25
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3bjn8")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "x"
+label_settings = SubResource("LabelSettings_kcp7s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RxInputContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3bjn8")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "y"
+label_settings = SubResource("LabelSettings_2efm4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RyInputContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Rotation"
+label_settings = SubResource("LabelSettings_3bjn8")
+
+[node name="RotationInputContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_kcp7s")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Large Arc"
+label_settings = SubResource("LabelSettings_3bjn8")
+
+[node name="Container" type="PanelContainer" parent="VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_1vtg0")
+
+[node name="LargeArcCheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer3/Container"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "On"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Sweep"
+label_settings = SubResource("LabelSettings_3bjn8")
+
+[node name="Container" type="PanelContainer" parent="VBoxContainer/HBoxContainer4"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_1vtg0")
+
+[node name="SweepCheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer4/Container"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "On"
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Ok"
+
+[connection signal="gui_input" from="VBoxContainer/Label" to="." method="_on_label_gui_input"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer3/Container/LargeArcCheckBox" to="." method="_on_large_arc_check_box_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxContainer4/Container/SweepCheckBox" to="." method="_on_sweep_check_box_toggled"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

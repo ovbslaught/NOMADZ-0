@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="LLMProviderResource" format=3]
+
+[ext_resource type="Script" path="res://addons/GodAgent/llm_providers/llm_provider_resource.gd" id=1]
+
+[resource]
+script = ExtResource("1")
+api_id = "paxsenix_api"
+name = "Paxsenix"
+description = "Paxsenix OpenAI-compatible API gateway"
+requires_key = true
+fix_url = "https://api.paxsenix.org"
+get_key_url = "https://api.paxsenix.org/dashboard#api-keys"
+models_url_postfix = "/v1/models"
+chat_url_postfix = "/v1/chat/completions"

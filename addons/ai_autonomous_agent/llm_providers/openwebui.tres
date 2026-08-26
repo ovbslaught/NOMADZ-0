@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LLMProviderResource" load_steps=2 format=3 uid="uid://b07y61hy1g6q"]
+
+[ext_resource type="Script" uid="uid://nu6vlj1a7op2" path="res://addons/ai_autonomous_agent/llm_providers/llm_provider_resource.gd" id="1_dwm2i"]
+
+[resource]
+script = ExtResource("1_dwm2i")
+api_id = "openwebui_api"
+name = "OpenWebUI"
+description = "OpenWebUI for locally hosted LLM"
+requires_key = true
+models_url_postfix = "/api/models"
+chat_url_postfix = "/api/chat/completions"
