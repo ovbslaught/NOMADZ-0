@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ADE-CORE Production Engine v1.2.1 — Samsung Galaxy S23 Ultra / Termux / ARM64"""
+"""ADE-CORE Production Engine v1.2.2 — Samsung Galaxy S23 Ultra / Termux / ARM64"""
 from __future__ import annotations
 import argparse, hashlib, json, logging, os, platform, shutil
 import signal, sqlite3, subprocess, sys, time, traceback, uuid
