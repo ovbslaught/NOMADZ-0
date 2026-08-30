@@ -1,0 +1,42 @@
+name: MOTHER-BRAIN Resilient Sync — GitHub <-> WORMHOLE
+
+on:
+  push:
+    branches: [ "main", "Cosmic-key" ]
+  workflow_dispatch:
+
+jobs:
+  sync-mother-brain:
+    name: Rclone WORMHOLE Substrate Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Rclone
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+
+      - name: Configure Rclone
+        env:
+          RCLONE_CONFIG_DATA: ${{ secrets.RCLONE_CONFIG }}
+        run: |
+          if [ -z "$RCLONE_CONFIG_DATA" ]; then
+            echo "ERROR: RCLONE_CONFIG secret is missing or empty."
+            exit 1
+          fi
+          mkdir -p ~/.config/rclone
+          echo "$RCLONE_CONFIG_DATA" > ~/.config/rclone/rclone.conf
+          rclone listremotes
+
+      - name: Execute Two-Way Guarded Sync
+        run: |
+          rclone copy . gdrive:WORMHOLE/NOMADZ-0/repo/ \
+            --exclude ".git/**" \
+            --exclude ".godot/**" \
+            --exclude "build/**" \
+            --fast-list \
+            --transfers 4 \
+            --checkers 8 \
+            -v

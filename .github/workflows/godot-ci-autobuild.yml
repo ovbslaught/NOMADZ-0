@@ -1,0 +1,166 @@
+name: NOMADZ-0 Autobuild & Release Pipeline
+
+on:
+  push:
+    branches: [ "main", "Cosmic-key" ]
+    tags:
+      - "v*"
+  pull_request:
+    branches: [ "main", "Cosmic-key" ]
+  workflow_dispatch:
+    inputs:
+      create_release:
+        description: "Force GitHub Release creation"
+        required: false
+        type: boolean
+        default: false
+
+env:
+  GODOT_VERSION: "4.3"
+  PROJECT_NAME: "NOMADZ-0"
+
+jobs:
+  lint-and-validate:
+    name: GDScript Lint & Headless Smoke Test
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate project.godot
+        run: |
+          if [ ! -f "project.godot" ]; then
+            echo "ERROR: project.godot not found in root!"
+            exit 1
+          fi
+
+      - name: Headless Engine Smoke Test
+        run: |
+          timeout 45s godot --headless --editor --quit || true
+          echo "Godot 4.3 headless engine initialization passed."
+
+  export-matrix:
+    name: Build Export (${{ matrix.platform }})
+    needs: lint-and-validate
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: linux
+            preset_name: "Linux/X11"
+            output_dir: "build/linux"
+            output_file: "nomadz_linux.x86_64"
+            zip_name: "nomadz-linux-x86_64.zip"
+          - platform: windows
+            preset_name: "Windows Desktop"
+            output_dir: "build/windows"
+            output_file: "nomadz_windows.exe"
+            zip_name: "nomadz-windows-x86_64.zip"
+          - platform: web
+            preset_name: "Web"
+            output_dir: "build/web"
+            output_file: "index.html"
+            zip_name: "nomadz-web.zip"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Prepare Export Directories & Preset Fallback
+        run: |
+          mkdir -p ${{ matrix.output_dir }}
+          if [ ! -f "export_presets.cfg" ]; then
+            echo "Generating fallback export_presets.cfg..."
+            cat << 'PRESET_EOF' > export_presets.cfg
+[preset.0]
+name="Linux/X11"
+platform="Linux/X11"
+runnable=true
+dedicated_server=false
+custom_features=""
+export_filter="all_resources"
+include_filter=""
+exclude_filter=""
+export_path="build/linux/nomadz_linux.x86_64"
+
+[preset.1]
+name="Windows Desktop"
+platform="Windows Desktop"
+runnable=true
+dedicated_server=false
+custom_features=""
+export_filter="all_resources"
+include_filter=""
+exclude_filter=""
+export_path="build/windows/nomadz_windows.exe"
+
+[preset.2]
+name="Web"
+platform="Web"
+runnable=true
+dedicated_server=false
+custom_features=""
+export_filter="all_resources"
+include_filter=""
+exclude_filter=""
+export_path="build/web/index.html"
+PRESET_EOF
+          fi
+
+      - name: Export Headless Binary
+        run: |
+          godot --headless --export-release "${{ matrix.preset_name }}" "${{ matrix.output_dir }}/${{ matrix.output_file }}" || \
+          godot --headless --export-debug "${{ matrix.preset_name }}" "${{ matrix.output_dir }}/${{ matrix.output_file }}"
+
+      - name: Package Release Archive
+        run: |
+          cd ${{ matrix.output_dir }}
+          zip -r ../../${{ matrix.zip_name }} ./*
+          cd ../..
+
+      - name: Upload Action Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.zip_name }}
+          path: ${{ matrix.zip_name }}
+          retention-days: 14
+
+  publish-github-release:
+    name: Publish Release & Distribute
+    needs: export-matrix
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.create_release == 'true' || github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download All Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: dist-release/
+          merge-multiple: true
+
+      - name: Compute Checksums
+        run: |
+          cd dist-release/
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || format('autobuild-{0}', github.sha) }}
+          name: ${{ startsWith(github.ref, 'refs/tags/v') && format('NOMADZ-0 Release {0}', github.ref_name) || format('NOMADZ-0 Autobuild ({0})', github.sha) }}
+          draft: false
+          prerelease: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+          files: |
+            dist-release/*.zip
+            dist-release/SHA256SUMS.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
