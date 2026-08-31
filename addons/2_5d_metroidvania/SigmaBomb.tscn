@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://environments/2_5d_metroidvania/SigmaBomb.gd" id="1_bomb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 6.0
+
+[node name="SigmaBomb" type="RigidBody2D"]
+gravity_scale = 2.0
+script = ExtResource("1_bomb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="BombLight" type="PointLight2D" parent="."]
+energy = 1.0
+color = Color(0.3, 0.8, 1, 1)
+
+[node name="BlastArea" type="Area2D" parent="."]
+monitoring = false
+
+[node name="BlastParticles" type="GPUParticles2D" parent="."]
+emitting = false

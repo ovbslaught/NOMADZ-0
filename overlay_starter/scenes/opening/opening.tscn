@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bxr8jn02i5iab"]
+
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/opening/opening.tscn" id="1_tufov"]
+[ext_resource type="Texture2D" path="res://overlay_starter/assets/godot_engine_logo/logo_vertical_color_dark.png" id="2_eve8u"]
+
+[node name="Opening" unique_id=1930105641 instance=ExtResource("1_tufov")]
+images = Array[Texture2D]([ExtResource("2_eve8u")])
+
+[node name="ImagesContainer" parent="." index="2" unique_id=1471559661]
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64

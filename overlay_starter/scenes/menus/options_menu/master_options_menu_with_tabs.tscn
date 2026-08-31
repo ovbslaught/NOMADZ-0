@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://ewmpkdqh1n56"]
+
+[ext_resource type="Script" path="res://overlay_starter/scenes/menus/options_menu/master_options_menu_with_tabs.gd" id="1_mdc0q"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/menus/options_menu/input/input_options_menu.tscn" id="2_u7ja8"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/menus/options_menu/input/input_extras_menu.tscn" id="3_fhexo"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/menus/options_menu/audio/audio_options_menu.tscn" id="4_lxowg"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/menus/options_menu/video/video_options_menu_with_extras.tscn" id="5_ekvmp"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/menus/options_menu/game/game_options_menu.tscn" id="6_7kqnq"]
+
+[node name="MasterOptionsMenu" type="TabContainer" unique_id=1111795112]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tab_alignment = 1
+current_tab = 0
+script = ExtResource("1_mdc0q")
+
+[node name="Controls" parent="." unique_id=1827648101 instance=ExtResource("2_u7ja8")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Inputs" parent="." unique_id=1534818691 instance=ExtResource("3_fhexo")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Audio" parent="." unique_id=506115522 instance=ExtResource("4_lxowg")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Video" parent="." unique_id=382045299 instance=ExtResource("5_ekvmp")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="Game" parent="." unique_id=1395408076 instance=ExtResource("6_7kqnq")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4

@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cosmic Key: Nomadz Dev Deck</title>
+    <style>
+      :root {
+        --bg-primary: #F5F0E1;
+        --bg-secondary: #8B7D6B;
+        --bg-tertiary: #5C4A3A;
+        --text-primary: #5C4A3A; 
+        --text-secondary: #8B7D6B;
+        --accent-primary: #FF8C00;
+        --accent-burgundy: #800020;
+        --accent-ok: #4CAF50;
+        --accent-warn: #A52A2A;
+        --border-color: #5C4A3A;
+
+        --glitch-intensity: 1;
+        --scanline-opacity: 0.06;
+        --flicker-duration: 0.1s;
+        --chromatic-shift: 2px;
+        
+        --neon-intensity: 1;
+        --crt-warp: 0;
+        --term-brightness: 1;
+        --vignette-intensity: 0.6;
+        --tint-r: 0.55;
+        --tint-g: 0.49;
+        --tint-b: 0.42;
+
+        /* Syntax Highlighting Variables */
+        --syntax-keyword: var(--accent-primary);
+        --syntax-comment: rgba(92, 74, 58, 0.6);
+        --syntax-decorator: var(--accent-burgundy);
+        --syntax-string: var(--bg-secondary);
+        --syntax-type: var(--accent-burgundy);
+        --syntax-identifier: var(--text-primary);
+        --syntax-bg-hover: rgba(255, 140, 0, 0.05);
+        --syntax-line-numbers-text: rgba(92, 74, 58, 0.5);
+        --syntax-line-numbers-border: var(--bg-tertiary);
+      }
+
+      [data-theme='void'] {
+        --bg-primary: #0a0a0a;
+        --bg-secondary: #1a1a1a;
+        --bg-tertiary: #00ff41;
+        --text-primary: #00ff41;
+        --accent-primary: #00ff41;
+        --syntax-keyword: #00ff41;
+        --syntax-comment: #004400;
+        --syntax-decorator: #ffffff;
+        --syntax-string: #ffffff;
+        --syntax-type: #00ff41;
+        --syntax-identifier: #00ff41;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        height: 100vh;
+        overflow: hidden;
+        perspective: 2500px;
+        touch-action: manipulation;
+        filter: brightness(var(--term-brightness));
+      }
+
+      #root { height: 100%; transform-style: preserve-3d; }
+      
+      .static-noise {
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        pointer-events: none; z-index: 1004; opacity: 0.04;
+        animation: static-anim 0.1s infinite steps(2);
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39tbW1+fn5oaGhxcXGnpaWEhIR6enp0dHT+/v7w8PDKysrNzc3p6enk5OTR0dFZWVm/v7+qqqqGgoZ6AAAAyklEQVR4nO2U2w6EIAxAG5K1i7Wf/v9P9w1EZEjSjhsPU8/QZ8jTDs+xChP5q1QvQu1sIszEYVEUEpIdOPEHByQj8YQ2VEKlGkYZZmgqi1a7e2D4u2/f/g29zC2u5oZZkQu5oT+3fevO5noIL5e7m5iL2t1E+C3uTqIuYg+ySG7k6iLmIPcSg/mLqQPcyg2cQPcpBfyG/gO0kQmcQ/c3D4gUeYg/dEPgO0kAd3IID7gN3kAL3kALnEF3MB3zBH3wA/kI/gB/BH/QAD30A/0EA/0GA/34A/0MA/z4A/wYA/z4A/0IA/0IA/3MA/zMA/zYA/zYA/zcA/zcA/zUA/zUA/zQA/zQA/zQA/zQA/zQA/zSA/zSA/zSA/zQYj0Yj0ajEY/GEeEAcAAAAASUVORK5CYII=);
+      }
+
+      @keyframes static-anim { 0% { transform: translate(2px, 1px); } 100% { transform: translate(-1px, -2px); } }
+
+      .crt-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, var(--scanline-opacity)) 50%), 
+                    linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+        background-size: 100% 3px, 3px 100%;
+        pointer-events: none; z-index: 1000;
+      }
+
+      .vignette {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        box-shadow: inset 0 0 200px rgba(0,0,0,0.5);
+        pointer-events: none; z-index: 1001;
+      }
+
+      .brutalist-grid {
+        background-image: radial-gradient(var(--bg-secondary) 0.5px, transparent 0.5px);
+        background-size: 30px 30px;
+      }
+
+      .paper-grain::before {
+        content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        opacity: 0.08; pointer-events: none; z-index: 5; mix-blend-mode: multiply;
+      }
+
+      .fusion-glitch { animation: glitch-anim 0.2s cubic-bezier(.25,.46,.45,.94) both infinite; }
+      .fusion-flash { 
+        animation: flash-anim 0.8s ease-out forwards;
+        pointer-events: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: white; z-index: 1005; opacity: 0;
+      }
+      @keyframes flash-anim {
+        0% { opacity: 0.8; }
+        10% { opacity: 0.2; }
+        20% { opacity: 0.6; }
+        100% { opacity: 0; }
+      }
+      @keyframes glitch-anim { 0% { transform: translate(0); } 33% { transform: translate(-3px, 1px); } 66% { transform: translate(3px, -1px); } 100% { transform: translate(0); } }
+      
+      /* Subtle Glitch Utilities */
+      @keyframes subtle-skew {
+        0% { transform: skew(0deg) translate(0); filter: hue-rotate(0deg); }
+        20% { transform: skew(1deg) translate(-1px, 1px); filter: hue-rotate(10deg); }
+        40% { transform: skew(-1deg) translate(1px, -1px); filter: hue-rotate(-10deg); }
+        60% { transform: skew(0.5deg) translate(-0.5px, 0.5px); }
+        100% { transform: skew(0deg) translate(0); filter: hue-rotate(0deg); }
+      }
+
+      .subtle-glitch-hover:hover {
+        animation: subtle-skew 0.4s steps(3) infinite;
+      }
+
+      .subtle-glitch-active:active {
+        animation: glitch-anim 0.1s steps(2) infinite;
+        filter: invert(0.1) brightness(1.2) contrast(1.1);
+      }
+
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--accent-primary); }
+
+      .neon-text-glow-orange { text-shadow: 0 0 8px var(--accent-primary); }
+
+      /* Syntax Highlighting Utility Classes */
+      .syntax-keyword { color: var(--syntax-keyword); font-weight: 900; font-style: italic; }
+      .syntax-comment { color: var(--syntax-comment); font-weight: 700; font-style: italic; opacity: 0.6; }
+      .syntax-decorator { color: var(--syntax-decorator); font-weight: 900; border-bottom: 1px solid rgba(var(--syntax-decorator), 0.3); }
+      .syntax-string { color: var(--syntax-string); font-weight: 900; padding: 0 0.25rem; background: rgba(var(--syntax-string), 0.1); }
+      .syntax-type { color: var(--syntax-type); font-weight: 700; }
+      .syntax-identifier { color: var(--syntax-identifier); font-weight: 900; text-decoration: underline; text-decoration-color: rgba(var(--accent-primary), 0.5); }
+      .syntax-line-hover:hover { background: var(--syntax-bg-hover); transition: background 0.2s ease; }
+    </style>
+    <!-- Pre-styled via index.css bundle -->
+  </head>
+  <body>
+    <div class="static-noise"></div>
+    <div class="crt-overlay"></div>
+    <div class="vignette"></div>
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

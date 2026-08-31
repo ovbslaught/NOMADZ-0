@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://environments/2_5d_metroidvania/pickups/HealthPickup.gd" id="1_health"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_health"]
+radius = 8.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_health"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"small",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"large",
+"speed": 5.0
+}]
+
+[node name="HealthPickup" type="Area2D"]
+script = ExtResource("1_health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_health")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_health")
+
+[node name="HealLight" type="PointLight2D" parent="."]
+energy = 0.8
+color = Color(0.2, 1, 0.3, 1)

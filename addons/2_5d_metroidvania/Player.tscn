@@ -1,0 +1,148 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://environments/2_5d_metroidvania/Player.gd" id="1_player"]
+[ext_resource type="Script" path="res://environments/2_5d_metroidvania/EchoShield.gd" id="2_echo"]
+[ext_resource type="Script" path="res://environments/2_5d_metroidvania/WormholeTether.gd" id="3_tether"]
+[ext_resource type="Script" path="res://environments/2_5d_metroidvania/PlayerShaderController.gd" id="4_shaderctl"]
+[ext_resource type="Shader" path="res://environments/2_5d_metroidvania/player_glow.gdshader" id="5_glowshader"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 8.0
+height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_morph"]
+radius = 8.0
+height = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aura"]
+radius = 32.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_player"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"jump_rise",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"jump_fall",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"wall_slide",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"jetpack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"dash",
+"speed": 10.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"morph_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"morph_roll",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ring"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"activate",
+"speed": 10.0
+}]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_glow"]
+shader = ExtResource("5_glowshader")
+shader_parameter/fuel_level = 1.0
+shader_parameter/signal_level = 0.0
+shader_parameter/damage_flash = 0.0
+shader_parameter/jetpack_active = 0.0
+shader_parameter/corruption = 0.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_player")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_glow")
+sprite_frames = SubResource("SpriteFrames_player")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="MorphCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_morph")
+disabled = true
+
+[node name="PlayerLight" type="PointLight2D" parent="."]
+energy = 1.2
+color = Color(0.4, 0.8, 1, 1)
+
+[node name="JetpackParticles" type="GPUParticles2D" parent="."]
+emitting = false
+
+[node name="DashParticles" type="GPUParticles2D" parent="."]
+emitting = false
+
+[node name="ShootOrigin" type="Marker2D" parent="."]
+position = Vector2(12, 0)
+
+[node name="EchoShield" type="Node2D" parent="."]
+script = ExtResource("2_echo")
+
+[node name="RingSprite" type="AnimatedSprite2D" parent="EchoShield"]
+visible = false
+sprite_frames = SubResource("SpriteFrames_ring")
+
+[node name="ShieldLight" type="PointLight2D" parent="EchoShield"]
+energy = 0.0
+color = Color(0.5, 0.9, 1, 1)
+
+[node name="AuraArea" type="Area2D" parent="EchoShield"]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EchoShield/AuraArea"]
+shape = SubResource("CircleShape2D_aura")
+
+[node name="WormholeTether" type="Node2D" parent="."]
+script = ExtResource("3_tether")
+
+[node name="TetherLine" type="Line2D" parent="WormholeTether"]
+visible = false
+width = 2.0
+
+[node name="AnchorLight" type="PointLight2D" parent="WormholeTether"]
+energy = 0.0
+color = Color(0.3, 0.7, 1, 1)
+
+[node name="TetherCast" type="RayCast2D" parent="WormholeTether"]
+
+[node name="PlayerShaderController" type="Node" parent="."]
+script = ExtResource("4_shaderctl")

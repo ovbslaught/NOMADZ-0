@@ -1,0 +1,168 @@
+// This file is part of the Godot Orchestrator project.
+//
+// Copyright (c) 2023-present Crater Crash Studios LLC and its contributors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//		http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+#pragma once
+
+#include <godot_cpp/classes/script.hpp>
+#include <godot_cpp/variant/typed_array.hpp>
+
+using namespace godot;
+
+/// A helper class to accessing methods similarly found in Godot's ScriptServer.
+class ScriptServer {
+    static inline bool _scripting_enabled = true;
+
+public:
+    /// Represents a Global Class entry in the script server.
+    struct GlobalClass {
+    private:
+        static Ref<Script> _load_script(const String& path);
+
+    public:
+        StringName name;        //! Global class name
+        StringName base_type;   //! The type that the global class extends
+        String icon_path;       //! The path to the `@icon`
+        String path;            //! The path to the global class script
+        String language;        //! Language that contributes the class
+
+        /// Returns the list of properties on the global class
+        /// @return an array of dictionary entries for properties
+        TypedArray<Dictionary> get_property_list() const;
+
+        /// Returns the list of methods on the global class
+        /// @return an array of dictionary entries for methods
+        TypedArray<Dictionary> get_method_list() const;
+
+        /// Returns the list of signals on the global class
+        /// @return an array of dictionary entries for signals
+        TypedArray<Dictionary> get_signal_list() const;
+
+        /// Returns all constants of a global class (constants and enumerations)
+        /// @return the constants map
+        Dictionary get_constants_list() const;
+
+        /// Gets the name of the enum that the constant enum belongs
+        /// @param p_enum_constant_name the enumeration element name
+        /// @return the name of the container enumeration
+        StringName get_integer_constant_enum(const StringName& p_enum_constant_name) const;
+
+        /// Gets the various constants defined in the global class
+        /// @return all the defined constants
+        PackedStringArray get_integer_constant_list() const;
+
+        /// Gets the constant value
+        /// @param p_constant_name
+        /// @return the constant value
+        int64_t get_integer_constant(const StringName& p_constant_name) const;
+
+        /// Checks whether the method name exists for the global class
+        /// @param p_method_name the method name to check
+        /// @return true if the method exists, false otherwise
+        bool has_method(const StringName& p_method_name) const;
+
+        /// Checks whether the property exists for the global class
+        /// @param p_property_name the property name to check
+        /// @return true if the property exists, false otherwise
+        bool has_property(const StringName& p_property_name) const;
+
+        /// Checks whether the signal exists for the global class
+        /// @param p_signal_name the signal name to check
+        /// @return true if the signal exists, false otherwise
+        bool has_signal(const StringName& p_signal_name) const;
+
+        /// Returns the list of static methods on this class
+        /// @return an array of dictionary entries for static methods
+        TypedArray<Dictionary> get_static_method_list() const;
+
+        GlobalClass() = default;
+        explicit GlobalClass(const Dictionary& p_dict);
+    };
+
+protected:
+    static bool _reload_scripts_on_save;
+
+    /// Gets the global classes
+    /// @return an array of dictionary entries for the global class list
+    static TypedArray<Dictionary> _get_global_class_list();
+
+    /// Get the global class dictionary entry
+    /// @param p_class_name the global class name to find
+    /// @return the dictionary for the global class, or an empty dictionary if not found
+    static Dictionary _get_global_class(const StringName& p_class_name);
+
+public:
+    /// Checks whether the specified class name is a global script class.
+    /// @param p_class_name the global class name to check
+    /// @return true if the class is a global class, or false if not
+    static bool is_global_class(const StringName& p_class_name);
+
+    /// Checks whether the specified source class name is descendent of the target class.
+    /// @param p_source_class_name the source class name
+    /// @param p_target_class_name the target class_name
+    /// @return true if the source is a descendant of the target class, false otherwise
+    static bool is_parent_class(const StringName& p_source_class_name, const StringName& p_target_class_name);
+
+    /// Get a list of all global classes
+    /// @return an array of global class names
+    static PackedStringArray get_global_class_list();
+
+    /// Returns the global class entry for a specified class name.
+    /// @param p_class_name the global class name to check
+    /// @return the global class info structure, or an empty structure if not found
+    static GlobalClass get_global_class(const StringName& p_class_name);
+
+    /// Returns the global class entry for a specified script path
+    /// @param p_path the script file path
+    /// @return the global class info structure, or an empty structure if not found
+    static GlobalClass get_global_class_by_path(const String& p_path);
+
+    /// Returns the global class script path
+    /// @param p_class_name the global class name to check
+    /// @return the script path if found, an empty string otherwise
+    static String get_global_class_path(const StringName& p_class_name);
+
+    /// Returns the native class for which this global class derives
+    /// @param p_class_name the global class name
+    /// @return the native class name
+    static StringName get_global_class_native_base(const StringName& p_class_name);
+
+    /// Returns a list of class hierarchies, starting with the global class first
+    /// @param p_class_name the global class name to check
+    /// @param p_include_native_classes if true, all native classes are included in bottom-up order
+    /// @return all classes in the hierarchy, in bottom-up order
+    static PackedStringArray get_class_hierarchy(const StringName& p_class_name, bool p_include_native_classes = false);
+
+    /// Get the global name of the specified script
+    /// @param p_script the script instance
+    /// @return the global name of the script, if one is present
+    static String get_global_name(const Ref<Script>& p_script);
+
+    /// Check whether scripting is enabled
+    /// @return true if scripting is enabled, false otherwise
+    static bool is_scripting_enabled();
+
+    /// Set whether scripting is enabled
+    /// @param p_enabled whether to enable scripting or not.
+    static void set_scripting_enabled(bool p_enabled);
+
+    /// Check whether scripts should be reloaded on save
+    /// @return true if reload on save, false otherwise
+    static bool is_reload_scripts_on_save() { return _reload_scripts_on_save; }
+
+    /// Set whether scripts are reloaded on save
+    /// @param p_reload_on_save whether to reload scripts on save
+    static void set_reload_scripts_on_save(bool p_reload_on_save) { _reload_scripts_on_save = p_reload_on_save;}
+};

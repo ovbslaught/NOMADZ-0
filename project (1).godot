@@ -1,0 +1,49 @@
+; Engine configuration file.
+; This project.godot did not exist in the source files you provided —
+; this is a new one, generated to match how the scripts reference each
+; other (autoload singleton names below were reverse-engineered from
+; calls like GameManager.xxx, AudioManager.xxx, etc. found in the code).
+;
+; NOTE: no main scene is set (run/main_scene) because none of the four
+; environments is an obvious default. Set one in Project Settings once
+; you decide what boots first, or build a hub/launcher scene that lets
+; you pick 2d_platformer / 2_5d_metroidvania / 3d_fps / 3d_camera_experiments.
+
+config_version=5
+
+[application]
+
+config/name="NOMADZ-0"
+config/features=PackedStringArray("4.3", "Forward Plus")
+run/main_scene=""
+
+[autoload]
+
+; --- core singletons actually referenced elsewhere as Name.method() ---
+GameManager="*res://core/GameManager.gd"
+AudioManager="*res://core/AudioManager.gd"
+SignalverseManager="*res://core/SignalverseManager.gd"
+LoreDatabase="*res://core/LoreDatabase.gd"
+ProControllerManager="*res://core/ProControllerManager.gd"
+DebugTools="*res://core/DebugTools.gd"
+EventFlags="*res://core/event_flags.gd"
+Game="*res://core/game.gd"
+InputBuffer="*res://core/input_buffer.gd"
+SaveService="*res://core/save_service.gd"
+
+; --- stubs: referenced by scripts (save_service.gd, fps_controller.gd)
+; but the actual source files were never provided. Real implementations
+; needed before those scripts will do anything useful — see
+; MISSING_DEPENDENCIES.md ---
+ControlSettings="*res://core/_stubs/ControlSettings.gd"
+EraClock="*res://core/_stubs/EraClock.gd"
+UpgradeInventory="*res://core/_stubs/UpgradeInventory.gd"
+QuestMemory="*res://core/_stubs/QuestMemory.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/flight_navigation_3d/plugin.cfg")
+
+[physics]
+
+common/enable_pause_aware_picking=true

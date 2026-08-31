@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://environments/2_5d_metroidvania/Projectile.gd" id="1_proj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_proj"]
+radius = 4.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_proj"]
+animations = [{
+"frames": [],
+"loop": false,
+"name": &"impact",
+"speed": 10.0
+}]
+
+[node name="Projectile" type="Area2D"]
+script = ExtResource("1_proj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_proj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_proj")
+
+[node name="ProjectileLight" type="PointLight2D" parent="."]
+energy = 0.8
+color = Color(0.3, 0.7, 1, 1)

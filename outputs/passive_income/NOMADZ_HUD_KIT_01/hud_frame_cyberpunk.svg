@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <rect width="800" height="600" fill="#0d0e1a"/>
+  <polygon points="20,20 780,20 780,540 740,580 20,580" fill="none" stroke="#00ffff" stroke-width="3"/>
+  <polygon points="30,30 200,30 220,50 770,50 770,535 735,570 30,570" fill="none" stroke="#ff0055" stroke-width="1" stroke-dasharray="8 4"/>
+  <rect x="40" y="35" width="150" height="10" fill="#00ffff"/>
+  <text x="45" y="44" fill="#000" font-family="monospace" font-weight="bold" font-size="9">NOMADZ-FRAME-01</text>
+  <line x1="40" y1="550" x2="200" y2="550" stroke="#00ffaa" stroke-width="4"/>
+  <text x="750" y="565" fill="#00ffff" font-family="monospace" font-size="10" text-anchor="end">STATUS: ACTIVE</text>
+</svg>

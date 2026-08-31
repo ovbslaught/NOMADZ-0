@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://dmu3dwgqgn70h"]
+
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/music_players/background_music_player.tscn" id="1_at0es"]
+[ext_resource type="Script" path="res://overlay_starter/scenes/game/scripts/game_timer.gd" id="2_3m503"]
+[ext_resource type="Script" path="res://addons/maaacks_game_template/base/nodes/utilities/pause_menu_controller.gd" id="3_bii2y"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/windows/pause_menu_layer.tscn" id="4_yu7m7"]
+[ext_resource type="Script" path="res://addons/maaacks_game_template/extras/scripts/level_loader.gd" id="5_pymem"]
+[ext_resource type="Script" path="res://overlay_starter/scripts/level_and_state_manager.gd" id="6_rjkug"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/windows/game_won_window.tscn" id="7_ntwgx"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/windows/level_lost_window.tscn" id="8_e7iba"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/windows/level_won_window.tscn" id="9_jlocx"]
+[ext_resource type="Script" path="res://addons/maaacks_game_template/extras/scripts/scene_lister.gd" id="10_of70h"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/loading_screen/level_loading_screen.tscn" id="11_m5ip5"]
+
+[node name="Game" type="Node" unique_id=1262092417]
+
+[node name="BackgroundMusicPlayer" parent="." unique_id=986713811 instance=ExtResource("1_at0es")]
+
+[node name="GameTimer" type="Node" parent="." unique_id=116840261]
+script = ExtResource("2_3m503")
+
+[node name="PauseMenuController" type="Node" parent="." unique_id=1685173287]
+script = ExtResource("3_bii2y")
+pause_menu_packed = ExtResource("4_yu7m7")
+
+[node name="LevelLoader" type="Node" parent="." unique_id=1364778615 node_paths=PackedStringArray("level_container", "level_loading_screen")]
+script = ExtResource("5_pymem")
+level_container = NodePath("../LevelContainer")
+level_loading_screen = NodePath("../LevelLoadingScreen")
+
+[node name="LevelManager" type="Node" parent="." unique_id=1350972375 node_paths=PackedStringArray("level_loader", "scene_lister")]
+script = ExtResource("6_rjkug")
+level_loader = NodePath("../LevelLoader")
+starting_level_path = "res://overlay_starter/scenes/game/levels/level_1.tscn"
+scene_lister = NodePath("SceneLister")
+game_won_scene = ExtResource("7_ntwgx")
+level_lost_scene = ExtResource("8_e7iba")
+level_won_scene = ExtResource("9_jlocx")
+
+[node name="SceneLister" type="Node" parent="LevelManager" unique_id=673614733]
+script = ExtResource("10_of70h")
+files = Array[String](["res://overlay_starter/scenes/game/levels/level_1.tscn", "res://overlay_starter/scenes/game/levels/level_2.tscn", "res://overlay_starter/scenes/game/levels/level_3.tscn"])
+directory = "res://overlay_starter/scenes/game/levels"
+
+[node name="LevelContainer" type="Node" parent="." unique_id=437554331]
+
+[node name="LevelLoadingScreen" parent="." unique_id=816430938 instance=ExtResource("11_m5ip5")]
+visible = false

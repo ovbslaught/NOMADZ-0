@@ -1,0 +1,33 @@
+{
+  "transmission_id": "TX-LAUNCH-20260829114221",
+  "product_id": "NOMADZ_HUD_KIT_01",
+  "distribution_matrix": {
+    "gumroad": {
+      "name": "NOMADZ-0 Cyberpunk HUD & Shader Asset Pack",
+      "price_cents": 1998,
+      "currency": "usd",
+      "custom_permalink": "nomadz-hud-kit-01",
+      "file_path": "/sdcard/WORMHOLE/-VAULT-/releases/NOMADZ_HUD_KIT_01_1.0.0.zip",
+      "summary": "Modular 80s Cyberpunk HUD vector UI kit & Godot 4 CRT shader pack for game developers."
+    },
+    "itch_io": {
+      "title": "NOMADZ-0 Cyberpunk HUD & Shader Asset Pack",
+      "pricing": "min_price",
+      "min_price": 19.99,
+      "classification": "assets",
+      "tags": [
+        "godot",
+        "cyberpunk",
+        "shaders",
+        "2d",
+        "ui"
+      ]
+    }
+  },
+  "content_engine_brief": {
+    "hook_1": "Why hand-craft UI shaders from scratch when you can drop procedural cyber HUDs in 30 seconds?",
+    "hook_2": "The exact modular Godot 4 shader architecture powering 80s cyberpunk visual interfaces.",
+    "social_copy": "\ud83d\ude80 Just dropped: NOMADZ-0 Cyberpunk HUD & Shader Asset Pack. Modular SVG targeting reticles + procedural GLSL/GDScript CRT shaders. Instant drag-and-drop into your engine.",
+    "pricing_tier": "$19.99 (Single-Seat Indie Commercial License)"
+  }
+}

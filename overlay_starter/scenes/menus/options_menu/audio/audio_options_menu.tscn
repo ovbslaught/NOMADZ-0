@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://uk0k8lmhjw4o"]
+
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/menus/options_menu/audio/audio_options_menu.tscn" id="1_vpa8i"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/menus/options_menu/audio/audio_input_option_control.tscn" id="2_rfvdq"]
+
+[node name="Audio" unique_id=651805888 instance=ExtResource("1_vpa8i")]
+
+[node name="AudioInputOptionControl" parent="VBoxContainer" parent_id_path=PackedInt32Array(1265848630) index="2" unique_id=774781052 instance=ExtResource("2_rfvdq")]
+layout_mode = 2

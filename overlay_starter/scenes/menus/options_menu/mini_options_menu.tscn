@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cp26gqevhh2jj"]
+
+[ext_resource type="Script" path="res://overlay_starter/scenes/menus/options_menu/mini_options_menu.gd" id="1_tnhxt"]
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/menus/options_menu/option_control/slider_option_control.tscn" id="2_rr51g"]
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/menus/options_menu/option_control/toggle_option_control.tscn" id="3_50aig"]
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/menus/options_menu/option_control/vector_2_list_option_control.tscn" id="4_an0bk"]
+[ext_resource type="Script" path="res://addons/maaacks_game_template/base/nodes/utilities/capture_focus.gd" id="5_ptkgh"]
+
+[node name="MiniOptionsMenu" type="VBoxContainer" unique_id=2109470311]
+custom_minimum_size = Vector2(400, 260)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -130.0
+offset_right = 200.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 8
+alignment = 1
+script = ExtResource("1_tnhxt")
+audio_control_scene = ExtResource("2_rr51g")
+
+[node name="FullscreenControl" parent="." unique_id=311912129 instance=ExtResource("3_50aig")]
+unique_name_in_owner = true
+layout_mode = 2
+option_name = "Fullscreen"
+option_section = 3
+key = "FullscreenEnabled"
+section = "VideoSettings"
+
+[node name="ResolutionControl" parent="." unique_id=21057374 instance=ExtResource("4_an0bk")]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Select a screen size"
+option_values = [Vector2i(640, 360), Vector2i(960, 540), Vector2i(1024, 576), Vector2i(1280, 720), Vector2i(1600, 900), Vector2i(1920, 1080), Vector2i(2048, 1152), Vector2i(2560, 1440), Vector2i(3200, 1800), Vector2i(3840, 2160)]
+option_titles = Array[String](["640 x 360", "960 x 540", "1024 x 576", "1280 x 720", "1600 x 900", "1920 x 1080", "2048 x 1152", "2560 x 1440", "3200 x 1800", "3840 x 2160"])
+option_name = "Resolution"
+option_section = 3
+key = "ScreenResolution"
+section = "VideoSettings"
+property_type = 6
+
+[node name="AudioControlContainer" type="VBoxContainer" parent="." unique_id=2081802894]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 8
+script = ExtResource("5_ptkgh")
+search_depth = 2
+
+[connection signal="setting_changed" from="FullscreenControl" to="." method="_on_fullscreen_control_setting_changed"]

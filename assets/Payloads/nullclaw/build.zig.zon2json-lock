@@ -1,0 +1,8 @@
+{
+  "websocket-0.1.0-ZPISdRlzAwBB_Bz2UMMqxYqF6YEVTIBoFsbzwPUJTHIc": {
+    "name": "websocket",
+    "url": "git+https://github.com/karlseguin/websocket.zig#97fefafa59cc78ce177cff540b8685cd7f699276",
+    "hash": "sha256-6fGZphAT4/MnEHjjqzUx/oUa07TBvLPl/58pyHHwq+M=",
+    "rev": "97fefafa59cc78ce177cff540b8685cd7f699276"
+  }
+}

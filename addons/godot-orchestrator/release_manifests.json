@@ -1,0 +1,206 @@
+[
+  {
+    "version": "v2.0.dev1",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.dev2",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.dev3",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.rc1",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.rc2",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.1.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.2.rc1",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.2.rc2",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.2.rc3",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.2.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.3.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.4.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.5.rc1",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.5.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.6.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.7.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.0.8.stable",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.1.dev1",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.1.dev2",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.1.dev3",
+    "godot_compatibility": "4.2"
+  },
+  {
+    "version": "v2.1.dev4",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.rc1",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.rc2",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.rc3",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.rc4",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.stable",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.1.stable",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.2.stable",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.3.rc1",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.3.stable",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.4.stable",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.5.stable",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.1.6.stable",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.2.dev1",
+    "godot_compatibility": "4.3"
+  },
+  {
+    "version": "v2.2.stable",
+    "godot_compatibility": "4.4"
+  },
+  {
+    "version": "v2.2.1.stable",
+    "godot_compatibility": "4.4"
+  },
+  {
+    "version": "v2.2.2.stable",
+    "godot_compatibility": "4.4"
+  },
+  {
+    "version": "v2.2.3.stable",
+    "godot_compatibility": "4.4"
+  },
+  {
+    "version": "v2.2.4.stable",
+    "godot_compatibility": "4.4"
+  },
+  {
+    "version": "v2.3.stable",
+    "godot_compatibility": "4.5"
+  },
+  {
+    "version": "v2.3.1.stable",
+    "godot_compatibility": "4.5"
+  },
+  {
+    "version": "v2.3.2.stable",
+    "godot_compatibility": "4.5"
+  },
+  {
+    "version": "v2.3.3.stable",
+    "godot_compatibility": "4.5"
+  },
+  {
+    "version": "v2.3.4.stable",
+    "godot_compatibility": "4.5"
+  },
+  {
+    "version": "v2.4.dev1",
+    "godot_compatibility": "4.6"
+  },
+  {
+    "version": "v2.4.dev2",
+    "godot_compatibility": "4.6"
+  },
+  {
+    "version": "v2.4.rc1",
+    "godot_compatibility": "4.6"
+  },
+  {
+    "version": "v2.4.rc2",
+    "godot_compatibility": "4.6"
+  },
+  {
+    "version": "v2.4.stable",
+    "godot_compatibility": "4.6"
+  },
+  {
+    "version": "v2.4.1.stable",
+    "godot_compatibility": "4.6"
+  }
+]

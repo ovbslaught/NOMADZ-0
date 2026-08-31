@@ -1,0 +1,49 @@
+name: 🌐 Web Builds
+on:
+  workflow_call:
+
+env:
+  EM_VERSION: 4.0.11
+  EM_INSTALL_DIR: "${{ github.workspace }}/.emsdk"
+
+jobs:
+  build-web:
+    runs-on: ubuntu-22.04
+    name: ${{ matrix.name }}
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Template w/o threads (target=template_release, threads=no)
+            artifact-name: web-nothreads-release
+            cache-name: web-nothreads-release
+            preset: web-nothreads-release
+
+          - name: Template w/ threads (target=template_release, threads=yes)
+            artifact-name: web-threads-release
+            cache-name: web-threads-release
+            preset: web-threads-release
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - uses: ./.github/actions/setup-emsdk
+        with:
+          version: ${{ env.EM_VERSION }}
+          install-path: ${{ env.EM_INSTALL_DIR }}
+
+      - name: Install Ninja (Linux)
+        shell: sh
+        run: |
+          sudo apt-get install ninja-build
+
+      - name: Build
+        uses: ./.github/actions/orchestrator-build
+        with:
+          artifact-name: ${{ matrix.artifact-name }}
+          cache-name: ${{ matrix.cache-name }}
+          preset-name: ${{ matrix.preset }}

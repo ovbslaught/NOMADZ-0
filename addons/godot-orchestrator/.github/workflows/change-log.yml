@@ -1,0 +1,33 @@
+name: Generate Change Log
+
+on:
+  workflow_dispatch:
+    inputs:
+      last_release:
+        description: 'Last release tag'
+        required: true
+      target_sha:
+        description: 'Target sha'
+        required: true
+
+jobs:
+  script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Generate changes
+        id: changelog
+        uses: metcalfc/changelog-generator@v4.6.2
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          head-ref: ${{ github.event.inputs.target_sha }}
+          base-ref: ${{ github.event.inputs.last_release }}
+
+      - name: Get the changelog
+        run: |
+          cat << "EOF"
+          ${{ steps.changelog.outputs.changelog }}
+          EOF

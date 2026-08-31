@@ -1,0 +1,51 @@
+{
+  "name": "NOMADZ-0 Wave AI Providers",
+  "version": 1,
+  "secrets_policy": "read_from_environment_only",
+  "providers": {
+    "openrouter": {
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "default_model": "openai/gpt-4o-mini"
+    },
+    "openai": {
+      "base_url": "https://api.openai.com/v1",
+      "api_key_env": "OPENAI_API_KEY",
+      "default_model": "gpt-4o-mini"
+    },
+    "gemini": {
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "api_key_env": "GEMINI_API_KEY",
+      "default_model": "gemini-1.5-flash"
+    },
+    "google_ai_studio": {
+      "base_url": "https://generativelanguage.googleapis.com/v1beta",
+      "api_key_env": "GOOGLE_AI_STUDIO_API_KEY",
+      "default_model": "gemini-1.5-flash"
+    },
+    "xai": {
+      "base_url": "https://api.x.ai/v1",
+      "api_key_env": "XAI_API_KEY",
+      "default_model": "grok-2-latest"
+    },
+    "huggingface": {
+      "base_url": "https://api-inference.huggingface.co",
+      "api_key_env": "HUGGINGFACE_API_TOKEN",
+      "default_model": "meta-llama/Llama-3.1-8B-Instruct"
+    },
+    "elevenlabs": {
+      "base_url": "https://api.elevenlabs.io/v1",
+      "api_key_env": "ELEVENLABS_API_KEY",
+      "purpose": "voice"
+    },
+    "gitlab": {
+      "base_url": "https://gitlab.com/api/v4",
+      "api_key_env": "GITLAB_TOKEN",
+      "purpose": "repo-sync"
+    },
+    "google_drive": {
+      "credentials_env": "GOOGLE_APPLICATION_CREDENTIALS",
+      "purpose": "drive-sync"
+    }
+  }
+}

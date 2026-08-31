@@ -1,0 +1,27 @@
+[submodule "submodules/cosmic-key"]
+	path = submodules/cosmic-key
+	url = https://github.com/ovbslaught/Cosmic-key.git
+[submodule "submodules/godot-demos"]
+	path = submodules/godot-demos
+	url = https://github.com/ovbslaught/godot-demo-projects.git
+[submodule "submodules/gengen"]
+	path = submodules/gengen
+	url = https://github.com/ovbslaught/GenGen.git
+[submodule "tools/pixel-composer"]
+	path = tools/pixel-composer
+	url = https://github.com/ovbslaught/Pixel-Composer.git
+[submodule "reference/gms2-metroidvania"]
+	path = reference/gms2-metroidvania
+	url = https://github.com/ovbslaught/GMS2-MetroidvaniaEngine.git
+[submodule "reference/zenrpg"]
+	path = reference/zenrpg
+	url = https://github.com/ovbslaught/ZenRPG.git
+[submodule "reference/action-rpg"]
+	path = reference/action-rpg
+	url = https://github.com/ovbslaught/ActionRPG.git
+[submodule "submodules/gms2-server"]
+	path = submodules/gms2-server
+	url = https://github.com/ovbslaught/Game-Maker-Studio-2-Server-Library.git
+[submodule "reference/gui-templates"]
+	path = reference/gui-templates
+	url = https://github.com/ovbslaught/GameMaker-GUI-Template.git

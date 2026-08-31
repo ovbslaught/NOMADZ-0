@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://b52glx3g2kt6b"]
+
+[ext_resource type="Script" path="res://overlay_starter/scenes/credits/scrollable_credits.gd" id="1_k4kgo"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/credits/credits_label.tscn" id="2_f2jp0"]
+
+[node name="ScrollableCredits" type="Control" unique_id=1649718614]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k4kgo")
+
+[node name="CreditsLabel" parent="." unique_id=967293869 instance=ExtResource("2_f2jp0")]
+unique_name_in_owner = true
+layout_mode = 1
+fit_content = false
+scroll_active = true

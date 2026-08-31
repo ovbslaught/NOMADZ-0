@@ -1,0 +1,23 @@
+#!/usr/bin/env python
+# Build: `scons platform=<linux|windows|macos>` from this directory.
+# Requires godot-cpp cloned into ./godot-cpp (matching your Godot 4.3 version):
+#   git submodule add -b 4.3 https://github.com/godotengine/godot-cpp
+
+env = SConscript("godot-cpp/SConstruct")
+
+env.Append(CPPPATH=["src/"])
+sources = Glob("src/*.cpp")
+
+target_name = "flight_navigation_3d"
+if env["platform"] == "macos":
+    library = env.SharedLibrary(
+        f"bin/lib{target_name}.{env['platform']}.{env['target']}.framework/{target_name}.{env['platform']}.{env['target']}",
+        source=sources,
+    )
+else:
+    library = env.SharedLibrary(
+        f"bin/lib{target_name}.{env['platform']}.{env['target']}{env['SHLIBSUFFIX']}",
+        source=sources,
+    )
+
+Default(library)

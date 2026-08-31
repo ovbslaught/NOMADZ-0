@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="UIInventoryEmptyItem" type="Control"]
+offset_right = 82.0
+offset_bottom = 82.0
+custom_minimum_size = Vector2( 82, 82 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

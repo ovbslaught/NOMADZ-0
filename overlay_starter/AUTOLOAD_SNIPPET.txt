@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Add these entries to your project.godot under [autoload]:
+# (Project > Project Settings > AutoLoad in the Godot editor)
+# ─────────────────────────────────────────────────────────────────────────────
+[autoload]
+OverlayBus="*res://00_Core/overlay/OverlayBus.gd"
+OverlayConfig="*res://00_Core/overlay/OverlayConfig.gd"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# scene tree for overlay_runtime.tscn  (create manually in Godot):
+# ─────────────────────────────────────────────────────────────────────────────
+# OverlayRuntime        (Node)              ← attach OverlayRuntime.gd
+# ├── SourceBridge      (Node)              ← attach TilemapImportAdapter.gd
+# ├── SemanticInterpreter (Node)            ← attach SemanticInterpreter.gd
+# └── PresentationRoot  (Node3D)
+#     ├── LevelAssembler  (Node3D)          ← stub, build next sprint
+#     ├── EntitiesRoot    (Node3D)          ← entity presenters spawn here
+#     ├── CameraDirector  (Node3D)          ← stub
+#     ├── FXDirector      (Node3D)          ← stub
+#     └── DebugRoot       (CanvasLayer)
+#         ├── ExactVisualView (Control)     ← attach ExactVisualView.gd
+#         └── SemanticGridView (Control)    ← attach SemanticGridView.gd
+#
+# ─────────────────────────────────────────────────────────────────────────────
+# Sample JSON import file (save as test_level.json):
+# ─────────────────────────────────────────────────────────────────────────────
+# {
+#   "project_id": "nes_overlay_test",
+#   "level_id": "1-1",
+#   "dimensions": { "cols": 16, "rows": 12 },
+#   "palette": ["#000000","#888888","#FFFFFF","#00AA44","#0044FF","#FF2200"],
+#   "tiles": [
+#     {"coord":[0,0],"tile_id":1,"palette_index":1},
+#     {"coord":[1,0],"tile_id":1,"palette_index":1},
+#     {"coord":[0,11],"tile_id":2,"palette_index":0},
+#     {"coord":[4,5],"tile_id":10,"palette_index":2},
+#     {"coord":[4,6],"tile_id":10,"palette_index":3},
+#     {"coord":[8,7],"tile_id":22,"palette_index":4},
+#     {"coord":[12,4],"tile_id":33,"palette_index":5}
+#   ],
+#   "entities": [],
+#   "events":   []
+# }
+#
+# To trigger an import from code:
+#   var adapter : TilemapImportAdapter = $SourceBridge
+#   adapter.import_from_path("res://test_level.json")

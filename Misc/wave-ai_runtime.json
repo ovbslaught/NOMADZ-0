@@ -1,0 +1,30 @@
+{
+  "name": "NOMADZ-0 Wave AI Runtime",
+  "version": 1,
+  "mode": "local-low-inference",
+  "logs": {
+    "dir": "LOGS",
+    "events": "LOGS/wave-ai-events.jsonl"
+  },
+  "routes": {
+    "default_chat": "openrouter",
+    "code_assist": "openai",
+    "fast_briefing": "gemini",
+    "vision_or_asset_tags": "gemini",
+    "voice": "elevenlabs",
+    "repo_sync": "gitlab",
+    "drive_sync": "google_drive"
+  },
+  "guardrails": {
+    "never_log_secret_values": true,
+    "prefer_env_vars": true,
+    "redact_patterns": [
+      "sk-",
+      "sk-or-",
+      "xai-",
+      "hf_",
+      "glpat-",
+      "AIza"
+    ]
+  }
+}

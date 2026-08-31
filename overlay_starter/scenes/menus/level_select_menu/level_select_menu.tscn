@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://tyelgbidqreo"]
+
+[ext_resource type="Script" path="res://overlay_starter/scenes/menus/level_select_menu/level_select_menu.gd" id="1_nb0ok"]
+[ext_resource type="Script" path="res://addons/maaacks_game_template/base/nodes/utilities/capture_focus.gd" id="2_38ptq"]
+[ext_resource type="Script" path="res://addons/maaacks_game_template/extras/scripts/scene_lister.gd" id="3_3bvhb"]
+
+[node name="LevelSelectMenu" type="Control" unique_id=1470024191]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_nb0ok")
+
+[node name="Control" type="Control" parent="." unique_id=1541649425]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_38ptq")
+
+[node name="LevelButtonsContainer" type="ItemList" parent="Control" unique_id=17921809]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -17.5
+offset_right = 200.0
+offset_bottom = 17.5
+grow_horizontal = 2
+grow_vertical = 2
+auto_height = true
+item_count = 1
+item_0/text = "1 - ExampleLevel"
+
+[node name="SceneLister" type="Node" parent="." unique_id=1851760223]
+script = ExtResource("3_3bvhb")
+files = Array[String](["res://overlay_starter/scenes/game/levels/level_1.tscn", "res://overlay_starter/scenes/game/levels/level_2.tscn", "res://overlay_starter/scenes/game/levels/level_3.tscn"])
+directory = "res://overlay_starter/scenes/game/levels"
+
+[connection signal="item_activated" from="Control/LevelButtonsContainer" to="." method="_on_level_buttons_container_item_activated"]

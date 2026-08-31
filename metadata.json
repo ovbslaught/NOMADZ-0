@@ -1,0 +1,11 @@
+{
+  "name": "Cosmic Key: Nomadz Dev Deck",
+  "description": "A portable, multi-platform AI terminal for Voltron Nomadz. Optimized for Switch, Wii U, 3DS, and Shield. Integrated with GoldHEN, Telegram, and Obsidian.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

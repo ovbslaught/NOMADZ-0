@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://cjnwkknij50tg"]
+
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/menus/main_menu/main_menu.tscn" id="1_hweny"]
+[ext_resource type="Script" path="res://overlay_starter/scenes/menus/main_menu/main_menu.gd" id="2_aqqst"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/windows/main_menu_options_window.tscn" id="3_xqy1q"]
+[ext_resource type="PackedScene" path="res://overlay_starter/scenes/windows/main_menu_credits_window.tscn" id="4_q1nlu"]
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/windows/confirmation_overlaid_window.tscn" id="5_0lygv"]
+
+[node name="MainMenu" unique_id=869232425 instance=ExtResource("1_hweny")]
+script = ExtResource("2_aqqst")
+level_select_packed_scene = null
+confirm_new_game = true
+options_packed_scene = ExtResource("3_xqy1q")
+credits_packed_scene = ExtResource("4_q1nlu")
+
+[node name="ContinueGameButton" type="Button" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="1" unique_id=1495566523]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Continue"
+
+[node name="LevelSelectButton" type="Button" parent="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer" parent_id_path=PackedInt32Array(2017477786) index="2" unique_id=1348895676]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Level Select"
+
+[node name="NewGameConfirmation" parent="." index="5" unique_id=487332143 instance=ExtResource("5_0lygv")]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(420, 200)
+layout_mode = 1
+offset_left = -210.0
+offset_top = -100.0
+offset_right = 210.0
+offset_bottom = 100.0
+title = "New Game"
+text = "Are you sure you want to start a new game?
+
+All progress in the current game will be lost."
+
+[connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/ContinueGameButton" to="." method="_on_continue_game_button_pressed"]
+[connection signal="pressed" from="MenuContainer/MenuButtonsMargin/MenuButtonsContainer/MenuButtonsBoxContainer/LevelSelectButton" to="." method="_on_level_select_button_pressed"]
+[connection signal="confirmed" from="NewGameConfirmation" to="." method="_on_new_game_confirmation_confirmed"]

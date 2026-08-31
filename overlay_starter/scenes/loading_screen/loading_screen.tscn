@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://n7sok1fxj4dh"]
+
+[ext_resource type="PackedScene" path="res://addons/maaacks_game_template/base/nodes/loading_screen/loading_screen.tscn" id="1_fobyg"]
+[ext_resource type="Script" path="res://overlay_starter/scenes/loading_screen/loading_screen.gd" id="2_colsu"]
+
+[node name="LoadingScreen" unique_id=179842335 instance=ExtResource("1_fobyg")]
+script = ExtResource("2_colsu")
