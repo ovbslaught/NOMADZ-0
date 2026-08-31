@@ -1,0 +1,48 @@
+name: MOTHER-BRAIN Resilient Sync — GitHub <-> Google Drive Wormhole
+
+on:
+  push:
+    branches:
+      - main
+      - Cosmic-key
+  workflow_dispatch:
+
+jobs:
+  sync-mother-brain:
+    name: Rclone WORMHOLE Substrate Sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Check Secret & Configure Rclone
+        id: rclone_check
+        env:
+          RCLONE_CONF_DATA: ${{ secrets.RCLONE_CONFIG }}
+        run: |
+          if [ -z "$RCLONE_CONF_DATA" ]; then
+            echo "::warning::RCLONE_CONFIG secret not found on ovbslaught/MOTHER-BRAIN. Skipping sync until secret is configured in Repository Settings."
+            echo "skip_sync=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          mkdir -p ~/.config/rclone
+          echo "$RCLONE_CONF_DATA" > ~/.config/rclone/rclone.conf
+          echo "skip_sync=false" >> $GITHUB_OUTPUT
+
+      - name: Install Rclone
+        if: steps.rclone_check.outputs.skip_sync == 'false'
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq rclone
+
+      - name: Execute Guarded Sync to WORMHOLE
+        if: steps.rclone_check.outputs.skip_sync == 'false'
+        run: |
+          rclone copy . gdrive:WORMHOLE/MOTHER-BRAIN/ \
+            --exclude ".git/**" \
+            --exclude "*.tmp" \
+            --fast-list \
+            --transfers 4 \
+            --checkers 8 \
+            -v
