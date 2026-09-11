@@ -1,22 +1,75 @@
 ; Engine configuration file.
-; It's best edited using the editor UI and not directly,
-; since the parameters that go here are not all obvious.
-;
-; Format:
-;   [section] ; section goes between []
-;   param=value ; assign values to parameters
+; It's best edited using the editor UI and not directly.
 
 config_version=5
 
 [application]
 
-config/name="Ocean"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/name="NOMADZ-0"
+run/main_scene="res://scenes/main/MainScene.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
-Director=*res://scripts/systems/Director.gd
-EchoRunRecorder=*res://scripts/systems/EchoRunRecorder.gd
-VultureMonitor=*res://scripts/systems/VultureMonitor.gd
 
 [autoload]
-GameCoordinator="*res://src/GameCoordinator.gd"
+
 VultureDrone="*res://src/VultureDrone.gd"
+GameCoordinator="*res://src/GameCoordinator.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+[input]
+
+move_forward={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194320,"physical_keycode":87,"key_label":0,"unicode":119,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":1,"axis_value":-1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":11,"pressed":true)
+]
+}
+move_backward={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194322,"physical_keycode":83,"key_label":0,"unicode":115,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":1,"axis_value":1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":12,"pressed":true)
+]
+}
+move_left={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194319,"physical_keycode":65,"key_label":0,"unicode":97,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":0,"axis_value":-1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":13,"pressed":true)
+]
+}
+move_right={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194321,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":0,"axis_value":1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":14,"pressed":true)
+]
+}
+jump={
+"deadzone": 0.5,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":32,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadButton,"device":-1,"button_index":0,"pressed":true)
+]
+}
+dash={
+"deadzone": 0.5,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194325,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadButton,"device":-1,"button_index":1,"pressed":true)
+]
+}

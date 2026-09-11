@@ -1,34 +1,32 @@
 extends Node
 
-var socket = WebSocketPeer.new()
-const VIBE_URL = "ws://127.0.0.1:7331"
+const GOSSIP_URL = "http://127.0.0.1:7331/gossip"
 
-func _ready():
-    socket.connect_to_url(VIBE_URL)
-    print("[VCN8] Initiating vortex connection to Termux...")
+var http_request: HTTPRequest
 
-func _process(delta):
-    socket.poll()
-    var state = socket.get_ready_state()
-    if state == WebSocketPeer.STATE_OPEN:
-        while socket.get_available_packet_count() > 0:
-            var packet = socket.get_packet().get_string_from_utf8()
-            _handle_incoming_command(packet)
-    elif state == WebSocketPeer.STATE_CLOSED:
-        var code = socket.get_close_code()
-        var reason = socket.get_close_reason()
-        print("[VCN8] Vortex Closed ", code, ", reason: ", reason)
-        set_process(false) # Stop polling if closed
+func _ready() -> void:
+	http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(self._on_gossip_completed)
 
-func gossip_broadcast_packet(payload: Dictionary) -> void:
-    if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
-        socket.send_text(JSON.stringify(payload))
-    else:
-        print("[VCN8] Cannot broadcast; vortex is not open.")
+func gossip_broadcast(packet: Dictionary) -> void:
+	var json_payload = JSON.stringify(packet)
+	var headers = ["Content-Type: application/json"]
+	var error = http_request.request(
+		GOSSIP_URL,
+		headers,
+		HTTPClient.METHOD_POST,
+		json_payload
+	)
+	if error != OK:
+		push_error("VultureDrone [VCN-8]: Failed to execute gossip broadcast. Error code: " + str(error))
+	else:
+		print("VultureDrone [VCN-8]: Emitting packet to " + GOSSIP_URL)
 
-func _handle_incoming_command(raw_json: String) -> void:
-    var parsed = JSON.parse_string(raw_json)
-    if parsed typeof Dictionary and parsed.has("command"):
-        print("[GODOT-RECEIVED] Termux Ordered: ", parsedX"command"])
-        if parsedX"command"] == "spawn_particles":
-            print(" -> Spawning Particles with data: ", parsedX"data"])
+func _on_gossip_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	if response_code == 200:
+		var response = JSON.parse_string(body.get_string_from_utf8())
+		if response is Dictionary:
+			print("VultureDrone [VCN-8]: Daemon acknowledged gossip block at ts: ", response.get("recorded_ts", "Unknown"))
+	else:
+		push_warning("VultureDrone [VCN-8]: Gossip broadcast failed. Response code: " + str(response_code))
