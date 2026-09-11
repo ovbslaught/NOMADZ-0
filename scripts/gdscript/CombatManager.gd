@@ -14,7 +14,7 @@
 ## Requires an Area3D assigned via @export (melee_hitbox) for hit detection.
 ## Enemy nodes must belong to the "enemy" group.
 
-class_name CombatManager
+# class_name CombatManager
 extends Node
 
 # ---------------------------------------------------------------------------

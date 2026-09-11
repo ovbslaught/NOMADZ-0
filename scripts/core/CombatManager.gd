@@ -1,5 +1,5 @@
 extends Node3D
-class_name CombatManager
+# class_name CombatManager
 
 signal attack_executed(combo_step)
 signal parry_triggered

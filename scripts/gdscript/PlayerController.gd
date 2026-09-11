@@ -13,7 +13,7 @@
 ## Requires an AnimationTree with an AnimationStateMachinePlayback parameter at "parameters/playback".
 ## Each TransformMode expects a distinct CollisionShape3D child; assign via @export.
 
-class_name PlayerController
+# class_name PlayerController
 extends CharacterBody3D
 
 # ---------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 extends CharacterBody3D
-class_name PlayerController
+# class_name PlayerController
 
 enum MovementState { WALKING, RUNNING, CROUCHING, SWIMMING, FLYING, DRIVING, JUMPING, DASHING }
 
