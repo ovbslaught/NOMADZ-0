@@ -1,0 +1,225 @@
+[gd_scene load_steps=18 format=3 uid="uid://cf4v9gq8w3m1k"]
+
+[ext_resource type="Script" path="res://scripts/MainArena.gd" id="1_arena"]
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/TrainingDummy.gd" id="3_dummy"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_arena"]
+sky_top_color = Color(0.18, 0.38, 0.65, 1)
+sky_horizon_color = Color(0.65, 0.75, 0.85, 1)
+ground_bottom_color = Color(0.12, 0.14, 0.18, 1)
+ground_horizon_color = Color(0.55, 0.62, 0.72, 1)
+
+[sub_resource type="Sky" id="Sky_arena"]
+sky_material = SubResource("ProceduralSkyMaterial_arena")
+
+[sub_resource type="Environment" id="Environment_arena"]
+background_mode = 2
+sky = SubResource("Sky_arena")
+ambient_light_source = 2
+ambient_light_color = Color(0.6, 0.68, 0.78, 1)
+ambient_light_energy = 0.8
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(80, 1, 80)
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.18, 0.22, 0.26, 1)
+metallic = 0.2
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="BoxMesh_floor"]
+material = SubResource("Material_floor")
+size = Vector3(80, 1, 80)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pillar"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="StandardMaterial3D" id="Material_pillar"]
+albedo_color = Color(0.28, 0.35, 0.42, 1)
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_pillar"]
+material = SubResource("Material_pillar")
+size = Vector3(4, 4, 4)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dummy"]
+radius = 0.5
+height = 2.0
+
+[sub_resource type="StandardMaterial3D" id="Material_dummy"]
+albedo_color = Color(0.85, 0.45, 0.15, 1)
+roughness = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_dummy"]
+material = SubResource("Material_dummy")
+radius = 0.5
+height = 2.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hurt"]
+height = 2.0
+radius = 0.7
+
+[node name="MainArena" type="Node3D"]
+script = ExtResource("1_arena")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_arena")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 0, 15, 0)
+light_color = Color(1, 0.96, 0.9, 1)
+light_energy = 1.3
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_floor")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_floor")
+
+[node name="Pillars" type="Node3D" parent="."]
+
+[node name="Pillar1" type="StaticBody3D" parent="Pillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2.5, -12)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillars/Pillar1"]
+shape = SubResource("BoxShape3D_pillar")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillars/Pillar1"]
+mesh = SubResource("BoxMesh_pillar")
+
+[node name="Pillar2" type="StaticBody3D" parent="Pillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 2.5, -12)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillars/Pillar2"]
+shape = SubResource("BoxShape3D_pillar")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillars/Pillar2"]
+mesh = SubResource("BoxMesh_pillar")
+
+[node name="Pillar3" type="StaticBody3D" parent="Pillars"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -20)
+scale = Vector3(1.5, 2.0, 1.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pillars/Pillar3"]
+shape = SubResource("BoxShape3D_pillar")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pillars/Pillar3"]
+mesh = SubResource("BoxMesh_pillar")
+
+[node name="TrainingDummy" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -8)
+collision_layer = 8
+collision_mask = 1
+script = ExtResource("3_dummy")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainingDummy"]
+shape = SubResource("CapsuleShape3D_dummy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TrainingDummy"]
+mesh = SubResource("CapsuleMesh_dummy")
+
+[node name="HurtBox" type="Area3D" parent="TrainingDummy"]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TrainingDummy/HurtBox"]
+shape = SubResource("CylinderShape3D_hurt")
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "NOMADZ-0 // BATTLE SIMULATOR"
+
+[node name="CharLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "CHARACTER: SPIDER-MAN [Press C or 1-4 to swap]"
+
+[node name="HealthLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "VITALITY"
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(240, 18)
+layout_mode = 2
+value = 100.0
+show_percentage = true
+
+[node name="StaminaLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "STAMINA / DASH"
+
+[node name="StaminaBar" type="ProgressBar" parent="HUD/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(240, 18)
+layout_mode = 2
+value = 100.0
+show_percentage = true
+
+[node name="ComboLabel" type="Label" parent="HUD/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 18
+text = "COMBO: READY"
+
+[node name="ControlsPanel" type="PanelContainer" parent="HUD/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Margin" type="MarginContainer" parent="HUD/MarginContainer/ControlsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 10
+
+[node name="Controls" type="Label" parent="HUD/MarginContainer/ControlsPanel/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 0.95, 1)
+theme_override_font_sizes/font_size = 13
+text = "CONTROLS:
+• WASD / Left Stick: Move
+• Mouse: Orbit Camera
+• Space / A Button: Jump (Double Jump)
+• Shift / RB: Dash
+• Left Click / J: 3-Hit Combo Strike
+• Right Click / K: Parry / Block
+• C or 1-4: Switch Character Model
+  1: Spider-Man (52 Anims)
+  2: Silver Surfer (37 Anims)
+  3: Sci-Fi Soldier
+  4: Arachnid Warrior
+• Mouse Wheel: Zoom Camera
+• Esc: Toggle Mouse Lock"

@@ -28,7 +28,7 @@ func gossip_broadcast_packet(payload: Dictionary) -> void:
 
 func _handle_incoming_command(raw_json: String) -> void:
     var parsed = JSON.parse_string(raw_json)
-    if parsed typeof Dictionary and parsed.has("command"):
-        print("[GODOT-RECEIVED] Termux Ordered: ", parsedX"command"])
-        if parsedX"command"] == "spawn_particles":
-            print(" -> Spawning Particles with data: ", parsedX"data"])
+    if parsed is Dictionary and parsed.has("command"):
+        print("[GODOT-RECEIVED] Termux Ordered: ", parsed["command"])
+        if parsed["command"] == "spawn_particles":
+            print(" -> Spawning Particles with data: ", parsed.get("data", {}))
