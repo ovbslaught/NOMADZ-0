@@ -31,30 +31,33 @@ func _physics_process(delta: float) -> void:
 	if mode == Mode.SUBMARINE:
 		_apply_buoyancy(delta)
 
+func _is_action(action_name: String) -> bool:
+	return InputMap.has_action(action_name) and Input.is_action_pressed(action_name)
+
 func _handle_input(_delta: float) -> void:
-	if Input.is_action_pressed("thrust_fwd"):
+	if _is_action("thrust_fwd"):
 		apply_central_force(-transform.basis.z * thrust_force)
-	if Input.is_action_pressed("thrust_back"):
+	if _is_action("thrust_back"):
 		apply_central_force(transform.basis.z * thrust_force)
-	if Input.is_action_pressed("strafe_left"):
+	if _is_action("strafe_left"):
 		apply_central_force(-transform.basis.x * strafe_force)
-	if Input.is_action_pressed("strafe_right"):
+	if _is_action("strafe_right"):
 		apply_central_force(transform.basis.x * strafe_force)
-	if Input.is_action_pressed("rise"):
+	if _is_action("rise"):
 		apply_central_force(transform.basis.y * vertical_force)
-	if Input.is_action_pressed("sink"):
+	if _is_action("sink"):
 		apply_central_force(-transform.basis.y * vertical_force)
-	if Input.is_action_pressed("yaw_left"):
+	if _is_action("yaw_left"):
 		apply_torque(Vector3.UP * torque_force)
-	if Input.is_action_pressed("yaw_right"):
+	if _is_action("yaw_right"):
 		apply_torque(-Vector3.UP * torque_force)
-	if Input.is_action_pressed("pitch_up"):
+	if _is_action("pitch_up"):
 		apply_torque(transform.basis.x * torque_force)
-	if Input.is_action_pressed("pitch_down"):
+	if _is_action("pitch_down"):
 		apply_torque(-transform.basis.x * torque_force)
-	if Input.is_action_pressed("roll_left"):
+	if _is_action("roll_left"):
 		apply_torque(transform.basis.z * torque_force * 0.5)
-	if Input.is_action_pressed("roll_right"):
+	if _is_action("roll_right"):
 		apply_torque(-transform.basis.z * torque_force * 0.5)
 
 func _apply_buoyancy(_delta: float) -> void:
