@@ -1,21 +1,39 @@
-extends Node3D
+# NOMADZ-0 :: MainScene.gd
+# Autoload root — boots player, lighting, audio, debug
+# Wires CameraSystem target, Director signals
+extends Node
+class_name MainScene
 
-var player_scene = preload("res://scenes/player/Player.tscn")
-@onready var spawn_point: Node3D = $WorldRoot/PlayerSpawn
+@onready var player: PlayerController = $Player
+@onready var camera_sys: CameraSystem = $CameraSystem
+@onready var lighting: LightingManager = $LightingManager
+@onready var audio: AudioManager = $AudioManager
+@onready var debug: DebugTools = $DebugTools
 
 func _ready() -> void:
-    spawn_player()
-    hook_autoloads()
+	# Wire camera to player
+	camera_sys.target = player
 
-func spawn_player() -> void:
-    if player_scene and is_instance_valid(spawn_point):
-        var p = player_scene.instantiate()
-        add_child(p)
-        p.global_position = spawn_point.global_position
+	# Boot retro lighting
+	lighting.pulse_cyan()
 
-func hook_autoloads() -> void:
-    if Engine.has_singleton("Director"):
-        var dir = Engine.get_singleton("Director")
-        var player = get_tree().get_first_node_in_group("player")
-        if player and player.has_signal("player_died"):
-            player.connect("player_died", Callable(dir, "on_player_died"))
+	# Boot ambient audio
+	audio.play_ambient("trench_ambient")
+
+	# Register player in group for debug + director hooks
+	player.add_to_group("player")
+
+	# Director autoload hook
+	var director := get_node_or_null("/root/Director")
+	if director:
+		director.connect("loot_drop", _on_loot_drop)
+		director.connect("boss_spawned", _on_boss_spawned)
+
+	print("[NOMADZ-0] MainScene ready. VCN-3.1 | Sol | φ=0.618")
+
+func _on_loot_drop(position: Vector3) -> void:
+	lighting.pulse_color("yellow")
+	audio.flash_biolum()
+
+func _on_boss_spawned(_boss: Node3D) -> void:
+	lighting.pulse_color("magenta")
