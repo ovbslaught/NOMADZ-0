@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "tools/citygen/fetch_norfolk_osm.py"
+      - ".github/workflows/fetch_norfolk.yml"
   workflow_dispatch: {}
 
 permissions:
@@ -23,8 +24,9 @@ jobs:
       - name: Run OSM fetcher
         run: python3 tools/citygen/fetch_norfolk_osm.py
 
-      - name: Commit city data
+      - name: Move data into place and commit
         run: |
+          test -f norfolk_city.json && mv norfolk_city.json tools/citygen/norfolk_city.json
           git config user.name "NOMADZ-bot"
           git config user.email "bot@users.noreply.github.com"
           git add tools/citygen/norfolk_city.json
