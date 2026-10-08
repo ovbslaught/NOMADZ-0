@@ -1,0 +1,293 @@
+{
+  ".": {
+    "dirs": [
+      "vault",
+      "docs",
+      ".git",
+      ".rust",
+      "ConnectionStatePlugin",
+      ".github",
+      "logs",
+      ".vscode",
+      "data",
+      "scripts"
+    ],
+    "files": [
+      "CodexManager.gd",
+      "voxelhammer.gd",
+      "PillarDisplay.gd",
+      "7.png",
+      "6.png",
+      "3.png",
+      "2.png",
+      "LaserBeam_Icon.png",
+      "CombatManager.gd",
+      "1.png",
+      "5.png.import",
+      "2.png.import",
+      "warp.gd",
+      "5.png",
+      "4.png",
+      "3.png.import",
+      "Control3Dicon.svg.import",
+      "1.png.import",
+      "suitstatesensor.gd",
+      "CortexCore.gd",
+      "4.png.import",
+      "PillarRegristry.gd",
+      "PillarRegistry.gd",
+      "SESSION_REPORT_20260307_203630.md",
+      "6.png.import",
+      "Control3Dicon.png.import",
+      "LaserBeam_Icon.png.import",
+      "VisorOverlay.gd",
+      "Operativesuitcontroller.gd",
+      "7.png.import",
+      "GalaxyGen.gd",
+      "LICENSE",
+      "project.godot",
+      "ReadMe.md",
+      "Control3Dicon.png",
+      "Control3Dicon.svg"
+    ]
+  },
+  "vault": {
+    "dirs": [
+      "VULTURE",
+      ".obsidian",
+      "GEOLOGOS",
+      "COSMO",
+      "NOMADZ-0",
+      "NEO-SOL-OMEGA"
+    ],
+    "files": []
+  },
+  "vault/VULTURE": {
+    "dirs": [],
+    "files": [
+      "20260307_1950_httpsmodelcontextprotocoliochangelo.md",
+      "20260307_1950_httpsfirecrawldevblog.md",
+      "20260307_2007_httpsmodelcontextprotocoliochangelo.md",
+      "20260307_1950_httpswwwanthropiccomnews.md",
+      "20260307_2007_httpswwwanthropiccomnews.md",
+      "20260307_2007_httpsfirecrawldevblog.md"
+    ]
+  },
+  "vault/.obsidian": {
+    "dirs": [],
+    "files": [
+      "api_keys.json",
+      "community-plugins.json",
+      "app.json"
+    ]
+  },
+  "vault/GEOLOGOS": {
+    "dirs": [],
+    "files": [
+      "20260307_1950_httpswwwbasacukmedialatest-news.md",
+      "20260307_2007_httpswwwusgsgovnewsscience-snippet.md",
+      "20260307_2007_httpswwwbasacukmedialatest-news.md",
+      "20260307_1950_httpswwwusgsgovnewsscience-snippet.md"
+    ]
+  },
+  "vault/COSMO": {
+    "dirs": [],
+    "files": [
+      "20260307_2007_httpsphysorgspace-news.md",
+      "20260307_2007_httpsarxivorglistastro-phGArecent.md",
+      "20260307_1950_httpsphysorgspace-news.md",
+      "20260307_1950_httpsarxivorglistastro-phGArecent.md"
+    ]
+  },
+  "vault/NOMADZ-0": {
+    "dirs": [],
+    "files": [
+      "20260307_2007_httpsgodotengineorgnews.md",
+      "20260307_1950_httpsgodotengineorgnews.md",
+      "20260307_1950_httpsitchiogamestop-ratedtag-godot.md",
+      "20260307_2007_httpsitchiogamestop-ratedtag-godot.md"
+    ]
+  },
+  "vault/NEO-SOL-OMEGA": {
+    "dirs": [],
+    "files": [
+      "20260307_2007_httpswwwnasagovnews.md",
+      "20260307_1950_httpswwwnasagovnews.md"
+    ]
+  },
+  "docs": {
+    "dirs": [],
+    "files": [
+      "SESSION_STATUS_20260307.md",
+      "ROADMAP.md",
+      "SESSION_BACKLOG.json"
+    ]
+  },
+  ".rust": {
+    "dirs": [
+      "src"
+    ],
+    "files": [
+      "Cargo.toml"
+    ]
+  },
+  ".rust/src": {
+    "dirs": [],
+    "files": [
+      "test.rs",
+      "lib.rs"
+    ]
+  },
+  "ConnectionStatePlugin": {
+    "dirs": [
+      "bin",
+      "model"
+    ],
+    "files": [
+      "icon.png",
+      "icon.png.import",
+      "ConnectionState.gd.uid",
+      "plugin.cfg",
+      "ConnectionStatePlugin.gd.uid",
+      "ConnectionState.gd",
+      "ConnectionStatePlugin.gd"
+    ]
+  },
+  "ConnectionStatePlugin/bin": {
+    "dirs": [
+      "release",
+      "debug"
+    ],
+    "files": []
+  },
+  "ConnectionStatePlugin/bin/release": {
+    "dirs": [],
+    "files": [
+      "ConnectionStatePlugin-release.aar"
+    ]
+  },
+  "ConnectionStatePlugin/bin/debug": {
+    "dirs": [],
+    "files": [
+      "ConnectionStatePlugin-debug.aar"
+    ]
+  },
+  "ConnectionStatePlugin/model": {
+    "dirs": [],
+    "files": [
+      "ConnectionInfo.gd",
+      "ConnectionInfo.gd.uid"
+    ]
+  },
+  "logs": {
+    "dirs": [],
+    "files": [
+      "system_monitor.jsonl",
+      "pipeline.log",
+      "daemon_stdout.log",
+      "daemon.log"
+    ]
+  },
+  ".vscode": {
+    "dirs": [],
+    "files": [
+      "settings.json",
+      "mcp.json"
+    ]
+  },
+  "data": {
+    "dirs": [
+      "schemas"
+    ],
+    "files": [
+      "knowledge_graph.db",
+      "rag.db",
+      "knowledge_graph.json",
+      "backlinks.json",
+      "knowledge_graph.jsonld",
+      "characters_sample.json"
+    ]
+  },
+  "data/schemas": {
+    "dirs": [],
+    "files": [
+      "cosmologos_character.json"
+    ]
+  },
+  "scripts": {
+    "dirs": [
+      "rust",
+      "gdscript",
+      "automation",
+      "python",
+      "typescript"
+    ],
+    "files": [
+      "rclone_cron_setup.sh",
+      "ouroboros_snapshot.py"
+    ]
+  },
+  "scripts/rust": {
+    "dirs": [
+      "src"
+    ],
+    "files": [
+      "Cargo.toml"
+    ]
+  },
+  "scripts/rust/src": {
+    "dirs": [],
+    "files": [
+      "lib.rs"
+    ]
+  },
+  "scripts/gdscript": {
+    "dirs": [],
+    "files": [
+      "CodexManager.gd",
+      "pplx_http_client.gd",
+      "DebugTools.gd",
+      "CombatManager.gd",
+      "CivAgentAI.gd",
+      "AIAgentBase.gd",
+      "ProtonCharge.gd",
+      "AudioManager.gd",
+      "DialogueSystem.gd",
+      "BiomeGenerator.gd",
+      "WorldTensionMeter.gd",
+      "MainScene.gd",
+      "SaveManager.gd",
+      "SolSuitVFX.gd",
+      "AssetPlacer.gd",
+      "RetroArcadeManager.gd",
+      "SaveLoadSystem.gd",
+      "HUDManager.gd"
+    ]
+  },
+  "scripts/automation": {
+    "dirs": [],
+    "files": [
+      "knowledge_graph_expander.py",
+      "firecrawl_pipeline.py",
+      "system_monitor.py",
+      "api_key_manager.py",
+      "sync_and_push.py",
+      "git_autopush.sh",
+      "knowledge_graph.py",
+      "daemon_runner.py"
+    ]
+  },
+  "scripts/python": {
+    "dirs": [],
+    "files": [
+      "geologos_v2.py",
+      "local_rag_sqlite.py"
+    ]
+  },
+  "scripts/typescript": {
+    "dirs": [],
+    "files": [
+      "motherbrain-protocol.ts"
+    ]
+  }
+}

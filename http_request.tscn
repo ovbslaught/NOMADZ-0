@@ -1,5 +1,0 @@
-[gd_scene format=3 uid="uid://hnbdeobqsf7h"]
-
-[node name="HTTPRequest" type="HTTPRequest"]
-
-[node name="Node" type="Node" parent="."]

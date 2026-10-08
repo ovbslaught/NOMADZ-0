@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://csm20vsgrdv3m"]
+
+[ext_resource type="Script" path="res://topdown/player/TopDownPlayer.gd" id="1_3wkcc"]
+[ext_resource type="Script" path="res://topdown/weapons/SwordHitbox.gd" id="2_xsfdm"]
+
+[node name="TopDownPlayer" type="CharacterBody2D"]
+script = ExtResource("1_3wkcc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="SwordHitbox" type="Area2D" parent="."]
+script = ExtResource("2_xsfdm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SwordHitbox"]
+disabled = true
+shape = SubResource("rect")
+
+[node name="ShootOrigin" type="Marker2D" parent="."]
+position = Vector2(0, -16)
+
+[node name="SwordTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ArrowTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RollTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RollCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+one_shot = true
+
+[sub_resource type="RectangleShape2D" id="rect"]
+size = Vector2(20, 12)

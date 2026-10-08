@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "COSMOLOGOS Character Profile",
+  "type": "object",
+  "required": ["id", "name", "archetype", "affiliation"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^CHAR_[A-Z0-9]+$"},
+    "name": {"type": "string"},
+    "aliases": {"type": "array", "items": {"type": "string"}},
+    "archetype": {"enum": ["Anchor", "Agent", "Guardian", "Nomad", "Shadow", "Construct", "Pillar"]},
+    "affiliation": {"enum": ["NOMADZ Alliance", "GeoLogos Collective", "Corporate Syndicate", "Rogue", "Pillar-Bound", "Unknown"]},
+    "origin": {"type": "object", "properties": {
+      "location": {"type": "string"},
+      "backstory": {"type": "string"},
+      "awakening_event": {"type": "string"}
+    }},
+    "abilities": {"type": "array", "items": {"type": "object", "properties": {
+      "name": {"type": "string"},
+      "description": {"type": "string"},
+      "power_level": {"type": "integer", "minimum": 1, "maximum": 10}
+    }}},
+    "relationships": {"type": "array", "items": {"type": "object", "properties": {
+      "target_id": {"type": "string"},
+      "type": {"enum": ["ally", "rival", "mentor", "student", "enemy", "family", "unknown"]},
+      "intensity": {"type": "integer", "minimum": 1, "maximum": 10}
+    }}},
+    "story_arcs": {"type": "array", "items": {"type": "string"}},
+    "quotes": {"type": "array", "items": {"type": "string"}},
+    "meta": {"type": "object", "properties": {
+      "created_at": {"type": "string", "format": "date-time"},
+      "last_updated": {"type": "string", "format": "date-time"},
+      "codex_unlocked": {"type": "boolean"},
+      "appearance_count": {"type": "integer"}
+    }}
+  }
+}

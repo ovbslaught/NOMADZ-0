@@ -1,0 +1,2 @@
+{"version":"1.2.8","db_type":"idb","start_time":"2026-05-16T06:14:23.772Z","db_info":{"doc_count":0,"update_seq":0,"idb_attachment_format":"binary","db_name":"locations","auto_compaction":false,"adapter":"idb"}}
+{"seq":0}

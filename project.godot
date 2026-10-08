@@ -1,51 +1,75 @@
 ; Engine configuration file.
-; It's best edited using the editor UI and not directly,
-; since the parameters that go here are not all obvious.
-;
-; Format:
-;   [section] ; section goes between []
-;   param=value ; assign values to parameters
+; It's best edited using the editor UI and not directly.
 
 config_version=5
 
 [application]
 
 config/name="NOMADZ-0"
-run/main_scene="uid://bmhqnfqnfjgy5"
-config/features=PackedStringArray("4.5", "Mobile")
+run/main_scene="res://scenes/main/MainScene.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-ScreenView="*res://addons/Control3D/root.gd"
-GMap="*res://addons/gmaps/map.gd"
-ItchAuth="*res://addons/itch-oauth/OAuth Manager/oauth_manager.tscn"
-GUIDE="*res://addons/guide/guide.gd"
+VultureDrone="*res://src/VultureDrone.gd"
+GameCoordinator="*res://src/GameCoordinator.gd"
 
-[debug_draw_3d]
+[display]
 
-settings/addon_root_folder="res://addons/debug_draw_3d"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/Control3D/plugin.cfg", "res://addons/DragNDropNodes/plugin.cfg", "res://addons/FreeControl/plugin.cfg", "res://addons/Gizmo3DScript/plugin.cfg", "res://addons/GodotGoogleSignIn/plugin.cfg", "res://addons/MagicaVoxel_Importer_with_Extensions/plugin.cfg", "res://addons/OpenStylized3D/plugin.cfg", "res://addons/asset_placer/plugin.cfg", "res://addons/extremely_fast_atmosphere/plugin.cfg", "res://addons/fetchmyscript/plugin.cfg", "res://addons/github_to_itch/plugin.cfg", "res://addons/gmaps/plugin.cfg", "res://addons/godot_3d_cursor/plugin.cfg", "res://addons/guide/plugin.cfg", "res://addons/itch-oauth/plugin.cfg", "res://addons/localization_sync/plugin.cfg", "res://addons/py4godot/plugin.cfg", "res://addons/real_equation_solver/plugin.cfg", "res://addons/rust_tools/plugin.cfg")
-
-[filesystem]
-
-import/blender/enabled=false
-
-[github_to_itch]
-
-config/itch_username=""
-config/itch_project_name=""
-
-[plugins]
-
-ai_assistant_hub/llm_api="ollama_api"
-ai_assistant_hub/preferences/thinking_target=0
-ai_assistant_hub/preferences/skip_greeting=false
-ai_assistant_hub/preferences/always_scroll_to_bottom=false
+window/size/viewport_width=1280
+window/size/viewport_height=720
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+
+[input]
+
+move_forward={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194320,"physical_keycode":87,"key_label":0,"unicode":119,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":1,"axis_value":-1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":11,"pressed":true)
+]
+}
+move_backward={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194322,"physical_keycode":83,"key_label":0,"unicode":115,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":1,"axis_value":1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":12,"pressed":true)
+]
+}
+move_left={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194319,"physical_keycode":65,"key_label":0,"unicode":97,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":0,"axis_value":-1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":13,"pressed":true)
+]
+}
+move_right={
+"deadzone": 0.2,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194321,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadMotion,"device":-1,"axis":0,"axis_value":1.0),
+Object(InputEventJoypadButton,"device":-1,"button_index":14,"pressed":true)
+]
+}
+jump={
+"deadzone": 0.5,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":32,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadButton,"device":-1,"button_index":0,"pressed":true)
+]
+}
+dash={
+"deadzone": 0.5,
+"events": [
+Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194325,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null),
+Object(InputEventJoypadButton,"device":-1,"button_index":1,"pressed":true)
+]
+}

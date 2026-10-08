@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dp640r1bqnxhh"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_pl1"]
+[ext_resource type="Script" path="res://Scripts/MotherBrainCopilot.gd" id="2_mb1"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_xx"]
+size = Vector2(16, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yy"]
+size = Vector2(16, 24)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_pl1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.313726, 0.823529, 0.862745, 1)
+texture = SubResource("PlaceholderTexture2D_xx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_yy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+
+[node name="MotherBrainCopilot" type="Node" parent="."]
+script = ExtResource("2_mb1")

@@ -1,0 +1,13 @@
+{
+  "name": "nomadz-gemini-orchestrator",
+  "version": "1.0.0",
+  "description": "Cross-platform Gemini CLI and Antigravity orchestrator for the NOMADZ swarm.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.1.1",
+    "dotenv": "^16.0.3"
+  }
+}

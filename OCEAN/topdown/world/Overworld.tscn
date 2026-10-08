@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c38dq8yamc2wh"]
+
+[ext_resource type="Script" path="res://topdown/world/Overworld.gd" id="1_5m2ta"]
+
+[node name="Overworld" type="Node2D"]
+script = ExtResource("1_5m2ta")
+
+[node name="PlayerSpawn" type="Marker2D" parent="."]
+position = Vector2(400, 300)
+
+[node name="TileMap" type="TileMap" parent="."]
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Interactables" type="Node" parent="."]

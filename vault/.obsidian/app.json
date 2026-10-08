@@ -1,0 +1,17 @@
+{
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "./assets",
+  "newLinkFormat": "shortest",
+  "useMarkdownLinks": false,
+  "newFileLocation": "current",
+  "promptDelete": false,
+  "foldHeading": true,
+  "foldIndent": true,
+  "showLineNumber": true,
+  "spellcheck": true,
+  "strictLineBreaks": false,
+  "vimMode": false,
+  "theme": "obsidian",
+  "cssTheme": "Things",
+  "baseFontSize": 16
+}

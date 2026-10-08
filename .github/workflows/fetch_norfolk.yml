@@ -1,0 +1,34 @@
+name: Fetch Norfolk OSM Data
+
+on:
+  push:
+    paths:
+      - "tools/citygen/fetch_norfolk_osm.py"
+      - ".github/workflows/fetch_norfolk.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run OSM fetcher
+        run: python3 tools/citygen/fetch_norfolk_osm.py
+
+      - name: Move data into place and commit
+        run: |
+          test -f norfolk_city.json && mv norfolk_city.json tools/citygen/norfolk_city.json
+          git config user.name "NOMADZ-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add tools/citygen/norfolk_city.json
+          git commit -m "citygen: auto-fetch Norfolk OSM data [skip ci]" || echo "no changes"
+          git push

@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://by7wctyb33xkq"]
-
-[ext_resource type="Script" uid="uid://b0fbr48rbvn27" path="res://OCEAN-MAIN/addons/PlayerCharacter/Camera/camera_script.gd" id="1_5avew"]
-
-[node name="Camera3D" type="Camera3D"]
-script = ExtResource("1_5avew")

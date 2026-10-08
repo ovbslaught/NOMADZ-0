@@ -1,28 +1,34 @@
-# System & Termux files
-.ssh/
-.termux/
-.npm/
-storage/
-downloads/
+# --- Godot Engine Artifacts ---
+.godot/
+*.translation
+*.import
+export.cfg
+export_presets.cfg
 
-# Secrets & Environment
-.env
+# --- Shell & System Security Exclusions ---
+.bash_history
+.bashrc
+.bash_profile
+.gitconfig
 *.env
-*.pem
 *.key
+*.pem
 
-# Python artifacts
+# --- Runtime Logs & Diagnostics ---
+*.log
+bootstrap_crash.log
+daemon_output.log
+*.tmp
 __pycache__/
 *.pyc
-*.pyo
 
-# OS & Zip archives
-*.zip
-*.tar.gz
-.cache/
-.config/
-.nomadz/
-.python_history
-*.wal
+# --- SQLite WAL & Temp Files ---
 *.db-wal
 *.db-shm
+*.db-journal
+
+# --- Storage Mounts & Staging Roots ---
+WORMHOLE/
+Community/
+Google/
+snapshot_*/
